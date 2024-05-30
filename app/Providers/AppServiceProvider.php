@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Pengguna;
+use App\Models\User;
+use App\Observers\PenggunaObserver;
+use App\Observers\UserObserver;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Paginator::useBootstrapFour();
+        Pengguna::observe(PenggunaObserver::class);
+        User::observe(UserObserver::class);
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Crypt;
 
 class User extends Authenticatable
 {
@@ -19,8 +20,6 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'nomor_telepon',
-        'alamat',
         'role',
         'email',
         'unHashed_password',

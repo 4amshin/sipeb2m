@@ -14,32 +14,5 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Admin Sipeb2m',
-            'nomor_telepon' =>  '081231341561',
-            'alamat' => 'Palopo Kota',
-            'role' => 'admin',
-            'email' => 'admin@sipeb2m.id',
-            'unHashed_password' => 'password',
-            'password' => Hash::make('password'),
-        ]);
-        User::factory()->create([
-            'name' => 'Ibrahim',
-            'nomor_telepon' =>  '081231341561',
-            'alamat' => 'Bua',
-            'role' => 'pengguna',
-            'email' => 'ibrahim@sipeb2m.id',
-            'unHashed_password' => 'password',
-            'password' => Hash::make('password'),
-        ]);
-        User::factory()->create([
-            'name' => 'Siti Fatimah',
-            'nomor_telepon' =>  '081231341561',
-            'alamat' => 'Luwu Timu',
-            'role' => 'pengguna',
-            'email' => 'siti@sipeb2m.id',
-            'unHashed_password' => 'password',
-            'password' => Hash::make('password'),
-        ]);
     }
 }

@@ -16,6 +16,15 @@
                     <i class="fa-solid fa-house"></i> <span>Beranda</span>
                 </a>
             </li>
+
+            @can('super-user')
+                <!--Kelola Pengguna-->
+                <li class="nav-item {{ Request::is('user*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('user.index') }}">
+                        <i class="fa-solid fa-users-gear"></i></i> <span>Kelola Pengguna</span>
+                    </a>
+                </li>
+            @endcan
         @show
     </ul>
 </aside>
