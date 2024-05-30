@@ -29,7 +29,7 @@
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                                 name="email" tabindex="1" autofocus>
 
-                            <!--Penampil Pesan Eror-->
+                            <!--Pesan Eror-->
                             @error('email')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -94,7 +94,7 @@
 
             <!--Footer-->
             <div class="simple-footer">
-                Copyright &copy; Sipetik 2024
+                Copyright &copy; SIPEB2M 2024
 
             </div>
         </div>

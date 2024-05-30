@@ -36,7 +36,7 @@
                 Don't have an account? <a href="{{ route('register') }}">Create One</a>
             </div>
             <div class="simple-footer">
-                Copyright &copy; Sipetik 2024
+                Copyright &copy; SIPEB2M 2024
 
             </div>
         </div>

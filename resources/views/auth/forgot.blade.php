@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class="simple-footer">
-                Copyright &copy; Sipetik 2024
+                Copyright &copy; SIPEB2M 2024
             </div>
         </div>
     </div>
