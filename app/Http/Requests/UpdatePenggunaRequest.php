@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Pengguna;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdatePenggunaRequest extends FormRequest
@@ -11,7 +12,7 @@ class UpdatePenggunaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +22,25 @@ class UpdatePenggunaRequest extends FormRequest
      */
     public function rules(): array
     {
+        $pengguna = $this->route('pengguna');
         return [
-            //
+            'nama' => 'required|string',
+            'nomor_telepon' => 'nullable|string',
+            'alamat' => 'nullable|string',
+            'email' => [
+                'required',
+                'email',
+                function ($value, $fail)  use ($pengguna) {
+                    //cek email yang terdaftar
+                    $existingEmail = Pengguna::where('email', $value)
+                        ->where('id', '!=', $pengguna->id)
+                        ->exists();
+                    if ($existingEmail) {
+                        $fail('Email Pengguna telah terdaftar.');
+                    }
+                }
+            ],
+            'password' => 'nullable|string',
         ];
     }
 }

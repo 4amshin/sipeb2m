@@ -19,8 +19,8 @@
 
             @can('super-user')
                 <!--Kelola Pengguna-->
-                <li class="nav-item {{ Request::is('user*') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('user.index') }}">
+                <li class="nav-item {{ Request::is('pengguna*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('pengguna.index') }}">
                         <i class="fa-solid fa-users-gear"></i></i> <span>Kelola Pengguna</span>
                     </a>
                 </li>

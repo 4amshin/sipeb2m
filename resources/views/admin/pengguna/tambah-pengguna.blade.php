@@ -14,7 +14,7 @@
     <section class="section-body">
         <div class="card card-primary">
             <div class="card-body">
-                <form method="POST" action="{{ route('user.store') }}">
+                <form method="POST" action="{{ route('pengguna.store') }}">
                     @csrf
                     <!--Role-->
                     <input type="hidden" name="role" id="role" value="pengguna">
@@ -23,8 +23,8 @@
                     <div class="row">
                         <!--Nama-->
                         <div class="form-group col-6">
-                            <label for="name">Nama Lengkap</label>
-                            <input id="name" type="text" class="form-control" name="name" autofocus required>
+                            <label for="nama">Nama Lengkap</label>
+                            <input id="nama" type="text" class="form-control" name="nama" autofocus required>
                         </div>
 
                         <!--Nomor Telepon-->

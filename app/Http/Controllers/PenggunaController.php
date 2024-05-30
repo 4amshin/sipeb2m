@@ -44,7 +44,19 @@ class PenggunaController extends Controller
      */
     public function store(StorePenggunaRequest $request)
     {
-        //
+        //Cek Akses
+        if (Gate::denies('super-user')) {
+            abort(403, 'Anda tidak bisa mengakses halaman ini');
+        }
+
+        // Validasi
+        $validatedData = $request->validated();
+
+        //Simpan Pengguna
+        Pengguna::create($validatedData);
+
+        //Kembali
+        return redirect()->route('pengguna.index')->with('success', 'Pengguna berhasil ditambahkan');
     }
 
     /**
@@ -68,7 +80,14 @@ class PenggunaController extends Controller
      */
     public function update(UpdatePenggunaRequest $request, Pengguna $pengguna)
     {
-        //
+        // Validasi
+        $validatedData = $request->validated();
+
+        // Simpan Perubahan
+        $pengguna->update($validatedData);
+
+        // Kembali
+        return redirect()->route('pengguna.index')->with('success', 'Data Pengguna berhasil diperbarui');
     }
 
     /**
@@ -76,6 +95,7 @@ class PenggunaController extends Controller
      */
     public function destroy(Pengguna $pengguna)
     {
-        //
+        $pengguna->delete();
+        return redirect()->route('pengguna.index')->with('success', 'Akun Pengguna Berhasil Dihapus');
     }
 }

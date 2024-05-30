@@ -31,7 +31,7 @@
                             @can('super-user')
                                 <!--Tombol Tambah Pengguna-->
                                 <div class="float-left">
-                                    <a href="{{ route('user.create') }}" class="btn btn-primary btn-lg">Tambah Pengguna</a>
+                                    <a href="{{ route('pengguna.create') }}" class="btn btn-primary btn-lg">Tambah Pengguna</a>
                                 </div>
                             @endcan
 
@@ -71,7 +71,7 @@
                                                 {{ $index + $daftarPengguna->firstItem() }}
                                             </td>
                                             <td>
-                                                {{ $pengguna->name }}
+                                                {{ $pengguna->nama }}
                                             <td>
                                                 {{ $pengguna->nomor_telepon }}
                                             </td>
@@ -84,7 +84,7 @@
                                             <td>
                                                 <div class="bg-secondary text-white">
                                                     <center>
-                                                        {{ $pengguna->unHashed_password }}
+                                                        {{ $pengguna->password }}
                                                     </center>
 
                                                 </div>
@@ -93,14 +93,14 @@
                                                 <td>
                                                     <div class="row">
                                                         <!--Tombol Update-->
-                                                        <a href="{{ route('user.edit', $pengguna->id) }}"
+                                                        <a href="{{ route('pengguna.edit', $pengguna->id) }}"
                                                             class="btn btn-primary">
                                                             <i class="fa-solid fa-pen-to-square"></i>
                                                         </a>
                                                         <div style="width: 10px;"></div>
 
                                                         <!--Tombol Hapus-->
-                                                        <form action="{{ route('user.destroy', $pengguna->id) }}"
+                                                        <form action="{{ route('pengguna.destroy', $pengguna->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')

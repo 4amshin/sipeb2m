@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Pengguna;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StorePenggunaRequest extends FormRequest
@@ -11,7 +12,7 @@ class StorePenggunaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,22 @@ class StorePenggunaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nama' => 'required|string',
+            'nomor_telepon' => 'nullable|string',
+            'alamat' => 'nullable|string',
+            'role' => 'required|string',
+            'email' => [
+                'required',
+                'email',
+                function ($value, $fail) {
+                    //cek email yang terdaftar
+                    $existingEmail = Pengguna::where('email', $value)->exists();
+                    if ($existingEmail) {
+                        $fail('Email Pengguna telah terdaftar.');
+                    }
+                }
+            ],
+            'password' => 'required|string',
         ];
     }
 }

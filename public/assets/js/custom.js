@@ -1,8 +1,16 @@
-/**
- *
- * You can write your JS code here, DO NOT touch the default style file
- * because it will make it harder for you to update.
- *
- */
+function togglePasswordVisibility(inputId, showEyeId, hideEyeId) {
+    var inputElement = document.getElementById(inputId);
+    var showEye = document.getElementById(showEyeId);
+    var hideEye = document.getElementById(hideEyeId);
+    hideEye.classList.remove("d-none");
 
-"use strict";
+    if (inputElement.type === "password") {
+        inputElement.type = "text";
+        showEye.style.display = "none";
+        hideEye.style.display = "block";
+    } else {
+        inputElement.type = "password";
+        showEye.style.display = "block";
+        hideEye.style.display = "none";
+    }
+}

@@ -35,6 +35,13 @@
                         </div>
                     </div>
 
+                    <!--Alamat-->
+                    <div class="form-group">
+                        <label for="alamat">Alamat</label>
+                        <input id="alamat" type="text" class="form-control" name="alamat"
+                            value="{{ $pengguna->alamat }}" autofocus required>
+                    </div>
+
                     <!--Email & Password-->
                     <div class="row">
                         <!--Email-->
