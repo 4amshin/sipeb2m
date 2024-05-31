@@ -46,30 +46,32 @@
                             <!-- Nama -->
                             <div class="mb-3 col-md-6">
                                 <label for="nama" class="form-label">Nama</label>
-                                <input class="form-control" type="text" id="nama" name="nama" value="John"
-                                    autofocus />
+                                <input class="form-control" type="text" id="nama" name="nama"
+                                    value="{{ $pengguna->nama }}" autofocus />
                             </div>
 
                             <!-- Email -->
                             <div class="mb-3 col-md-6">
                                 <label for="email" class="form-label">E-mail</label>
                                 <input class="form-control" type="text" id="email" name="email"
-                                    value="john.doe@example.com" />
+                                    value="{{ $pengguna->email }}" />
                             </div>
 
                             <!-- Nomor Telepon -->
                             <div class="mb-3 col-md-6">
                                 <label class="form-label" for="nomor_telepon">Nomor Telepon</label>
                                 <div class="input-group input-group-merge">
-                                    <span class="input-group-text">ID (+62)</span>
-                                    <input type="text" id="nomor_telepon" name="nomor_telepon" class="form-control" />
+                                    <span class="input-group-text">ID |</span>
+                                    <input type="text" id="nomor_telepon" name="nomor_telepon" class="form-control"
+                                        value="{{ $pengguna->nomor_telepon }}" />
                                 </div>
                             </div>
 
                             <!-- Aalamat -->
                             <div class="mb-3 col-md-6">
                                 <label for="alamat" class="form-label">Alamat</label>
-                                <input type="text" class="form-control" id="alamat" name="alamat" />
+                                <input type="text" class="form-control" id="alamat" name="alamat"
+                                    value="{{ $pengguna->alamat }}" />
                             </div>
                         </div>
 

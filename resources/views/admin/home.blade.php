@@ -31,7 +31,7 @@
                                 your profile.
                             </p>
 
-                            <a href="{{ route('profile') }}" class="btn btn-sm btn-outline-primary">Lihat Profil</a>
+                            <a href="{{ route('pengguna.profile') }}" class="btn btn-sm btn-outline-primary">Lihat Profil</a>
                         </div>
                     </div>
 

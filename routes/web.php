@@ -13,10 +13,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('admin.home');
     })->name('home');
 
-    Route::get('profile', function () {
-        return view('auth.profile');
-    })->name('profile');
-
     Route::resource('user', UserController::class);
+
     Route::resource('pengguna', PenggunaController::class);
+    Route::get('profile', [PenggunaController::class, 'profile'])->name('pengguna.profile');
 });

@@ -31,6 +31,14 @@ class PenggunaController extends Controller
         return view('admin.pengguna.daftar-pengguna', compact('daftarPengguna'));
     }
 
+    public function profile()
+    {
+        $user = auth()->user();
+        $pengguna = Pengguna::where('email', $user->email)->first();
+
+        return view('auth.profile', compact('pengguna'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
