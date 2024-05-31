@@ -20,4 +20,12 @@
             <div data-i18n="Analytics">Pengguna</div>
         </a>
     </li>
+
+    <!-- Baju -->
+    <li class="menu-item {{ Request::is('baju*') ? 'active' : '' }}">
+        <a href="{{ route('baju.index') }}" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-user"></i>
+            <div data-i18n="Analytics">Baju</div>
+        </a>
+    </li>
 </ul>

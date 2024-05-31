@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BajuController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -17,4 +18,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('pengguna', PenggunaController::class);
     Route::get('profile', [PenggunaController::class, 'profile'])->name('pengguna.profile');
+
+    Route::resource('baju', BajuController::class);
 });
