@@ -1,90 +1,85 @@
 @extends('layout.app')
 
-@section('title', 'Profile')
+@section('page-title', 'Profil')
 
 @section('content')
-    <section class="section">
-        <!--Header-->
-        <div class="section-header">
-            <h1>Profile</h1>
-        </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <h5 class="card-header">Biodata Pengguna</h5>
 
+                <!-- Foto Profil -->
+                <div class="card-body">
+                    <div class="d-flex align-items-start align-items-sm-center gap-4">
+                        <!-- Foto -->
+                        <img src="../assets/img/avatars/1.png" alt="user-avatar" class="d-block rounded" height="100"
+                            width="100" id="uploadedAvatar" />
 
-        <?php
-        $user = auth()->user();
-        $profile = App\Models\Pengguna::where('email', $user->email)->first();
-        ?>
-        <!--Body-->
-        <section class="section-body">
-            <div class="row">
-                <!--Left Card-->
-                <div class="col-lg-4">
-                    <div class="card mb-4">
-                        <div class="card-body text-center">
-                            <!--Foto Profil-->
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-                                alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                        <!-- Tombol Upload & Reset -->
+                        <div class="button-wrapper">
+                            <!-- Upload -->
+                            <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                <span class="d-none d-sm-block">Upload Foto Baru</span>
+                                <i class="bx bx-upload d-block d-sm-none"></i>
+                                <input type="file" id="upload" class="account-file-input" hidden
+                                    accept="image/png, image/jpeg" />
+                            </label>
 
-                            <!--Nama-->
-                            <h5 class="my-3">{{ $profile->nama }}</h5>
-                            <p>{{ $user->email }}</p>
+                            <!-- Reset -->
+                            <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                                <i class="bx bx-reset d-block d-sm-none"></i>
+                                <span class="d-none d-sm-block">Reset</span>
+                            </button>
 
-                            <!--Tombol Edit Profil-->
-                            @can('super-user')
-                                <a href="#" class="btn btn-primary">Edit Profil</a>
-                            @endcan
+                            <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
                         </div>
                     </div>
                 </div>
 
-                <!--Right Card-->
-                <div class="col-lg-8 card mb-4 ">
-                    <div class="card-body">
-                        <!--Nama-->
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Name Lengkap</p>
-                            </div>
-                            <div class="col-sm-9">
-                                <p class="text-muted mb-0">{{ $profile->nama }}</p>
-                            </div>
-                        </div>
-                        <hr>
+                <hr class="my-0" />
 
-                        <!--Nomor Telepon-->
+                <!-- Data Pengguna -->
+                <div class="card-body">
+                    <form id="formAccountSettings" method="POST" onsubmit="return false">
                         <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Nomor Telepon</p>
-                            </div>
-                            <div class="col-sm-9">
-                                <p class="text-muted mb-0">{{ $profile->nomor_telepon }}</p>
-                            </div>
-                        </div>
-                        <hr>
 
-                        <!--Email-->
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Email</p>
+                            <!-- Nama -->
+                            <div class="mb-3 col-md-6">
+                                <label for="nama" class="form-label">Nama</label>
+                                <input class="form-control" type="text" id="nama" name="nama" value="John"
+                                    autofocus />
                             </div>
-                            <div class="col-sm-9">
-                                <p class="text-muted mb-0">{{ $profile->email }}</p>
-                            </div>
-                        </div>
-                        <hr>
 
-                        <!--Password-->
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Password</p>
+                            <!-- Email -->
+                            <div class="mb-3 col-md-6">
+                                <label for="email" class="form-label">E-mail</label>
+                                <input class="form-control" type="text" id="email" name="email"
+                                    value="john.doe@example.com" />
                             </div>
-                            <div class="col-sm-9">
-                                <p class="text-muted mb-0">{{ $profile->password }}</p>
+
+                            <!-- Nomor Telepon -->
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label" for="nomor_telepon">Nomor Telepon</label>
+                                <div class="input-group input-group-merge">
+                                    <span class="input-group-text">ID (+62)</span>
+                                    <input type="text" id="nomor_telepon" name="nomor_telepon" class="form-control" />
+                                </div>
+                            </div>
+
+                            <!-- Aalamat -->
+                            <div class="mb-3 col-md-6">
+                                <label for="alamat" class="form-label">Alamat</label>
+                                <input type="text" class="form-control" id="alamat" name="alamat" />
                             </div>
                         </div>
-                    </div>
+
+                        <!-- Tombol Simpan Perubahan-->
+                        <div class="mt-2">
+                            <button type="submit" class="btn btn-primary me-2">Simpan Perubahan</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </section>
-    </section>
+        </div>
+    </div>
 @endsection

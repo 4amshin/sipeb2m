@@ -1,105 +1,79 @@
-@extends('layout.custom')
+@extends('layout.app')
 
-@section('title', 'Registrasi Akun')
+@section('title', 'Register')
 
 @section('content')
-    <div class="row">
-        <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
-            <div class="login-brand">
-                <img src="../assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
-            </div>
+    <h4 class="mb-2">Adventure starts here 🚀</h4>
+    <p class="mb-4">Make your app management easy and fun!</p>
 
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h4>Registrasi</h4>
-                </div>
-
-                <div class="card-body">
-                    <form method="POST">
-                        @csrf
-                        <div class="form-group">
-                            <label for="name">Nama</label>
-                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                                name="name" autofocus>
-                            @error('name')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                name="email">
-                            @error('email')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group col-6">
-                                <!--label-->
-                                <label for="password" class="d-block control-label">Password</label>
-
-                                <!--Input-->
-                                <div class="input-group">
-                                    <!--Input Field-->
-                                    <input id="password" type="password"
-                                        class="form-control @error('password') is-invalid @enderror" name="password"
-                                        tabindex="2">
-
-                                    <!--Show/Hide Password-->
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"
-                                            onclick="togglePasswordVisibility('password', 'show_eye', 'hide_eye');">
-                                            <i class="fas fa-eye" id="show_eye"></i>
-                                            <i class="fas fa-eye-slash d-none" id="hide_eye"></i>
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <!--Penampil Pesan Error-->
-                                @error('password')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="form-group col-6">
-                                <!--label-->
-                                <label for="password_confirmation" class="d-block control-label">Konfirmasi Password</label>
-                                <!--Input-->
-                                <div class="input-group">
-                                    <!--Input Field-->
-                                    <input id="password_confirmation" type="password" class="form-control"
-                                        name="password_confirmation" tabindex="2">
-
-                                    <!--Show/Hide Password-->
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"
-                                            onclick="togglePasswordVisibility('password_confirmation', 'show_eye_confirm', 'hide_eye_confirm');">
-                                            <i class="fas fa-eye" id="show_eye_confirm"></i>
-                                            <i class="fas fa-eye-slash d-none" id="hide_eye_confirm"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-lg btn-block">
-                                Daftar
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="simple-footer">
-                Copyright &copy; SIPEB2M 2024
-            </div>
+    <form id="formAuthentication" class="mb-3" method="POST" action="{{ route('register') }}">
+        @csrf
+        <!--Nama-->
+        <div class="mb-3">
+            <label for="name" class="form-label">Nama</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Masukkkan Nama Lengkap"
+                autofocus />
         </div>
-    </div>
+
+        <!--Email-->
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email"
+                placeholder="Masukkkan Email Anda" />
+
+            <!--Pesan Error-->
+            @error('email')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+
+        <!--Password-->
+        <div class="mb-3 form-password-toggle">
+            <label class="form-label" for="password">Password</label>
+            <div class="input-group input-group-merge">
+                <input type="password" id="password" class="form-control @error('password') is-invalid @enderror"
+                    name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                    aria-describedby="password" />
+                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+            </div>
+
+            <!--Pesan Error-->
+            @error('password')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+
+        <!--Password Confirmation-->
+        <div class="mb-3 form-password-toggle">
+            <label class="form-label" for="password_confirmation">Password Confirmation</label>
+            <div class="input-group input-group-merge">
+                <input type="password" id="password_confirmation" class="form-control" name="password_confirmation"
+                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                    aria-describedby="password" />
+                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+            </div>
+
+            <!--Pesan Error-->
+            @error('password_confirmation')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+
+        <!--Tombol Daftar-->
+        <button type="submit" class="btn btn-primary d-grid w-100">Daftar</button>
+    </form>
+
+    <!--Link Login-->
+    <p class="text-center">
+        <span>Sudah Punya Akun?</span>
+        <a href="{{ route('login') }}">
+            <span>Login Disini</span>
+        </a>
+    </p>
 @endsection

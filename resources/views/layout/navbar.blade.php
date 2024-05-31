@@ -1,32 +1,71 @@
-<form class="form-inline mr-auto">
-    <ul class="navbar-nav mr-3">
-        <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
-        <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a>
+<div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+    <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+        <i class="bx bx-menu bx-sm"></i>
+    </a>
+</div>
+
+<div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+
+    <!-- Page Title -->
+    <div class="navbar-nav align-items-center">
+        <h4 class="fw-bold mt-3">@yield('page-title')</h4>
+    </div>
+
+    <!-- User -->
+    <ul class="navbar-nav flex-row align-items-center ms-auto">
+        <!-- User -->
+        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                <div class="avatar avatar-online">
+                    <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                </div>
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end">
+                <!--Nama & Role-->
+                <li>
+                    <a class="dropdown-item" href="#">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar avatar-online">
+                                    <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <span class="fw-semibold d-block">{{ auth()->user()->name }}</span>
+                                <small class="text-muted">{{ auth()->user()->role }}</small>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <!--Divider-->
+                <li>
+                    <div class="dropdown-divider"></div>
+                </li>
+
+                <!--Profil-->
+                <li>
+                    <a class="dropdown-item" href="{{ route('profile') }}">
+                        <i class="bx bx-user me-2"></i>
+                        <span class="align-middle">Profil</span>
+                    </a>
+                </li>
+
+                <!--Logout-->
+                <li>
+                    <a class="dropdown-item" href="#"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="bx
+                        bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="post">
+                        @csrf
+                    </form>
+                </li>
+
+            </ul>
         </li>
     </ul>
-</form>
-<ul class="navbar-nav navbar-right">
-
-
-    <li class="dropdown"><a href="#" data-toggle="dropdown"
-            class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-            <img alt="image" src="{{ asset('assets/img/avatar/avatar-1.png') }}" class="rounded-circle mr-1">
-            <div class="d-sm-none d-lg-inline-block">Hi, {{ auth()->user()->name }}</div>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right">
-            <a href="{{ route('profile') }}" class="dropdown-item has-icon">
-                <i class="far fa-user"></i> Profile
-            </a>
-
-            <div class="dropdown-divider"></div>
-
-            <a href="#" class="dropdown-item has-icon text-danger"
-                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="post">
-                @csrf
-            </form>
-        </div>
-    </li>
-</ul>
+</div>

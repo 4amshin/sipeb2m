@@ -1,30 +1,23 @@
-<aside id="sidebar-wrapper">
-    <div class="sidebar-brand">
-        <a href="{{ route('home') }}">SIPEB2M</a>
-    </div>
-    <div class="sidebar-brand sidebar-brand-sm">
-        <a href="index.html">SP</a>
-    </div>
+@include('layout.logo')
 
-    <ul class="sidebar-menu">
-        @section('sidebar')
-            <li class="menu-header">Menu</li>
+<div class="menu-inner-shadow"></div>
 
-            <!--Beranda-->
-            <li class="nav-item {{ Request::is('home*') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('home') }}">
-                    <i class="fa-solid fa-house"></i> <span>Beranda</span>
-                </a>
-            </li>
+<!--Sidebar-->
+<ul class="menu-inner py-1">
 
-            @can('super-user')
-                <!--Kelola Pengguna-->
-                <li class="nav-item {{ Request::is('pengguna*') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('pengguna.index') }}">
-                        <i class="fa-solid fa-users-gear"></i></i> <span>Kelola Pengguna</span>
-                    </a>
-                </li>
-            @endcan
-        @show
-    </ul>
-</aside>
+    <!-- Beranda -->
+    <li class="menu-item {{ Request::is('home*') ? 'active' : '' }}">
+        <a href="{{ route('home') }}" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+            <div data-i18n="Analytics">Beranda</div>
+        </a>
+    </li>
+
+    <!-- Pengguna -->
+    <li class="menu-item {{ Request::is('pengguna*') ? 'active' : '' }}">
+        <a href="{{ route('pengguna.index') }}" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-user"></i>
+            <div data-i18n="Analytics">Pengguna</div>
+        </a>
+    </li>
+</ul>

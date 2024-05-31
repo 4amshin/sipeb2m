@@ -1,0 +1,8 @@
+- Buat Tabel Baju
+    - input gambar
+
+- Buat Tabel Penyewaan
+
+- Buat Tabel Pembayaran
+
+- Buat Tabel Pengembalian

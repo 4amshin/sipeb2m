@@ -38,5 +38,8 @@ class PenggunaSeeder extends Seeder
             'email' => 'siti@sipeb2m.id',
             'password' => 'password',
         ]);
+
+        // Tambahkan 10 data dummy
+        // Pengguna::factory()->count(10)->create();
     }
 }

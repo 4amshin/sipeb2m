@@ -1,85 +1,82 @@
 @extends('layout.app')
 
-@section('title', 'Tambah Pengguna')
+@section('page-title', 'Tambah Pengguna')
 
 @section('content')
-    <!--Header-->
-    <section class="section">
-        <div class="section-header">
-            <h1>Tambah Pengguna</h1>
-        </div>
-    </section>
+    <div class="row">
+        <div class="col-xl">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form method="POST" action="{{ route('pengguna.store') }}">
+                        @csrf
+                        <!--Role-->
+                        <input type="hidden" name="role" id="role" value="pengguna">
 
-    <!--Body-->
-    <section class="section-body">
-        <div class="card card-primary">
-            <div class="card-body">
-                <form method="POST" action="{{ route('pengguna.store') }}">
-                    @csrf
-                    <!--Role-->
-                    <input type="hidden" name="role" id="role" value="pengguna">
+                        <!--Nama & Nomor Telepon-->
+                        <div class="row">
+                            <!--Nama-->
+                            <div class="col-6 mb-3">
+                                <label class="form-label" for="nama">Nama</label>
+                                <input type="text" class="form-control" id="nama" name="nama" autofocus required>
+                            </div>
 
-                    <!--Nama & Nomor Telepon-->
-                    <div class="row">
-                        <!--Nama-->
-                        <div class="form-group col-6">
-                            <label for="nama">Nama Lengkap</label>
-                            <input id="nama" type="text" class="form-control" name="nama" autofocus required>
+                            <!--Nomor Telepon-->
+                            <div class="col-6 mb-3">
+                                <label class="form-label" for="nomor_telepon">Nomor Telepon (Whatsapp)</label>
+                                <input type="text" id="nomor_telepon" name="nomor_telepon"
+                                    class="form-control phone-mask">
+                            </div>
                         </div>
 
-                        <!--Nomor Telepon-->
-                        <div class="form-group col-6">
-                            <label for="nomor_telepon">Nomor Telepon (Whatsapp)</label>
-                            <input id="nomor_telepon" type="text" class="form-control" name="nomor_telepon" autofocus
-                                required>
-                        </div>
-                    </div>
-
-                    <!--Alamat-->
-                    <div class="form-group">
-                        <label for="alamat">Alamat</label>
-                        <input id="alamat" type="text" class="form-control" name="alamat" autofocus required>
-                    </div>
-
-                    <!--Email & Password-->
-                    <div class="row">
-                        <!--Email-->
-                        <div class="form-group col-6">
-                            <label for="email">Email</label>
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                name="email" required>
-                            @error('email')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                        <!--Alamat-->
+                        <div class="mb-3">
+                            <label class="form-label" for="alamat">Alamat</label>
+                            <input type="text" class="form-control" id="alamat" name="alamat">
                         </div>
 
-                        <!--Password-->
-                        <div class="form-group col-6">
-                            <label for="password" class="d-block">Password</label>
-                            <div class="input-group">
-                                <!--Input Field-->
-                                <input id="password" type="password" class="form-control" name="password" required>
+                        <div class="row">
+                            <!--Email-->
+                            <div class="col-6 mb-3">
+                                <label for="email" class="form-label">Email </label>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                    id="email" name="email" placeholder="Masukkan Email Anda" autofocus />
 
-                                <!--Show/Hide Password-->
-                                <div class="input-group-append">
-                                    <span class="input-group-text"
-                                        onclick="togglePasswordVisibility('password', 'show_eye', 'hide_eye');">
-                                        <i class="fas fa-eye" id="show_eye"></i>
-                                        <i class="fas fa-eye-slash d-none" id="hide_eye"></i>
-                                    </span>
+                                <!--Pesan Eror-->
+                                @error('email')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <!--Password-->
+                            <div class="col-6 mb-3 form-password-toggle">
+                                <!--Label & Link Lupa Password-->
+                                <div class="d-flex justify-content-between">
+                                    <!--Label-->
+                                    <label class="form-label" for="password">Password</label>
+                                </div>
+
+                                <div class="input-group input-group-merge">
+                                    <input type="password" id="password"
+                                        class="form-control @error('password') is-invalid @enderror" name="password"
+                                        name="password"
+                                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                        aria-describedby="password" />
+                                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!--Tombol Simpan-->
-                    <div class="form-group ">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block">
-                            Simpan
-                        </button>
-                    </div>
-                </form>
+
+                        <!--Tombol Submit-->
+                        <div class="row p-2">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+
+                    </form>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 @endsection
