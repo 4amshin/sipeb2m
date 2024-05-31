@@ -33,8 +33,8 @@
                                 {{ $index + $daftarBaju->firstItem() }}
                             </td>
                             <td>
-                                <img src="/storage/app/public/gambar_baju/tPkeNzFlqh37OLc1RruGF1KqoPv8dyir7qX8ULe9.png"
-                                    alt="Gambar {{ $baju->nama_baju }}">
+                                <img src="{{ asset('assets/img/avatars/1.png') }}" alt="user-avatar" class="d-block rounded"
+                                    height="50" width="50" id="uploadedAvatar">
                             </td>
                             <td>
                                 {{ $baju->nama_baju }}

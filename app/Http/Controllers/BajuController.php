@@ -64,7 +64,8 @@ class BajuController extends Controller
      */
     public function edit(Baju $baju)
     {
-        return view('admin.baju.update-baju', compact('baju'));
+        $listUkuran = ['S', 'M', 'L', 'XL', 'XXL'];
+        return view('admin.baju.update-baju', compact('baju', 'listUkuran'));
     }
 
     /**
