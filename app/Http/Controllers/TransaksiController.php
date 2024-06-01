@@ -68,6 +68,18 @@ class TransaksiController extends Controller
         //
     }
 
+    public function konfirmasi(Transaksi $transaksi)
+    {
+        $transaksi->update(['status' => 'terkonfirmasi']);
+        return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil dikonfirmasi.');
+    }
+
+    public function tandaiSelesai(Transaksi $transaksi)
+    {
+        $transaksi->update(['status' => 'selesai']);
+        return redirect()->route('transaksi.index')->with('success', 'Transaksi ditandai selesai.');
+    }
+
     /**
      * Display the specified resource.
      */
@@ -97,6 +109,7 @@ class TransaksiController extends Controller
      */
     public function destroy(Transaksi $transaksi)
     {
-        //
+        $transaksi->delete();
+        return redirect()->route('transaksi.index')->with('success', 'Transaksi Berhaisl Dihapus');
     }
 }

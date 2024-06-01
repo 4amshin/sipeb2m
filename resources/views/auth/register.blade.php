@@ -51,7 +51,8 @@
         <div class="mb-3 form-password-toggle">
             <label class="form-label" for="password_confirmation">Konfirmasi Password</label>
             <div class="input-group input-group-merge">
-                <input type="password" id="password_confirmation" class="form-control" name="password_confirmation"
+                <input type="password" id="password_confirmation"
+                    class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation"
                     placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                     aria-describedby="password" />
                 <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>

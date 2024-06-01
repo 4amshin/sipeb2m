@@ -99,12 +99,13 @@
                                         </button>
                                         <div class="dropdown-menu">
                                             <!--Tombol Konfirmasi-->
-                                            <a href="#" class="dropdown-item">
+                                            <a href="{{ route('transaksi.konfirmasi', $transaksi->id) }}"
+                                                class="dropdown-item">
                                                 <i class="bx bx-edit-alt me-1"></i> Konfirmasi
                                             </a>
 
                                             <!--Tombol Selesai-->
-                                            <a href="#" class="dropdown-item">
+                                            <a href="{{ route('transaksi.selesai', $transaksi->id) }}" class="dropdown-item">
                                                 <i class="bx bx-edit-alt me-1"></i> Selesai
                                             </a>
 
