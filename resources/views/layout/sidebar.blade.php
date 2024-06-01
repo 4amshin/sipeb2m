@@ -31,4 +31,12 @@
         </li>
     @endcan
 
+    <!-- Penyewaan -->
+    <li class="menu-item {{ Request::is('transaksi*') ? 'active' : '' }}">
+        <a href="{{ route('transaksi.index') }}" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-user"></i>
+            <div data-i18n="Analytics">Penyewaan</div>
+        </a>
+    </li>
+
 </ul>

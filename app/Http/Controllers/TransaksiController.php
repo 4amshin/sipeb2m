@@ -13,7 +13,17 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        //
+        $user = auth()->user();
+        $daftarTransaksi  = Transaksi::with('pengguna')
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
+
+        if ($user->role == 'pengguna') {
+            $daftarTransaksi->where('pengguna_id', $user->id);
+        }
+
+
+        return view('admin.penyewaan.daftar-penyewaan', compact('daftarTransaksi'));
     }
 
     /**
