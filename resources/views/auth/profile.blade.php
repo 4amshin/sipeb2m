@@ -12,8 +12,8 @@
                 <div class="card-body">
                     <div class="d-flex align-items-start align-items-sm-center gap-4">
                         <!-- Foto -->
-                        <img src="../assets/img/avatars/1.png" alt="user-avatar" class="d-block rounded" height="100"
-                            width="100" id="uploadedAvatar" />
+                        <img src="{{ asset('assets/img/avatars/6.png') }}" alt="user-avatar" class="d-block rounded"
+                            height="100" width="100" id="uploadedAvatar" />
 
                         <!-- Tombol Upload & Reset -->
                         <div class="button-wrapper">

@@ -16,7 +16,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Gambar</th>
+                        {{-- <th>Gambar</th> --}}
                         <th>Baju</th>
                         <th>Ukuran</th>
                         <th>Stok</th>
@@ -32,10 +32,11 @@
                             <td>
                                 {{ $index + $daftarBaju->firstItem() }}
                             </td>
-                            <td>
-                                <img src="{{ asset('assets/img/avatars/1.png') }}" alt="user-avatar" class="d-block rounded"
-                                    height="50" width="50" id="uploadedAvatar">
-                            </td>
+                            {{-- <td>
+                                <img src="{{ asset('storage/gambar-baju/' . $baju->gambar_baju) }}"
+                                    alt="{{ $baju->nama_baju }}" class="d-block rounded" height="50" width="50"
+                                    id="uploadedAvatar">
+                            </td> --}}
                             <td>
                                 {{ $baju->nama_baju }}
                             </td>
