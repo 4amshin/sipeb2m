@@ -41,11 +41,21 @@
                                 <input type="number" class="form-control" id="stok" name="stok" autofocus required>
                             </div>
 
+
                             <!--Harga Sewa-->
                             <div class="col-6 mb-3">
                                 <label class="form-label" for="harga_sewa_perhari">Harga Sewa/Hari</label>
-                                <input type="number" id="harga_sewa_perhari" name="harga_sewa_perhari"
-                                    class="form-control">
+
+                                {{-- <input type="number" id="harga_sewa_perhari" name="harga_sewa_perhari"
+                                    class="form-control"> --}}
+
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp</span>
+                                    <input type="number" class="form-control" placeholder="Harga"
+                                        aria-label="Amount (to the nearest dollar)" id="harga_sewa_perhari"
+                                        name="harga_sewa_perhari">
+                                    <span class="input-group-text">.00</span>
+                                </div>
                             </div>
                         </div>
 

@@ -46,7 +46,7 @@
                                 </span>
                             </td>
                             <td>
-                                {{ $baju->stok }}pcs
+                                {{ $baju->stok }}Pcs
                             </td>
                             <td>
                                 Rp{{ number_format($baju->harga_sewa_perhari, 0, ',', '.') }}

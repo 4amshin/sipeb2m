@@ -18,12 +18,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('user', UserController::class);
 
+
     Route::resource('pengguna', PenggunaController::class);
     Route::get('profile', [PenggunaController::class, 'profile'])->name('pengguna.profile');
 
     Route::resource('baju', BajuController::class);
 
     Route::resource('transaksi', TransaksiController::class);
+    Route::get('/transaksi/ukuran/{nama_baju}', [TransaksiController::class, 'getUkuran']);
 
     Route::resource('detailTransaksi', DetailTransaksiController::class);
 });

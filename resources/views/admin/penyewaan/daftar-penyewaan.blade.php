@@ -19,6 +19,7 @@
                         @can('super-user')
                             <th>Penyewa</th>
                             <th>Alamat</th>
+                            <th>No.Telepon</th>
                         @endcan
                         <th>Baju Disewa</th>
                         <th>Harga Total</th>
@@ -38,11 +39,15 @@
                             @can('super-user')
                                 <td>
                                     <strong>
-                                        {{ $transaksi->pengguna->nama }}
+                                        {{ $transaksi->nama_penyewa }}
                                     </strong>
                                 </td>
                                 <td>
-                                    {{ $transaksi->pengguna->alamat }}
+                                    {{ $transaksi->alamat_penyewa }}
+                                </td>
+                                <td>
+                                    <span class="badge bg-label-info me-1">{{ $transaksi->noTelepon_penyewa }}</span>
+
                                 </td>
                             @endcan
                             <td>
@@ -66,22 +71,25 @@
                                     {{ $tanggalKembali->isoFormat('DD MMMM YYYY') }}
                                 @endif
                             </td>
-
                             <td>
-                                @if ($transaksi->status == 'diproses')
-                                    <span class="badge bg-label-warning me-1">
-                                        DiProses
-                                    </span>
-                                @elseif ($transaksi->status == 'terkonfirmasi')
-                                    <span class="badge bg-label-primary me-1">
-                                        DiProses
-                                    </span>
-                                @elseif ($transaksi->success == 'selesai')
-                                    <span class="badge bg-label-primary me-1">
-                                        DiProses
-                                    </span>
-                                @endif
+                                @switch($transaksi->status)
+                                    @case('diproses')
+                                        <span class="badge bg-label-warning me-1">DiProses</span>
+                                    @break
+
+                                    @case('terkonfirmasi')
+                                        <span class="badge bg-label-primary me-1">Terkonfirmasi</span>
+                                    @break
+
+                                    @case('selesai')
+                                        <span class="badge bg-label-success me-1">Selesai</span>
+                                    @break
+
+                                    @default
+                                        <span class="badge bg-label-info me-1">Status Tidak Dikenali</span>
+                                @endswitch
                             </td>
+
                             @can('super-user')
                                 <td>
                                     <div class="dropdown">
@@ -113,24 +121,24 @@
                                 </td>
                             @endcan
                         </tr>
-                    @empty
-                        <tr>
-                            <td>Data Tidak Ditemukan</td>
-                        </tr>
-                    @endforelse
+                        @empty
+                            <tr>
+                                <td>Data Tidak Ditemukan</td>
+                            </tr>
+                        @endforelse
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
+
+            <!--Navigasi Halaman-->
+            <nav class="p-3" aria-label="Page navigation">
+                <ul class="pagination justify-content-end">
+                    {{ $daftarTransaksi->withQueryString()->links() }}
+                </ul>
+            </nav>
+
         </div>
+        <!--/ Basic Bootstrap Table -->
 
-        <!--Navigasi Halaman-->
-        <nav class="p-3" aria-label="Page navigation">
-            <ul class="pagination justify-content-end">
-                {{ $daftarTransaksi->withQueryString()->links() }}
-            </ul>
-        </nav>
-
-    </div>
-    <!--/ Basic Bootstrap Table -->
-
-@endsection
+    @endsection

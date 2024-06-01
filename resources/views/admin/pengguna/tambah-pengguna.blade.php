@@ -16,22 +16,23 @@
                         <div class="row">
                             <!--Nama-->
                             <div class="col-6 mb-3">
-                                <label class="form-label" for="nama">Nama</label>
-                                <input type="text" class="form-control" id="nama" name="nama" autofocus required>
+                                <label class="form-label" for="nama_penyewa">Nama</label>
+                                <input type="text" class="form-control" id="nama_penyewa" name="nama_penyewa" autofocus
+                                    required>
                             </div>
 
                             <!--Nomor Telepon-->
                             <div class="col-6 mb-3">
-                                <label class="form-label" for="nomor_telepon">Nomor Telepon (Whatsapp)</label>
-                                <input type="text" id="nomor_telepon" name="nomor_telepon"
+                                <label class="form-label" for="noTelepon_penyewa">Nomor Telepon (Whatsapp)</label>
+                                <input type="text" id="noTelepon_penyewa" name="noTelepon_penyewa"
                                     class="form-control phone-mask">
                             </div>
                         </div>
 
                         <!--Alamat-->
                         <div class="mb-3">
-                            <label class="form-label" for="alamat">Alamat</label>
-                            <input type="text" class="form-control" id="alamat" name="alamat">
+                            <label class="form-label" for="alamat_penyewa">Alamat</label>
+                            <input type="text" class="form-control" id="alamat_penyewa" name="alamat_penyewa">
                         </div>
 
                         <div class="row">

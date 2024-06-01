@@ -17,7 +17,9 @@ class TransaksiSeeder extends Seeder
     {
         DB::table('transaksis')->insert([
             [
-                'pengguna_id' => 2,
+                'nama_penyewa' => 'Ibrahim',
+                'alamat_penyewa' => 'Bua',
+                'noTelepon_penyewa' =>  '081231341561',
                 'kode_transaksi' => Str::random(10),
                 'tanggal_sewa' => now(),
                 'tanggal_kembali' => now()->addDays(7),
@@ -25,7 +27,9 @@ class TransaksiSeeder extends Seeder
                 'status' =>  'diproses',
             ],
             [
-                'pengguna_id' => 3,
+                'nama_penyewa' => 'Siti Fatimah',
+                'alamat_penyewa' => 'Luwu Timu',
+                'noTelepon_penyewa' =>  '081231341561',
                 'kode_transaksi' => Str::random(10),
                 'tanggal_sewa' => now(),
                 'tanggal_kembali' => now()->addDays(7),

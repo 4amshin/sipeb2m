@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pengguna_id')->constrained('penggunas')->onDelete('cascade');
             $table->string('kode_transaksi')->unique();
+            $table->string('nama_penyewa');
+            $table->string('alamat_penyewa');
+            $table->string('noTelepon_penyewa');
             $table->date('tanggal_sewa');
             $table->date('tanggal_kembali');
             $table->decimal('harga_total', 10, 2);
