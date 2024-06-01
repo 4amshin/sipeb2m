@@ -3,8 +3,8 @@
 @section('title', 'Register')
 
 @section('content')
-    <h4 class="mb-2">Adventure starts here 🚀</h4>
-    <p class="mb-4">Make your app management easy and fun!</p>
+    <h4 class="mb-2">Daftarkan Akunmu Sekarang 🚀</h4>
+    <p class="mb-4">Gabunglah Bersama Kami dan Mulailah Petualangan Berbusana Tradisionalmu!</p>
 
     <form id="formAuthentication" class="mb-3" method="POST" action="{{ route('register') }}">
         @csrf
@@ -49,7 +49,7 @@
 
         <!--Password Confirmation-->
         <div class="mb-3 form-password-toggle">
-            <label class="form-label" for="password_confirmation">Password Confirmation</label>
+            <label class="form-label" for="password_confirmation">Konfirmasi Password</label>
             <div class="input-group input-group-merge">
                 <input type="password" id="password_confirmation" class="form-control" name="password_confirmation"
                     placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"

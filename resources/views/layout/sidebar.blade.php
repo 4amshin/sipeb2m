@@ -8,7 +8,7 @@
     <!-- Beranda -->
     <li class="menu-item {{ Request::is('home*') ? 'active' : '' }}">
         <a href="{{ route('home') }}" class="menu-link">
-            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+            <i class='menu-icon tf-icons bx bxs-home-smile'></i>
             <div data-i18n="Analytics">Beranda</div>
         </a>
     </li>
@@ -17,7 +17,7 @@
         <!-- Pengguna -->
         <li class="menu-item {{ Request::is('pengguna*') ? 'active' : '' }}">
             <a href="{{ route('pengguna.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user"></i>
+                <i class='menu-icon tf-icons bx bxs-user'></i>
                 <div data-i18n="Analytics">Pengguna</div>
             </a>
         </li>
@@ -25,7 +25,7 @@
         <!-- Baju -->
         <li class="menu-item {{ Request::is('baju*') ? 'active' : '' }}">
             <a href="{{ route('baju.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user"></i>
+                <i class='menu-icon tf-icons bx bxs-t-shirt'></i>
                 <div data-i18n="Analytics">Baju</div>
             </a>
         </li>
@@ -34,7 +34,7 @@
     <!-- Penyewaan -->
     <li class="menu-item {{ Request::is('transaksi*') ? 'active' : '' }}">
         <a href="{{ route('transaksi.index') }}" class="menu-link">
-            <i class="menu-icon tf-icons bx bx-user"></i>
+            <i class='menu-icon tf-icons bx bxs-shopping-bags'></i>
             <div data-i18n="Analytics">Penyewaan</div>
         </a>
     </li>

@@ -3,8 +3,8 @@
 @section('title', 'Login')
 
 @section('content')
-    <h4 class="mb-2">Welcome Shin! 👋</h4>
-    <p class="mb-4">Please sign-in to your account and start the adventure</p>
+    <h4 class="mb-2">Selamat Datang 👋</h4>
+    <p class="mb-4">Masuk ke akun anda untuk menyewa produk kami.</p>
 
     <form id="formAuthentication" class="mb-3" action="{{ route('login') }}" method="POST">
         @csrf
