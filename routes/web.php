@@ -3,6 +3,7 @@
 use App\Http\Controllers\BajuController;
 use App\Http\Controllers\DetailTransaksiController;
 use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\PengembalianController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
@@ -37,4 +38,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('pembayaran', PembayaranController::class);
     Route::get('/pembayaran/tandaiLunas/{pembayaran}', [PembayaranController::class, 'tandaiLunas'])->name('pembayaran.tandaiLunas');
     Route::put('/pembayaran/updatePembayaran/{pembayaran}', [PembayaranController::class, 'updatePembayaran'])->name('pembayaran.updatePembayaran');
+
+    Route::resource('pengembalian', PengembalianController::class);
 });
