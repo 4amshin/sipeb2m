@@ -20,6 +20,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     Route::resource('pengguna', PenggunaController::class);
+    Route::post('profile/update', [PenggunaController::class, 'updateProfile'])->name('profile.update');
     Route::get('profile', [PenggunaController::class, 'profile'])->name('pengguna.profile');
 
     Route::resource('baju', BajuController::class);

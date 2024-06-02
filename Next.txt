@@ -3,9 +3,6 @@
     - tampilkan gambar pada daftar-Baju
     - ketika update gambar hapus gambar baju yang lama
 
-- Buat Tabel Penyewaan
-    - buat fungsi konfrimasi, selesai dan hapus
-
 - Buat Tabel Pembayaran
 
 - Buat Tabel Pengembalian

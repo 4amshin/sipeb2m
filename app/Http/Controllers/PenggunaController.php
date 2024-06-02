@@ -39,6 +39,25 @@ class PenggunaController extends Controller
         return view('auth.profile', compact('pengguna'));
     }
 
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user();
+        $pengguna = Pengguna::where('email', $user->email)->first();
+
+        // Validasi data
+        $validatedData = $request->validate([
+            'nama' => 'required|string|max:255',
+            'nomor_telepon' => 'nullable|string|max:255',
+            'alamat' => 'nullable|string|max:255',
+        ]);
+
+        // Perbarui data profil pengguna
+        $pengguna->update($validatedData);
+
+        return redirect()->back()->with('success', 'Profil Berhasil diPerbarui');
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */

@@ -41,7 +41,8 @@ class PenggunaObserver
             $userData['password'] = Hash::make($pengguna->password);
         }
 
-        User::where('id', $pengguna->id);
+        // Update user data in the users table
+        User::where('email', $pengguna->email)->update($userData);
     }
 
     /**
