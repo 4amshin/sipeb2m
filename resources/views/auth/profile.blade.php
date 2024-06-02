@@ -57,9 +57,9 @@
 
                                 <!-- Email -->
                                 <div class="mb-3 col-md-6">
-                                    <label for="email" class="form-label">E-mail</label>
-                                    <input class="form-control" type="text" id="email" name="email"
-                                        value="{{ $pengguna->email }}" />
+                                    <label for="email" class="form-label">Email</label>
+                                    <input class="form-control" type="text" id="email"
+                                        placeholder="Readonly input here..." value="{{ $pengguna->email }}" readonly="">
                                 </div>
 
                                 <!-- Nomor Telepon -->

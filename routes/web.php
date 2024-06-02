@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BajuController;
 use App\Http\Controllers\DetailTransaksiController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
@@ -31,6 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/transaksi/selesai/{transaksi}', [TransaksiController::class, 'tandaiSelesai'])->name('transaksi.selesai');
     Route::post('/transaksi/tambah-data-baju', [TransaksiController::class, 'tambahDataBaju'])->name('transaksi.tambahDataBaju');
 
-
     Route::resource('detailTransaksi', DetailTransaksiController::class);
+
+    Route::resource('pembayaran', PembayaranController::class);
 });
