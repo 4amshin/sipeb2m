@@ -28,6 +28,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/transaksi/ukuran/{nama_baju}', [TransaksiController::class, 'getUkuran']);
     Route::get('/transaksi/konfirmasi/{transaksi}', [TransaksiController::class, 'konfirmasi'])->name('transaksi.konfirmasi');
     Route::get('/transaksi/selesai/{transaksi}', [TransaksiController::class, 'tandaiSelesai'])->name('transaksi.selesai');
+    Route::post('/transaksi/tambah-data-baju', [TransaksiController::class, 'tambahDataBaju'])->name('transaksi.tambahDataBaju');
+
 
     Route::resource('detailTransaksi', DetailTransaksiController::class);
 });

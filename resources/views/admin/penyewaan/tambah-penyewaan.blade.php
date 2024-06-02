@@ -5,7 +5,7 @@
 @section('content')
     <div class="row">
         <div class="col-xl">
-            <form method="POST" action="{{ route('transaksi.store') }}">
+            <form method="POST" action="{{ route('transaksi.store') }}" id="main-form">
                 @csrf
 
                 <!--Data Pelanggan-->
@@ -56,8 +56,10 @@
                 <div class="card mb-4">
                     <h5 class="card-header">Data Baju</h5>
                     <div class="card-body">
-                        <!--Pilih Baju-->
+
+                        <!--Baju & Ukuran-->
                         <div class="row">
+                            <!--Baju-->
                             <div class="col-6 mb-3">
                                 <label for="nama_baju" class="form-label">Baju</label>
                                 <select id="nama_baju" class="form-select" name="nama_baju">
@@ -80,7 +82,26 @@
                         <!--Jumlah-->
                         <div class="col-12 mb-3">
                             <label class="form-label" for="jumlah">Jumlah</label>
-                            <input type="number" class="form-control" id="jumlah" name="jumlah" autofocus required>
+                            <input type="number" class="form-control" id="jumlah" name="jumlah">
+                        </div>
+
+                        <!--Tombol Tambah-->
+                        <div class="col-12 mb-3">
+                            <button type="button" class="btn btn-primary" id="tambah-baju-btn">Tambahkan</button>
+                        </div>
+
+                        <!-- List Data Baju Sementara -->
+                        <div id="list-data-baju">
+                            @if (!empty($listDataBaju))
+                                @foreach ($listDataBaju as $dataBaju)
+                                    <div class="alert alert-primary alert-dismissible" role="alert">
+                                        {{ $dataBaju['nama_baju'] }} ({{ $dataBaju['ukuran'] }},
+                                        {{ $dataBaju['jumlah'] }}Pcs)
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                    </div>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -92,6 +113,8 @@
                     </div>
                 </div>
             </form>
+
+
         </div>
     </div>
 @endsection
@@ -136,6 +159,50 @@
             } else {
                 ukuranContainer.innerHTML =
                     '<p class="text-muted">Pilih baju terlebih dahulu untuk melihat ukuran yang tersedia.</p>';
+            }
+        });
+
+        document.getElementById('tambah-baju-btn').addEventListener('click', function() {
+            var namaBaju = document.getElementById('nama_baju').value;
+            var ukuran = document.querySelector('input[name="ukuran"]:checked').value;
+            var jumlah = document.getElementById('jumlah').value;
+
+            if (namaBaju && ukuran && jumlah) {
+                fetch('{{ route('transaksi.tambahDataBaju') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            nama_baju: namaBaju,
+                            ukuran: ukuran,
+                            jumlah: jumlah
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            var newAlert = `<div class="alert alert-primary alert-dismissible" role="alert">
+                            ${namaBaju} (${ukuran}, ${jumlah}Pcs)
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>`;
+                            document.getElementById('list-data-baju').insertAdjacentHTML('beforeend', newAlert);
+                            // Clear form fields
+                            document.getElementById('nama_baju').value = '';
+                            document.getElementById('ukuran-container').innerHTML =
+                                '<p class="text-muted">Pilih baju terlebih dahulu untuk melihat ukuran yang tersedia.</p>';
+                            document.getElementById('jumlah').value = '';
+                        } else {
+                            alert(data.error || 'Terjadi kesalahan saat menambahkan data baju.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                        alert('Terjadi kesalahan saat menambahkan data baju: ' + error.message);
+                    });
+            } else {
+                alert('Semua field harus diisi.');
             }
         });
     </script>

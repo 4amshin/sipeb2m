@@ -6,6 +6,10 @@ use App\Models\Transaksi;
 use App\Http\Requests\StoreTransaksiRequest;
 use App\Http\Requests\UpdateTransaksiRequest;
 use App\Models\Baju;
+use App\Models\DetailTransaksi;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 
 class TransaksiController extends Controller
 {
@@ -57,16 +61,90 @@ class TransaksiController extends Controller
     {
         $listUkuran = ['S', 'M', 'L', 'XL', 'XXL'];
         $listBaju = Baju::all();
-        return view('admin.penyewaan.tambah-penyewaan', compact('listBaju', 'listUkuran'));
+        $listDataBaju = session()->get('listDataBaju', []);
+        session()->forget('listDataBaju');
+        return view('admin.penyewaan.tambah-penyewaan', compact('listBaju', 'listUkuran', 'listDataBaju'));
     }
+
+    public function tambahDataBaju(Request $request)
+    {
+        $dataBaju = $request->only(['nama_baju', 'ukuran', 'jumlah']);
+        $listDataBaju = session()->get('listDataBaju', []);
+        $listDataBaju[] = $dataBaju;
+        session()->put('listDataBaju', $listDataBaju);
+
+        return response()->json(['success' => true]);
+    }
+
+
+
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTransaksiRequest $request)
+    public function store(Request $request)
     {
-        //
+        // Validasi input
+        $request->validate([
+            'nama_penyewa' => 'required|string|max:255',
+            'alamat_penyewa' => 'required|string|max:255',
+            'noTelepon_penyewa' => 'required|string|max:15',
+            'tanggal_sewa' => 'required|date',
+            'tanggal_kembali' => 'required|date|after_or_equal:tanggal_sewa',
+        ]);
+
+        // Hitung durasi sewa dalam hari
+        $tanggalSewa = \Carbon\Carbon::parse($request->tanggal_sewa);
+        $tanggalKembali = \Carbon\Carbon::parse($request->tanggal_kembali);
+        $durasiSewa = $tanggalKembali->diffInDays($tanggalSewa);
+
+        // Hitung harga total
+        $hargaTotal = 0;
+        $listDataBaju = session()->get('listDataBaju', []);
+        foreach ($listDataBaju as $dataBaju) {
+            $baju = Baju::where('nama_baju', $dataBaju['nama_baju'])
+                ->where('ukuran', $dataBaju['ukuran'])
+                ->first();
+
+            if ($baju) {
+                $hargaSewaPerBaju = $baju->harga_sewa_perhari * $dataBaju['jumlah'];
+                $hargaSewaTotal = $hargaSewaPerBaju * $durasiSewa;
+                $hargaTotal += $hargaSewaTotal;
+            }
+        }
+
+        // Simpan data transaksi
+        $transaksi = Transaksi::create([
+            'kode_transaksi' => Str::random(10), // Atau gunakan generator kode unik lainnya
+            'nama_penyewa' => $request->nama_penyewa,
+            'alamat_penyewa' => $request->alamat_penyewa,
+            'noTelepon_penyewa' => $request->noTelepon_penyewa,
+            'tanggal_sewa' => $request->tanggal_sewa,
+            'tanggal_kembali' => $request->tanggal_kembali,
+            'harga_total' => $hargaTotal,
+            'status' => 'diproses',
+        ]);
+
+        // Simpan data detail transaksi
+        foreach ($listDataBaju as $dataBaju) {
+            $baju = Baju::where('nama_baju', $dataBaju['nama_baju'])->first();
+            if ($baju) {
+                DetailTransaksi::create([
+                    'transaksi_id' => $transaksi->id,
+                    'baju_id' => $baju->id,
+                    'ukuran' => $dataBaju['ukuran'],
+                    'jumlah' => $dataBaju['jumlah'],
+                ]);
+            }
+        }
+
+        // Reset session listDataBaju
+        session()->forget('listDataBaju');
+
+        return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil disimpan.');
     }
+
+
 
     public function konfirmasi(Transaksi $transaksi)
     {
