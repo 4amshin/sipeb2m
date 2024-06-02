@@ -35,4 +35,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('detailTransaksi', DetailTransaksiController::class);
 
     Route::resource('pembayaran', PembayaranController::class);
+    Route::get('/pembayaran/tandaiLunas/{pembayaran}', [PembayaranController::class, 'tandaiLunas'])->name('pembayaran.tandaiLunas');
+    Route::put('/pembayaran/updatePembayaran/{pembayaran}', [PembayaranController::class, 'updatePembayaran'])->name('pembayaran.updatePembayaran');
 });

@@ -4,6 +4,7 @@
     - ketika update gambar hapus gambar baju yang lama
 
 - Buat Tabel Pembayaran
+    - Ide untuk Tombol Akis (Tandai Lunas, Update Pembayaran)
 
 - Buat Tabel Pengembalian
-t
+

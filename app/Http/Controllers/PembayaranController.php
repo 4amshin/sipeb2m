@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pembayaran;
 use App\Http\Requests\StorePembayaranRequest;
 use App\Http\Requests\UpdatePembayaranRequest;
+use Illuminate\Http\Request;
 
 class PembayaranController extends Controller
 {
@@ -23,6 +24,36 @@ class PembayaranController extends Controller
     public function create()
     {
         //
+    }
+
+    public function tandaiLunas(Pembayaran $pembayaran)
+    {
+        $pembayaran->status_pembayaran = 'lunas';
+        $pembayaran->pembayaran_masuk = $pembayaran->transaksi->harga_total;
+        $pembayaran->tanggal_pembayaran = now();
+
+        $pembayaran->save();
+
+        return redirect()->back()->with('success', 'Pembayaran Lunas');
+    }
+
+    public function updatePembayaran(Request $request, Pembayaran $pembayaran)
+    {
+        $request->validate([
+            'pembayaran_masuk' => 'required|numeric',
+            'metode_pembayaran' => 'required|string|max:255',
+        ]);
+
+        $pembayaran->pembayaran_masuk = $request->input('pembayaran_masuk');
+        $pembayaran->metode_pembayaran = $request->input('metode_pembayaran');
+
+        if ($pembayaran->pembayaran_masuk >= $pembayaran->transaksi->harga_total) {
+            $pembayaran->status_pembayaran = 'lunas';
+        }
+
+        $pembayaran->save();
+
+        return redirect()->back()->with('success', 'Pembayaran berhasil diperbarui');
     }
 
     /**

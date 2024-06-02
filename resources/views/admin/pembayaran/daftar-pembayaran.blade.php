@@ -61,31 +61,85 @@
                                 @endswitch
                             </td>
                             @can('super-user')
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                            data-bs-toggle="dropdown">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <!--Tombol Update-->
-                                            <a href="{{ route('pembayaran.edit', $pembayaran->id) }}" class="dropdown-item">
-                                                <i class="bx bx-edit-alt me-1"></i> Edit
-                                            </a>
+                                @if ($pembayaran->status_pembayaran == 'belum_lunas')
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                data-bs-toggle="dropdown">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <!--Tombol Tandai Lunas-->
+                                                <a href="{{ route('pembayaran.tandaiLunas', $pembayaran->id) }}"
+                                                    class="dropdown-item">
+                                                    <i class='bx bx-check-double me-1'></i></i> Tandai Lunas
+                                                </a>
 
-                                            <!--Tombol Hapus-->
-                                            <form action="{{ route('pembayaran.destroy', $pembayaran->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="dropdown-item">
-                                                    <i class="bx bx-trash me-1"></i> Hapus
+                                                <!-- Tombol Update Pembayaran -->
+                                                <button type="button" class="dropdown-item" data-bs-toggle="modal"
+                                                    data-bs-target="#updatePembayaranModal{{ $pembayaran->id }}">
+                                                    <i class="bx bx-edit-alt me-1"></i> Update Pembayaran
                                                 </button>
-                                            </form>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
+                                @endif
                             @endcan
                         </tr>
+
+                        <!-- Modal Update Pembayaran -->
+                        <div class="modal fade" id="updatePembayaranModal{{ $pembayaran->id }}" tabindex="-1"
+                            aria-labelledby="exampleModalLabel{{ $pembayaran->id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                <!--Modal-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel{{ $pembayaran->id }}">Update
+                                            Pembayaran</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <form action="{{ route('pembayaran.updatePembayaran', $pembayaran->id) }}"
+                                        method="POST">
+                                        @csrf
+                                        @method('PUT')
+
+                                        <!--Form Input-->
+                                        <div class="modal-body">
+                                            <!--Pembayaran Masuk-->
+                                            <div class="row">
+                                                <div class="col mb-3">
+                                                    <label for="pembayaranMasuk{{ $pembayaran->id }}"
+                                                        class="form-label">Pembayaran Masuk</label>
+                                                    <input type="number" id="pembayaranMasuk{{ $pembayaran->id }}"
+                                                        name="pembayaran_masuk" class="form-control"
+                                                        value="{{ $pembayaran->pembayaran_masuk }}" required>
+                                                </div>
+                                            </div>
+
+                                            <!--Metode Pembayran-->
+                                            <div class="row">
+                                                <div class="col mb-3">
+                                                    <label for="metodePembayaran{{ $pembayaran->id }}"
+                                                        class="form-label">Metode Pembayaran</label>
+                                                    <input type="text" id="metodePembayaran{{ $pembayaran->id }}"
+                                                        name="metode_pembayaran" class="form-control"
+                                                        value="{{ $pembayaran->metode_pembayaran }}" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!--Tombol-->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
                         @empty
                             <tr>
                                 <td>Data Tidak Ditemukan</td>
