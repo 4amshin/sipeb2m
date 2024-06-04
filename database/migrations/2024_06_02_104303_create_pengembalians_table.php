@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pengembalians', function (Blueprint $table) {
             $table->id();
             $table->foreignId('transaksi_id')->constrained('transaksis')->onDelete('cascade');
-            $table->enum('status', ['diKembalikan', 'belum_diKembalikan', 'terlambat']);
+            $table->enum('status', ['diKembalikan', 'belum_diKembalikan', 'terlambat'])->default('belum_diKembalikan');
             $table->timestamps();
         });
     }

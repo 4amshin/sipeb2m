@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             TransaksiSeeder::class,
             DetailTransaksiSeeder::class,
             PembayaranSeeder::class,
+            PengembalianSeeder::class,
         ]);
     }
 }

@@ -13,7 +13,8 @@ class PengembalianController extends Controller
      */
     public function index()
     {
-        //
+        $daftarPengembalian = Pengembalian::with('transaksi')->orderBy('created_at', 'desc')->paginate(5);
+        return view('admin.pengembalian.daftar-pengembalian', compact('daftarPengembalian'));
     }
 
     /**
@@ -22,6 +23,14 @@ class PengembalianController extends Controller
     public function create()
     {
         //
+    }
+
+    public function tandaiKembali(Pengembalian $pengembalian)
+    {
+        $pengembalian->status = 'diKembalikan';
+        $pengembalian->save();
+
+        return redirect()->route('pengembalian.index')->with('success', 'Baju telah dikembalikan');
     }
 
     /**

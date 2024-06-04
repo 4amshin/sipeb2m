@@ -47,4 +47,12 @@
         </a>
     </li>
 
+    <!-- Pengembalian -->
+    <li class="menu-item {{ Request::is('pengembalian*') ? 'active' : '' }}">
+        <a href="{{ route('pengembalian.index') }}" class="menu-link">
+            <i class='menu-icon tf-icons bx bxs-package'></i>
+            <div data-i18n="Analytics">Pengembalian</div>
+        </a>
+    </li>
+
 </ul>

@@ -40,4 +40,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/pembayaran/updatePembayaran/{pembayaran}', [PembayaranController::class, 'updatePembayaran'])->name('pembayaran.updatePembayaran');
 
     Route::resource('pengembalian', PengembalianController::class);
+    Route::get('/pengembalian/tandaiKembali/{pengembalian}', [PengembalianController::class, 'tandaiKembali'])->name('pengembalian.tandaiKembali');
 });
