@@ -13,7 +13,9 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Penyewa</th>
+                        @can('super-user')
+                            <th>Penyewa</th>
+                        @endcan
                         <th>Baju Disewa</th>
                         <th>Pembayaran Masuk</th>
                         <th>Metode Pembayaran</th>
@@ -29,11 +31,13 @@
                             <td>
                                 {{ $index + $daftarPembayaran->firstItem() }}
                             </td>
-                            <td>
-                                <strong>
-                                    {{ $pembayaran->transaksi->nama_penyewa }}
-                                </strong>
-                            </td>
+                            @can('super-user')
+                                <td>
+                                    <strong>
+                                        {{ $pembayaran->transaksi->nama_penyewa }}
+                                    </strong>
+                                </td>
+                            @endcan
                             <td>
                                 @foreach ($pembayaran->transaksi->detailTransaksi as $detail)
                                     {{ $detail->baju->nama_baju }} ({{ $detail->ukuran }}, {{ $detail->jumlah }}Pcs)<br>

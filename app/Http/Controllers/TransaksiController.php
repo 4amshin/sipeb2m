@@ -7,6 +7,7 @@ use App\Http\Requests\StoreTransaksiRequest;
 use App\Http\Requests\UpdateTransaksiRequest;
 use App\Models\Baju;
 use App\Models\DetailTransaksi;
+use App\Models\Pengguna;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -19,11 +20,14 @@ class TransaksiController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $daftarTransaksi  = Transaksi::orderBy('created_at', 'desc')
-            ->paginate(5);
+
 
         if ($user->role == 'pengguna') {
-            $daftarTransaksi->where('pengguna_id', $user->id);
+            $daftarTransaksi = Transaksi::where('nama_penyewa', $user->name)->orderBy('created_at', 'desc')
+                ->paginate(5);
+        } else {
+            $daftarTransaksi  = Transaksi::orderBy('created_at', 'desc')
+                ->paginate(5);
         }
 
 

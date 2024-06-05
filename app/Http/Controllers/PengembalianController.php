@@ -13,7 +13,16 @@ class PengembalianController extends Controller
      */
     public function index()
     {
-        $daftarPengembalian = Pengembalian::with('transaksi')->orderBy('created_at', 'desc')->paginate(5);
+        $user = auth()->user();
+
+        if ($user->role == 'pengguna') {
+            $daftarPengembalian = Pengembalian::whereHas('transaksi', function ($query) use ($user) {
+                $query->where('nama_penyewa', $user->name);
+            })->with('transaksi')->orderBy('created_at', 'desc')->paginate(5);
+        } else {
+            $daftarPengembalian = Pengembalian::with('transaksi')->orderBy('created_at', 'desc')->paginate(5);
+        }
+
         return view('admin.pengembalian.daftar-pengembalian', compact('daftarPengembalian'));
     }
 

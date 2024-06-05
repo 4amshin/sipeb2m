@@ -21,15 +21,15 @@
                 <div data-i18n="Analytics">Pengguna</div>
             </a>
         </li>
-
-        <!-- Baju -->
-        <li class="menu-item {{ Request::is('baju*') ? 'active' : '' }}">
-            <a href="{{ route('baju.index') }}" class="menu-link">
-                <i class='menu-icon tf-icons bx bxs-t-shirt'></i>
-                <div data-i18n="Analytics">Baju</div>
-            </a>
-        </li>
     @endcan
+
+    <!-- Baju -->
+    <li class="menu-item {{ Request::is('baju*') ? 'active' : '' }}">
+        <a href="{{ route('baju.index') }}" class="menu-link">
+            <i class='menu-icon tf-icons bx bxs-t-shirt'></i>
+            <div data-i18n="Analytics">Baju</div>
+        </a>
+    </li>
 
     <!-- Penyewaan -->
     <li class="menu-item {{ Request::is('transaksi*') ? 'active' : '' }}">

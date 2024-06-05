@@ -14,13 +14,25 @@ class BajuController extends Controller
      */
     public function index(Request $request)
     {
-        $daftarBaju = Baju::when($request->input('search'), function ($query, $search) {
-            $query->where('nama_baju', 'like', '%' . $search . '%')
-                ->orWhere('ukuran', 'like', '%' . $search . '%')
-                ->orWhere('deskripsi', 'like', '%' . $search . '%');
-        })->orderBy('created_at', 'desc')->paginate(5);
+        $user = auth()->user();
 
-        return view('admin.baju.daftar-baju', compact('daftarBaju'));
+        if ($user->role == 'admin') {
+            $daftarBaju = Baju::when($request->input('search'), function ($query, $search) {
+                $query->where('nama_baju', 'like', '%' . $search . '%')
+                    ->orWhere('ukuran', 'like', '%' . $search . '%')
+                    ->orWhere('deskripsi', 'like', '%' . $search . '%');
+            })->orderBy('created_at', 'desc')->paginate(5);
+
+            return view('admin.baju.daftar-baju', compact('daftarBaju'));
+        } else {
+            $daftarBaju = Baju::when($request->input('search'), function ($query, $search) {
+                $query->where('nama_baju', 'like', '%' . $search . '%')
+                    ->orWhere('ukuran', 'like', '%' . $search . '%')
+                    ->orWhere('deskripsi', 'like', '%' . $search . '%');
+            })->orderBy('created_at', 'desc');
+
+            return view('admin.baju.stok-baju', compact('daftarBaju'));
+        }
     }
 
     /**

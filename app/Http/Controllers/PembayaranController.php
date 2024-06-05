@@ -14,7 +14,16 @@ class PembayaranController extends Controller
      */
     public function index()
     {
-        $daftarPembayaran = Pembayaran::with('transaksi')->orderBy('created_at', 'desc')->paginate(5);
+        $user = auth()->user();
+
+        if ($user->role == 'pengguna') {
+            $daftarPembayaran = Pembayaran::whereHas('transaksi', function ($query) use ($user) {
+                $query->where('nama_penyewa', $user->name);
+            })->with('transaksi')->orderBy('created_at', 'desc')->paginate(5);
+        } else {
+            $daftarPembayaran = Pembayaran::with('transaksi')->orderBy('created_at', 'desc')->paginate(5);
+        }
+
         return view('admin.pembayaran.daftar-pembayaran', compact('daftarPembayaran'));
     }
 

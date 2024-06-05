@@ -8,9 +8,13 @@
 
     <!-- Tabel -->
     <div class="card">
-        <div class="float-left p-3">
-            <a href="{{ route('transaksi.create') }}" class="btn btn-primary"> Tambah Penyewaan</a>
-        </div>
+        @can('super-user')
+            <div class="float-left p-3">
+                <a href="{{ route('transaksi.create') }}" class="btn btn-primary"> Tambah Penyewaan</a>
+            </div>
+        @endcan
+
+
         <div class="table-responsive text-nowrap">
             <table class="table">
                 <thead>
