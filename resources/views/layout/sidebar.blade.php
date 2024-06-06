@@ -31,6 +31,8 @@
         </a>
     </li>
 
+    <li class="menu-header small text-uppercase"><span class="menu-header-text">Transaksi</span></li>
+
     <!-- Penyewaan -->
     <li class="menu-item {{ Request::is('transaksi*') ? 'active' : '' }}">
         <a href="{{ route('transaksi.index') }}" class="menu-link">
@@ -55,4 +57,13 @@
         </a>
     </li>
 
+    <!-- Pengembalian -->
+    @can('pengguna-only')
+        <li class="menu-item {{ Request::is('keranjang*') ? 'active' : '' }}">
+            <a href="{{ route('keranjang.index') }}" class="menu-link">
+                <i class='menu-icon tf-icons bx bxs-cart-alt'></i>
+                <div data-i18n="Analytics">Keranjang Saya</div>
+            </a>
+        </li>
+    @endcan
 </ul>

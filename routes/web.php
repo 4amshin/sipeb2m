@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BajuController;
 use App\Http\Controllers\DetailTransaksiController;
+use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PengembalianController;
 use App\Http\Controllers\PenggunaController;
@@ -41,4 +42,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('pengembalian', PengembalianController::class);
     Route::get('/pengembalian/tandaiKembali/{pengembalian}', [PengembalianController::class, 'tandaiKembali'])->name('pengembalian.tandaiKembali');
+
+    Route::resource('keranjang', KeranjangController::class);
 });
