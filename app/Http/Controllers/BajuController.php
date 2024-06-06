@@ -24,12 +24,13 @@ class BajuController extends Controller
             })->orderBy('created_at', 'desc')->paginate(5);
 
             return view('admin.baju.daftar-baju', compact('daftarBaju'));
-        } else {
-            $daftarBaju = Baju::when($request->input('search'), function ($query, $search) {
-                $query->where('nama_baju', 'like', '%' . $search . '%')
-                    ->orWhere('ukuran', 'like', '%' . $search . '%')
-                    ->orWhere('deskripsi', 'like', '%' . $search . '%');
-            })->orderBy('created_at', 'desc');
+        } else  if ($user->role == 'pengguna') {
+            $daftarBaju = Baju::all();
+            // $daftarBaju = Baju::when($request->input('search'), function ($query, $search) {
+            //     $query->where('nama_baju', 'like', '%' . $search . '%')
+            //         ->orWhere('ukuran', 'like', '%' . $search . '%')
+            //         ->orWhere('deskripsi', 'like', '%' . $search . '%');
+            // });
 
             return view('admin.baju.stok-baju', compact('daftarBaju'));
         }

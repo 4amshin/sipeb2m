@@ -6,9 +6,20 @@
 
 <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
 
-    <!-- Page Title -->
+    <!-- Page Title  & Search -->
     <div class="navbar-nav align-items-center">
-        <h4 class="fw-bold mt-3">@yield('page-title')</h4>
+        @hasSection('page-title')
+            <h4 class="fw-bold mt-3">@yield('page-title')</h4>
+        @endif
+
+        @hasSection('search')
+            <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                    <i class="bx bx-search fs-4 lh-0"></i>
+                    @yield('search')
+                </div>
+            </div>
+        @endif
     </div>
 
     <!-- User -->
