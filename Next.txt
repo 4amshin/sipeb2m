@@ -3,11 +3,7 @@
     - tampilkan gambar pada daftar-Baju
     - ketika update gambar hapus gambar baju yang lama
 
-- Halaman Pengguna
-    - Halaman Stok Baju
-     - 2 Model
-      - Model 1
-      Tombol Sewaa Saja
-      - Model 2
-      Buatkaan keranjang, Tombol Tambahkan ke Keranjang
+- Keranjang
+    - Fungsikan tombol tambah ke keranjang dan sewa sekarang
+    - fungsikan tombol + dan - pada hal.kearnjang
 
