@@ -16,7 +16,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        {{-- <th>Gambar</th> --}}
+                        <th>Gambar</th>
                         <th>Baju</th>
                         <th>Ukuran</th>
                         <th>Stok</th>
