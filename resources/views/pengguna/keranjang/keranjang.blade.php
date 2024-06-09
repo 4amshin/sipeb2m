@@ -22,7 +22,7 @@
                 <div data-id="{{ $baju->id }}" class="item">
                     <img src=" {{ asset('assets/img/t-white.png') }}">
                     <div class="item-details">
-                        <h2>{{ $baju->nama_baju }}</h2>
+                        <h2>{{ $baju->nama_baju }} ({{ $baju->ukuran }})</h2>
                         <div class="price">
                             Rp{{ number_format($baju->harga_sewa_perhari, 0, ',', '.') }}/Hari
                         </div>
@@ -45,7 +45,55 @@
         </div>
         <div class="btn">
             <button class="close">CLOSE</button>
-            <button class="checkOut">Check Out</button>
+            <button class="checkOut" data-bs-toggle="modal" data-bs-target="#tanggalSewaModal">Check Out</button>
+        </div>
+    </div>
+
+    <!-- Modal Tanggal Sewa -->
+    <div class="modal fade" id="tanggalSewaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <!--Modal-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Durasi Penyewaan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <!--Form-->
+                <form action="{{ route('checkout') }}" method="POST">
+                    @csrf
+
+                    <!--Form Input-->
+                    <div class="modal-body">
+                        <!--Tanggal Sewa-->
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="tanggalSewa" class="form-label">Tanggal Sewa</label>
+                                <input type="date" id="tanggalSewa" name="tanggal_sewa" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <!--Tanggal Kembali-->
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="tanggalKembali" class="form-label">Tanggal Kembali</label>
+                                <input type="date" id="tanggalKembali" name="tanggal_kembali" class="form-control"
+                                    required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hidden Input for Cart Data -->
+                    <input type="hidden" name="cart" id="cartData">
+
+                    <!--Tombol-->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Lanjut</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 @endsection
@@ -53,6 +101,43 @@
 @push('customJs')
     <script>
         let products = @json($daftarBaju);
+
+        document.querySelector('.checkOut').addEventListener('click', () => {
+            document.getElementById('cartData').value = JSON.stringify(cart);
+        });
+
+        document.getElementById('sewaForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const tanggalSewa = document.getElementById('tanggalSewa').value;
+            const tanggalKembali = document.getElementById('tanggalKembali').value;
+
+            if (new Date(tanggalKembali) < new Date(tanggalSewa)) {
+                alert('Tanggal kembali tidak boleh lebih awal dari tanggal sewa.');
+                return;
+            }
+
+            // Submit form via AJAX
+            const formData = new FormData(this);
+            formData.append('cart', JSON.stringify(cart));
+
+            fetch('{{ route('checkout') }}', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    // Clear cart and local storage
+                    document.getElementById('sewaForm').reset();
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
     </script>
     <script src="{{ asset('assets/js/cart.js') }}"></script>
 @endpush

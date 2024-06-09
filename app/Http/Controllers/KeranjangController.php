@@ -6,7 +6,13 @@ use App\Models\Keranjang;
 use App\Http\Requests\StoreKeranjangRequest;
 use App\Http\Requests\UpdateKeranjangRequest;
 use App\Models\Baju;
+use App\Models\DetailTransaksi;
+use App\Models\Pengguna;
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class KeranjangController extends Controller
 {
@@ -71,6 +77,50 @@ class KeranjangController extends Controller
 
         return response()->json(['jumlah' => $keranjang->jumlah]);
     }
+
+    public function checkout(Request $request)
+    {
+        // Decode the cart data
+        $cart = json_decode($request->input('cart'), true);
+
+        // Get the authenticated user
+        $user = Auth::user();
+        $penyewa = Pengguna::where('email', $user->email)->first();
+
+        // Generate transaction code
+        $kodeTransaksi = Str::random(10);
+
+        // Calculate total price from cart
+        $totalPrice = array_reduce($cart, function ($sum, $item) {
+            $baju = Baju::find($item['product_id']);
+            return $sum + ($baju->harga_sewa_perhari * $item['quantity']);
+        }, 0);
+
+        // Create new transaction
+        $transaksi = new Transaksi();
+        $transaksi->kode_transaksi = $kodeTransaksi;
+        $transaksi->nama_penyewa = $penyewa->nama;
+        $transaksi->alamat_penyewa = $penyewa->alamat;
+        $transaksi->noTelepon_penyewa = $penyewa->nomor_telepon;
+        $transaksi->tanggal_sewa = $request->input('tanggal_sewa');
+        $transaksi->tanggal_kembali = $request->input('tanggal_kembali');
+        $transaksi->harga_total = $totalPrice;
+        $transaksi->save();
+
+        // Create detail transactions
+        foreach ($cart as $item) {
+            $baju = Baju::find($item['product_id']);
+            $detailTransaksi = new DetailTransaksi();
+            $detailTransaksi->transaksi_id = $transaksi->id;
+            $detailTransaksi->baju_id = $item['product_id'];
+            $detailTransaksi->ukuran = $baju->ukuran; // Assuming 'ukuran' is a property of Baju model
+            $detailTransaksi->jumlah = $item['quantity'];
+            $detailTransaksi->save();
+        }
+
+        return redirect()->route('transaksi.index')->with('success', 'Transaksi Berhasil');
+    }
+
 
     /**
      * Show the form for creating a new resource.

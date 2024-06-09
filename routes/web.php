@@ -47,4 +47,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('keranjang', KeranjangController::class);
     Route::post('/keranjang/tambah-baju/{baju}', [KeranjangController::class, 'tambahKeKeranjang'])->name('keranjang.tambahBaju');
     Route::get('/keranjang/{id}/{action}', 'KeranjangController@updateJumlah');
+    Route::post('/checkout', [KeranjangController::class, 'checkout'])->name('checkout');
 });
