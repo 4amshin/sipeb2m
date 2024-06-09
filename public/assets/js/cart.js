@@ -4,6 +4,7 @@ let iconCart = document.querySelector('.icon-cart');
 let iconCartSpan = document.querySelector('.icon-cart span');
 let body = document.querySelector('body');
 let closeCart = document.querySelector('.close');
+let totalPriceElement = document.querySelector('.totalPrice');
 let cart = [];
 
 iconCart.addEventListener('click', () => {
@@ -15,7 +16,7 @@ closeCart.addEventListener('click', () => {
 
 listProductHTML.addEventListener('click', (event) => {
     let positionClick = event.target;
-    if (positionClick.classList.contains('addCart') || positionClick.closest('.addCart')) {
+    if (positionClick.classList.contains('addCart')) {
         let id_product = positionClick.closest('.item').dataset.id;
         addToCart(id_product);
     }
@@ -23,12 +24,7 @@ listProductHTML.addEventListener('click', (event) => {
 
 const addToCart = (product_id) => {
     let positionThisProductInCart = cart.findIndex((value) => value.product_id == product_id);
-    if (cart.length <= 0) {
-        cart = [{
-            product_id: product_id,
-            quantity: 1
-        }];
-    } else if (positionThisProductInCart < 0) {
+    if (positionThisProductInCart < 0) {
         cart.push({
             product_id: product_id,
             quantity: 1
@@ -47,6 +43,7 @@ const addCartToMemory = () => {
 const addCartToHTML = () => {
     listCartHTML.innerHTML = '';
     let totalQuantity = 0;
+    let totalPrice = 0;
     if (cart.length > 0) {
         cart.forEach(item => {
             totalQuantity += item.quantity;
@@ -60,14 +57,14 @@ const addCartToHTML = () => {
             let productPrice = parseFloat(productElement.querySelector('.price').innerText.replace('Rp', '').replace(/\./g, '').replace('/Hari', ''));
             let productImageSrc = productElement.querySelector('img').src;
 
+            totalPrice += productPrice * item.quantity;
+
             newItem.innerHTML = `
                 <div class="image">
                     <img src="${productImageSrc}">
                 </div>
                 <div class="details">
-                    <div class="name">
-                        ${productName}
-                    </div>
+                    <div class="name">${productName}</div>
                     <div class="totalPrice">Rp${(productPrice * item.quantity).toLocaleString('id-ID')}</div>
                     <div class="quantity">
                         <span class="minus"><i class="tf-icons bx bx-minus"></i></span>
@@ -80,6 +77,7 @@ const addCartToHTML = () => {
         });
     }
     iconCartSpan.innerText = totalQuantity;
+    totalPriceElement.innerText = `Rp${totalPrice.toLocaleString('id-ID')}`;
 };
 
 listCartHTML.addEventListener('click', (event) => {

@@ -26,7 +26,7 @@
                         <div class="price">
                             Rp{{ number_format($baju->harga_sewa_perhari, 0, ',', '.') }}/Hari
                         </div>
-                        <button class="addCart"><i class="tf-icons bx bxs-cart-add"></i> Sewa</button>
+                        <button class="addCart"><i class="tf-icons bx bxs-cart-add"></i> Tambahkan</button>
                     </div>
                 </div>
             @empty
@@ -39,6 +39,9 @@
         <h1>Keranjang Saya</h1>
         <div class="listCart">
 
+        </div>
+        <div class="totalPriceContainer">
+            <h2>Total Harga: <span class="totalPrice">Rp0</span></h2>
         </div>
         <div class="btn">
             <button class="close">CLOSE</button>

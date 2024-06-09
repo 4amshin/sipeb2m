@@ -96,6 +96,20 @@ header {
     transition: .5s;
 }
 
+.totalPriceContainer {
+    padding: 20px;
+    background-color: #e6e6f2;
+    text-align: center;
+    border-top: 1px solid #ccc;
+}
+
+.totalPriceContainer h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #353432;
+}
+
+
 body.showCart .cartTab {
     right: 0;
 }
@@ -119,6 +133,7 @@ body.showCart .container {
 .cartTab button {
     background-color: #696cff;
     border: none;
+    padding: 15px 20px;
     font-family: Poppins;
     font-weight: 500;
     cursor: pointer;
