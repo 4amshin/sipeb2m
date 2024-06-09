@@ -1,8 +1,5 @@
 @extends('layout.app')
 
-{{-- @section('search')
-    <input type="text" class="form-control border-0 shadow-none" placeholder="Search..." aria-label="Search...">
-@endsection --}}
 
 @push('customCss')
     <link rel="stylesheet" href="{{ asset('assets/css/cart.css') }}">

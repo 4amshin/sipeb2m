@@ -15,8 +15,8 @@ closeCart.addEventListener('click', () => {
 
 listProductHTML.addEventListener('click', (event) => {
     let positionClick = event.target;
-    if (positionClick.classList.contains('addCart')) {
-        let id_product = positionClick.parentElement.dataset.id;
+    if (positionClick.classList.contains('addCart') || positionClick.closest('.addCart')) {
+        let id_product = positionClick.closest('.item').dataset.id;
         addToCart(id_product);
     }
 });
