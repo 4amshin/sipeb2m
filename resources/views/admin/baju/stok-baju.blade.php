@@ -15,7 +15,9 @@
 
                     <!--Nama, Harga, Tombol-->
                     <div class="card-body">
-                        <h5 class="card-title"> Rp{{ number_format($baju->harga_sewa_perhari, 0, ',', '.') }}/Hari</h5>
+                        <h5 class="card-title">
+                            Rp{{ number_format($baju->harga_sewa_perhari, 0, ',', '.') }}/Hari
+                        </h5>
                         <p class="card-text">
                             {{ $baju->nama_baju }}
                         </p>

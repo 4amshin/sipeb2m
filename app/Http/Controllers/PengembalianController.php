@@ -23,7 +23,7 @@ class PengembalianController extends Controller
             $daftarPengembalian = Pengembalian::with('transaksi')->orderBy('created_at', 'desc')->paginate(5);
         }
 
-        return view('admin.pengembalian.daftar-pengembalian', compact('daftarPengembalian'));
+        return view('admin.pengembalian.daftar-pengembalian', compact('daftarPengembalian'))->with('showNavbar', true);
     }
 
     /**

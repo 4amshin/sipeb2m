@@ -31,7 +31,7 @@ class TransaksiController extends Controller
         }
 
 
-        return view('admin.penyewaan.daftar-penyewaan', compact('daftarTransaksi'));
+        return view('admin.penyewaan.daftar-penyewaan', compact('daftarTransaksi'))->with('showNavbar', true);
     }
 
     public function getUkuran($nama_baju)

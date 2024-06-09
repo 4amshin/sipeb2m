@@ -16,7 +16,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('home', function () {
-        return view('admin.home');
+        return view('admin.home')->with('showNavbar', true);
     })->name('home');
 
     Route::resource('user', UserController::class);
@@ -46,4 +46,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('keranjang', KeranjangController::class);
     Route::post('/keranjang/tambah-baju/{baju}', [KeranjangController::class, 'tambahKeKeranjang'])->name('keranjang.tambahBaju');
+    Route::get('/keranjang/{id}/{action}', 'KeranjangController@updateJumlah');
 });

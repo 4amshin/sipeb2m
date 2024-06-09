@@ -47,6 +47,31 @@ class KeranjangController extends Controller
         return redirect()->back()->with('success', $baju->nama_baju . ' berhasil ditambahkan ke keranjang!');
     }
 
+    public function updateJumlah($id, $action)
+    {
+        $keranjang = Keranjang::find($id);
+
+        if (!$keranjang) {
+            return response()->json(['error' => 'Item tidak ditemukan'], 404);
+        }
+
+        if ($action == 'tambah') {
+            $keranjang->jumlah += 1;
+        } else if ($action == 'kurangi') {
+            if ($keranjang->jumlah > 1) {
+                $keranjang->jumlah -= 1;
+            } else {
+                // Jika jumlah terkini adalah 1, hapus dari keranjang
+                $keranjang->delete();
+                return response()->json(['success' => 'Item berhasil dihapus dari keranjang']);
+            }
+        }
+
+        $keranjang->save();
+
+        return response()->json(['jumlah' => $keranjang->jumlah]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

@@ -24,7 +24,7 @@ class PembayaranController extends Controller
             $daftarPembayaran = Pembayaran::with('transaksi')->orderBy('created_at', 'desc')->paginate(5);
         }
 
-        return view('admin.pembayaran.daftar-pembayaran', compact('daftarPembayaran'));
+        return view('admin.pembayaran.daftar-pembayaran', compact('daftarPembayaran'))->with('showNavbar', true);
     }
 
     /**

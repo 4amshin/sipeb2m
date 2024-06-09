@@ -28,7 +28,7 @@ class PenggunaController extends Controller
                 ->orWhere('email', 'like', '%' . $search . '%');
         })->orderBy('created_at', 'desc')->paginate(5);
 
-        return view('admin.pengguna.daftar-pengguna', compact('daftarPengguna'));
+        return view('admin.pengguna.daftar-pengguna', compact('daftarPengguna'))->with('showNavbar', true);
     }
 
     public function profile()

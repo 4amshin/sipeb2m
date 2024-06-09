@@ -23,11 +23,11 @@ class BajuController extends Controller
                     ->orWhere('deskripsi', 'like', '%' . $search . '%');
             })->orderBy('created_at', 'desc')->paginate(5);
 
-            return view('admin.baju.daftar-baju', compact('daftarBaju'));
+            return view('admin.baju.daftar-baju', compact('daftarBaju'))->with('showNavbar', true);
         } else  if ($user->role == 'pengguna') {
             $daftarBaju = Baju::all();
 
-            return view('admin.baju.stok-baju', compact('daftarBaju'));
+            return view('pengguna.keranjang.keranjang', compact('daftarBaju'))->with('showNavbar', false);
         }
     }
 
