@@ -57,7 +57,7 @@
         </a>
     </li>
 
-    <!-- Pengembalian -->
+    <!-- Keranjang -->
     @can('pengguna-only')
         <li class="menu-item {{ Request::is('keranjang*') ? 'active' : '' }}">
             <a href="{{ route('keranjang.index') }}" class="menu-link">

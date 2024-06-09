@@ -26,15 +26,11 @@ class BajuController extends Controller
             return view('admin.baju.daftar-baju', compact('daftarBaju'));
         } else  if ($user->role == 'pengguna') {
             $daftarBaju = Baju::all();
-            // $daftarBaju = Baju::when($request->input('search'), function ($query, $search) {
-            //     $query->where('nama_baju', 'like', '%' . $search . '%')
-            //         ->orWhere('ukuran', 'like', '%' . $search . '%')
-            //         ->orWhere('deskripsi', 'like', '%' . $search . '%');
-            // });
 
             return view('admin.baju.stok-baju', compact('daftarBaju'));
         }
     }
+
 
     /**
      * Show the form for creating a new resource.

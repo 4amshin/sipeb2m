@@ -28,6 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('baju', BajuController::class);
 
+
     Route::resource('transaksi', TransaksiController::class);
     Route::get('/transaksi/ukuran/{nama_baju}', [TransaksiController::class, 'getUkuran']);
     Route::get('/transaksi/konfirmasi/{transaksi}', [TransaksiController::class, 'konfirmasi'])->name('transaksi.konfirmasi');
@@ -44,4 +45,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/pengembalian/tandaiKembali/{pengembalian}', [PengembalianController::class, 'tandaiKembali'])->name('pengembalian.tandaiKembali');
 
     Route::resource('keranjang', KeranjangController::class);
+    Route::post('/keranjang/tambah-baju/{baju}', [KeranjangController::class, 'tambahKeKeranjang'])->name('keranjang.tambahBaju');
 });

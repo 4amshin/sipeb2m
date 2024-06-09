@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+    @include('layout.page-alert')
     <div class="row">
         @forelse ($daftarBaju as $baju)
             <div class="col-md-6 col-lg-4 mb-3">
@@ -23,9 +24,12 @@
                         <div class="demo-inline-spacing">
                             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                                 <!--Tombol Tambahkan Ke Keranjang-->
-                                <a href="" class="btn btn-outline-primary">
-                                    <i class="tf-icons bx bxs-cart-add"></i>
-                                </a>
+                                <form action="{{ route('keranjang.tambahBaju', $baju->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline-primary">
+                                        <i class="tf-icons bx bxs-cart-add"></i>
+                                    </button>
+                                </form>
 
                                 <!--Tombol Sewa Sekarang-->
                                 <a href="" class="btn btn-outline-primary">

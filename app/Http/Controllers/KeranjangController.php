@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Keranjang;
 use App\Http\Requests\StoreKeranjangRequest;
 use App\Http\Requests\UpdateKeranjangRequest;
+use App\Models\Baju;
+use Illuminate\Http\Request;
 
 class KeranjangController extends Controller
 {
@@ -17,6 +19,32 @@ class KeranjangController extends Controller
         $itemKeranjang = Keranjang::where('pengguna_id', $user->id)->get();
 
         return view('pengguna.keranjang.keranjang', compact('itemKeranjang'));
+    }
+
+    public function tambahKeKeranjang(Baju $baju)
+    {
+        $user = auth()->user();
+
+        // Cek jika baju sudah ada di keranjang
+        $itemKeranjang = Keranjang::where('pengguna_id', $user->id)
+            ->where('baju_id', $baju->id)
+            ->first();
+
+        if ($itemKeranjang) {
+            // Jika item sudah ada di keranjang, tambahkan jumlahnya
+            $itemKeranjang->jumlah += 1;
+            $itemKeranjang->save();
+        } else {
+            // Jika item belum ada di keranjang, buat baru
+            Keranjang::create([
+                'pengguna_id' => $user->id,
+                'baju_id' => $baju->id,
+                'jumlah' => 1,
+                'harga_sewa_perhari' => $baju->harga_sewa_perhari,
+            ]);
+        }
+
+        return redirect()->back()->with('success', $baju->nama_baju . ' berhasil ditambahkan ke keranjang!');
     }
 
     /**
