@@ -132,6 +132,9 @@
                 .then(data => {
                     console.log('Success:', data);
                     // Clear cart and local storage
+                    cart = [];
+                    localStorage.removeItem('cart');
+                    addCartToHTML();
                     document.getElementById('sewaForm').reset();
                 })
                 .catch((error) => {

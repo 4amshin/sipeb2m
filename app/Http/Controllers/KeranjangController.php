@@ -118,7 +118,9 @@ class KeranjangController extends Controller
             $detailTransaksi->save();
         }
 
-        return redirect()->route('transaksi.index')->with('success', 'Transaksi Berhasil');
+        // return redirect()->route('transaksi.index')->with('success', 'Transaksi Berhasil');
+        // Return JSON response
+        return response()->json(['message' => 'Transaction successful!'], 200);
     }
 
 
