@@ -141,23 +141,18 @@ class BajuController extends Controller
     {
         $baju->fill($request->validated());
 
-        // Jika ada gambar baru yang diunggah
+        // Hapus gambar lama jika ada gambar baru yang diunggah
         if ($request->hasFile('gambar_baju')) {
+            if (File::exists(public_path($baju->gambar_baju))) {
+                File::delete(public_path($baju->gambar_baju));
+            }
+
             // Simpan gambar baru
             $file = $request->file('gambar_baju');
             $path = 'uploads/baju/' . time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/baju'), $path);
-
-            // Hapus gambar lama jika ada
-            if (File::exists($baju->gambar_baju)) {
-                File::delete($baju->gambar_baju);
-            }
-
-            //simpan path gambar baru
+            $file->move('uploads/baju', $path);
             $baju->gambar_baju = $path;
         }
-
-
 
         $baju->save();
 
