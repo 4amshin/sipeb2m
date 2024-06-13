@@ -56,8 +56,8 @@
                         <div class="mb-3">
                             <label for="formFile" class="form-label">Input Gambar Baju</label>
                             <div class="d-flex align-items-center">
-                                <img src="{{ asset('assets/img/avatars/1.png') }}" alt="Gambar Baju"
-                                    class="d-block rounded me-3" style="width: 100px;">
+                                <img src="{{ asset($baju->gambar_baju) }}" alt="Gambar Baju" class="d-block rounded me-3"
+                                    style="width: 100px;">
                                 <input class="form-control" type="file" id="formFile" name="gambar_baju">
                             </div>
                         </div>

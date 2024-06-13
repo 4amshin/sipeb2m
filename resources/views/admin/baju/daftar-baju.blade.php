@@ -33,7 +33,7 @@
                                 {{ $index + $daftarBaju->firstItem() }}
                             </td>
                             <td>
-                                <img src="{{ asset('assets/img/t-white.png') }}" alt="user-avatar" class="d-block rounded"
+                                <img src="{{ asset($baju->gambar_baju) }}" alt="user-avatar" class="d-block rounded"
                                     height="50" width="50" id="uploadedAvatar" />
                             </td>
                             <td>

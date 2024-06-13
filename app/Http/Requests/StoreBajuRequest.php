@@ -23,7 +23,7 @@ class StoreBajuRequest extends FormRequest
     {
         return [
             'nama_baju' => 'required|string|max:255',
-            'gambar_baju' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'gambar_baju' => 'nullable|image|mimes:jpeg,png,jpg,webp',
             'ukuran' => 'required|in:S,M,L,XL,XXL',
             'stok' => 'required|integer|min:1',
             'harga_sewa_perhari' => 'required|numeric|min:0',

@@ -10,6 +10,8 @@ use App\Models\Pengguna;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class BajuController extends Controller
@@ -100,8 +102,14 @@ class BajuController extends Controller
 
         //jika ada gambar, simpan gambar
         if ($request->hasFile('gambar_baju')) {
-            $filePath = $request->file('gambar_baju')->store('public/gambar_baju');
-            $baju->gambar_baju = basename($filePath);
+            $file = $request->file('gambar_baju');
+            $extension = $file->getClientOriginalExtension();
+
+            $filename = time() . '.' . $extension;
+
+            $path = 'uploads/baju/';
+            $file->move($path, $filename);
+            $baju->gambar_baju = $path . $filename;
         }
 
         $baju->save();
@@ -133,11 +141,23 @@ class BajuController extends Controller
     {
         $baju->fill($request->validated());
 
-        //jika ada gambar baru, simpan gambar baru
+        // Jika ada gambar baru yang diunggah
         if ($request->hasFile('gambar_baju')) {
-            $filePath = $request->file('gambar_baju')->store('public/gambar_baju');
-            $baju->gambar_baju = basename($filePath);
+            // Simpan gambar baru
+            $file = $request->file('gambar_baju');
+            $path = 'uploads/baju/' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/baju'), $path);
+
+            // Hapus gambar lama jika ada
+            if (File::exists($baju->gambar_baju)) {
+                File::delete($baju->gambar_baju);
+            }
+
+            //simpan path gambar baru
+            $baju->gambar_baju = $path;
         }
+
+
 
         $baju->save();
 

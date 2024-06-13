@@ -2,8 +2,3 @@
     - Tampilkan Gambar yang dipilih pada tambah-Baju
     - tampilkan gambar pada daftar-Baju
     - ketika update gambar hapus gambar baju yang lama
-
-- Keranjang
-    - Fungsikan tombol tambah ke keranjang dan sewa sekarang
-    - fungsikan tombol + dan - pada hal.kearnjang
-
