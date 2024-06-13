@@ -19,7 +19,6 @@ class DatabaseSeeder extends Seeder
             DetailTransaksiSeeder::class,
             PembayaranSeeder::class,
             PengembalianSeeder::class,
-            KeranjangSeeder::class,
         ]);
     }
 }

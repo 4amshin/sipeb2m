@@ -65,16 +65,6 @@
                     </a>
                 </li>
 
-                <!--Keranjang-->
-                @can('pengguna-only')
-                    <li>
-                        <a class="dropdown-item" href="{{ route('keranjang.index') }}">
-                            <i class='bx bx-cart-alt me-2'></i>
-                            <span class="align-middle">Keranjang Saya</span>
-                        </a>
-                    </li>
-                @endcan
-
                 <!--Logout-->
                 <li>
                     <a class="dropdown-item" href="#"

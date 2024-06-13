@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\BajuController;
 use App\Http\Controllers\DetailTransaksiController;
-use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PengembalianController;
 use App\Http\Controllers\PenggunaController;
@@ -21,31 +20,38 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('user', UserController::class);
 
-
+    /*----------------------------------------PENGGUNA--------------------------------------*/
     Route::resource('pengguna', PenggunaController::class);
     Route::post('profile/update', [PenggunaController::class, 'updateProfile'])->name('profile.update');
     Route::get('profile', [PenggunaController::class, 'profile'])->name('pengguna.profile');
 
+
+
+    /*----------------------------------------BAJU--------------------------------------*/
     Route::resource('baju', BajuController::class);
+    Route::post('/checkout', [BajuController::class, 'checkout'])->name('checkout');
 
 
+
+    /*----------------------------------------TRANSAKSI--------------------------------------*/
     Route::resource('transaksi', TransaksiController::class);
     Route::get('/transaksi/ukuran/{nama_baju}', [TransaksiController::class, 'getUkuran']);
     Route::get('/transaksi/konfirmasi/{transaksi}', [TransaksiController::class, 'konfirmasi'])->name('transaksi.konfirmasi');
     Route::get('/transaksi/selesai/{transaksi}', [TransaksiController::class, 'tandaiSelesai'])->name('transaksi.selesai');
     Route::post('/transaksi/tambah-data-baju', [TransaksiController::class, 'tambahDataBaju'])->name('transaksi.tambahDataBaju');
 
+
+    /*----------------------------------------DETAIL TRANSAKSI--------------------------------------*/
     Route::resource('detailTransaksi', DetailTransaksiController::class);
 
+
+    /*----------------------------------------PEMBAYARAN--------------------------------------*/
     Route::resource('pembayaran', PembayaranController::class);
     Route::get('/pembayaran/tandaiLunas/{pembayaran}', [PembayaranController::class, 'tandaiLunas'])->name('pembayaran.tandaiLunas');
     Route::put('/pembayaran/updatePembayaran/{pembayaran}', [PembayaranController::class, 'updatePembayaran'])->name('pembayaran.updatePembayaran');
 
+
+    /*----------------------------------------PENGEMBALIAN--------------------------------------*/
     Route::resource('pengembalian', PengembalianController::class);
     Route::get('/pengembalian/tandaiKembali/{pengembalian}', [PengembalianController::class, 'tandaiKembali'])->name('pengembalian.tandaiKembali');
-
-    Route::resource('keranjang', KeranjangController::class);
-    Route::post('/keranjang/tambah-baju/{baju}', [KeranjangController::class, 'tambahKeKeranjang'])->name('keranjang.tambahBaju');
-    Route::get('/keranjang/{id}/{action}', 'KeranjangController@updateJumlah');
-    Route::post('/checkout', [KeranjangController::class, 'checkout'])->name('checkout');
 });

@@ -13,7 +13,10 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Kode Transaksi</th>
+                        @can('super-user')
+                            <th>Penyewa</th>
+                        @endcan
+                        <th>Baju Disewa</th>
                         <th>Status</th>
                         @can('super-user')
                             <th>Aksi</th>
@@ -26,10 +29,17 @@
                             <td>
                                 {{ $index + $daftarPengembalian->firstItem() }}
                             </td>
+                            @can('super-user')
+                                <td>
+                                    <strong>
+                                        {{ $pengembalian->transaksi->nama_penyewa }}
+                                    </strong>
+                                </td>
+                            @endcan
                             <td>
-                                <span class="badge bg-label-info me-1">
-                                    {{ $pengembalian->transaksi->kode_transaksi }}
-                                </span>
+                                @foreach ($pengembalian->transaksi->detailTransaksi as $detail)
+                                    {{ $detail->baju->nama_baju }} ({{ $detail->ukuran }}, {{ $detail->jumlah }}Pcs)<br>
+                                @endforeach
                             </td>
                             <td>
                                 @switch($pengembalian->status)

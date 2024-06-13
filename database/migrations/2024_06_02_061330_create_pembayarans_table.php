@@ -17,7 +17,7 @@ return new class extends Migration
             $table->decimal('pembayaran_masuk', 10, 2);
             $table->enum('status_pembayaran', ['lunas', 'belum_lunas'])->default('belum_lunas');
             $table->string('metode_pembayaran')->nullable();
-            $table->date('tanggal_pembayaran');
+            $table->date('tanggal_pembayaran')->nullable();
             $table->timestamps();
         });
     }

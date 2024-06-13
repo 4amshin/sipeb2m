@@ -7,6 +7,8 @@ use App\Http\Requests\StoreTransaksiRequest;
 use App\Http\Requests\UpdateTransaksiRequest;
 use App\Models\Baju;
 use App\Models\DetailTransaksi;
+use App\Models\Pembayaran;
+use App\Models\Pengembalian;
 use App\Models\Pengguna;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -152,9 +154,28 @@ class TransaksiController extends Controller
 
     public function konfirmasi(Transaksi $transaksi)
     {
+        // Update status transaksi menjadi terkonfirmasi
         $transaksi->update(['status' => 'terkonfirmasi']);
+
+        // Buat entri pembayaran baru
+        $pembayaran = Pembayaran::create([
+            'transaksi_id' => $transaksi->id,
+            'pembayaran_masuk' => 0,
+            'status_pembayaran' => 'belum_lunas',
+            'metode_pembayaran' => null,
+            'tanggal_pembayaran' => null,
+        ]);
+
+        // Buat entri pengembalian baru
+        $pengembalian = Pengembalian::create([
+            'transaksi_id' => $transaksi->id,
+            'status' => 'belum_diKembalikan',
+        ]);
+
+        // Redirect ke halaman daftar transaksi dengan pesan sukses
         return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil dikonfirmasi.');
     }
+
 
     public function tandaiSelesai(Transaksi $transaksi)
     {
