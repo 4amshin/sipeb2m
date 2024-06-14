@@ -325,9 +325,16 @@ figure {
     margin: 0 0 1rem;
 }
 
+
 img,
 svg {
     vertical-align: middle;
+}
+
+.fill-box {
+    width: 50px;  /* Ensure the width is fixed */
+    height: 50px; /* Ensure the height is fixed */
+    object-fit: cover; /* Make the image fill the box */
 }
 
 table {
