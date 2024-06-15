@@ -1,3 +1,5 @@
 - Gambar Baju
     - ketiak update gambar baju gambar lama masih tidak terhapus
-    - perbaiki style gambar gepeng daftar-baju
+    - tambahkan fitur uploda and edit gambar profil
+        - tambah gambar_profil tabel pengguna
+        - tambah circle avatar template pada tabel pengguna

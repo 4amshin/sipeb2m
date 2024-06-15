@@ -6,6 +6,7 @@ use App\Models\Pengguna;
 use App\Http\Requests\StorePenggunaRequest;
 use App\Http\Requests\UpdatePenggunaRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 
 class PenggunaController extends Controller
@@ -49,7 +50,22 @@ class PenggunaController extends Controller
             'nama' => 'required|string|max:255',
             'nomor_telepon' => 'nullable|string|max:255',
             'alamat' => 'nullable|string|max:255',
+            'gambar_baju' => 'nullable|image|mimes:jpeg,png,jpg,webp',
         ]);
+
+        // Periksa apakah ada gambar baru yang diunggah
+        if ($request->hasFile('gambar_profil')) {
+            // Hapus gambar lama jika ada
+            if ($pengguna->gambar_profil && File::exists(public_path($pengguna->gambar_profil))) {
+                File::delete(public_path($pengguna->gambar_profil));
+            }
+
+            // Simpan gambar baru
+            $file = $request->file('gambar_profil');
+            $path = 'uploads/profil/' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move('uploads/profil', $path);
+            $pengguna->gambar_profil = $path;
+        }
 
         // Perbarui data profil pengguna
         $pengguna->update($validatedData);

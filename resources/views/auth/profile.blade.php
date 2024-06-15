@@ -10,15 +10,16 @@
         <div class="col-md-12">
             <div class="card mb-4">
                 <h5 class="card-header">Biodata Pengguna</h5>
-                <form action="{{ route('profile.update') }}" method="POST">
+                <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <!-- Foto Profil -->
                     <div class="card-body">
                         <div class="d-flex align-items-start align-items-sm-center gap-4">
                             <!-- Foto -->
-                            <img src="{{ asset('assets/img/avatars/6.png') }}" alt="user-avatar" class="d-block rounded"
-                                height="100" width="100" id="uploadedAvatar" />
+                            <img src="{{ $pengguna->gambar_profil ? asset($pengguna->gambar_profil) : asset('assets/img/baju-kosong.png') }}"
+                                alt="user-avatar" class="d-block rounded fill-box" height="100" width="100"
+                                id="uploadedAvatar" />
 
                             <!-- Tombol Upload & Reset -->
                             <div class="button-wrapper">
@@ -27,7 +28,7 @@
                                     <span class="d-none d-sm-block">Upload Foto Baru</span>
                                     <i class="bx bx-upload d-block d-sm-none"></i>
                                     <input type="file" id="upload" class="account-file-input" hidden
-                                        accept="image/png, image/jpeg" />
+                                        accept="image/png, image/jpeg, image/jpg," name="gambar_profil" />
                                 </label>
 
                                 <!-- Reset -->
@@ -36,7 +37,7 @@
                                     <span class="d-none d-sm-block">Reset</span>
                                 </button>
 
-                                <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+                                <p class="text-muted mb-0">Upload gambar denga ratio 1:1 (Kotak)</p>
                             </div>
                         </div>
                     </div>
@@ -91,3 +92,32 @@
         </div>
     </div>
 @endsection
+
+@push('customJs')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const uploadedAvatar = document.getElementById('uploadedAvatar');
+            const uploadInput = document.getElementById('upload');
+            const resetButton = document.querySelector('.account-image-reset');
+            const defaultAvatarSrc =
+                "{{ $pengguna->gambar_profil ? asset($pengguna->gambar_profil) : asset('assets/img/baju-kosong.png') }}";
+
+            // Handle image upload
+            uploadInput.addEventListener('change', function(event) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadedAvatar.src = e.target.result;
+                };
+                if (event.target.files[0]) {
+                    reader.readAsDataURL(event.target.files[0]);
+                }
+            });
+
+            // Handle image reset
+            resetButton.addEventListener('click', function() {
+                uploadedAvatar.src = defaultAvatarSrc;
+                uploadInput.value = '';
+            });
+        });
+    </script>
+@endpush

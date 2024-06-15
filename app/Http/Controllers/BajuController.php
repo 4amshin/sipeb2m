@@ -143,7 +143,7 @@ class BajuController extends Controller
 
         // Hapus gambar lama jika ada gambar baru yang diunggah
         if ($request->hasFile('gambar_baju')) {
-            if (File::exists(public_path($baju->gambar_baju))) {
+            if ($baju->gambar_baju && File::exists(public_path($baju->gambar_baju))) {
                 File::delete(public_path($baju->gambar_baju));
             }
 

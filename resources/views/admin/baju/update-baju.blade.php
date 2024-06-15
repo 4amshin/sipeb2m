@@ -56,9 +56,11 @@
                         <div class="mb-3">
                             <label for="formFile" class="form-label">Input Gambar Baju</label>
                             <div class="d-flex align-items-center">
-                                <img src="{{ asset($baju->gambar_baju) }}" alt="Gambar Baju" class="d-block rounded me-3"
-                                    style="width: 100px;">
+                                <img src="{{ $baju->gambar_baju ? asset($baju->gambar_baju) : asset('assets/img/baju-kosong.png') }}"
+                                    alt="Gambar Baju" class="d-block rounded me-3" style="width: 100px;" id="uploadedBaju">
                                 <input class="form-control" type="file" id="formFile" name="gambar_baju">
+                                <button type="button" class="btn btn-outline-secondary ms-2"
+                                    id="resetButton">Reset</button>
                             </div>
                         </div>
 
@@ -66,10 +68,38 @@
                         <div class="row p-2">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
-
                     </form>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+@push('customJs')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const uploadedBaju = document.getElementById('uploadedBaju');
+            const uploadInput = document.getElementById('formFile');
+            const resetButton = document.getElementById('resetButton');
+            const defaultBajuSrc =
+                "{{ $baju->gambar_baju ? asset($baju->gambar_baju) : asset('assets/img/baju-kosong.png') }}";
+
+            // Handle image upload
+            uploadInput.addEventListener('change', function(event) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadedBaju.src = e.target.result;
+                };
+                if (event.target.files[0]) {
+                    reader.readAsDataURL(event.target.files[0]);
+                }
+            });
+
+            // Handle image reset
+            resetButton.addEventListener('click', function() {
+                uploadedBaju.src = defaultBajuSrc;
+                uploadInput.value = '';
+            });
+        });
+    </script>
+@endpush

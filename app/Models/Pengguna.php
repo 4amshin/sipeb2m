@@ -14,6 +14,7 @@ class Pengguna extends Model
         'nomor_telepon',
         'alamat',
         'role',
+        'gambar_profil',
         'email',
         'password',
     ];

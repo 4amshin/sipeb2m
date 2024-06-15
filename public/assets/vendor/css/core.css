@@ -332,9 +332,8 @@ svg {
 }
 
 .fill-box {
-    width: 50px;  /* Ensure the width is fixed */
-    height: 50px; /* Ensure the height is fixed */
-    object-fit: cover; /* Make the image fill the box */
+    object-fit: cover;
+    /* Make the image fill the box */
 }
 
 table {
