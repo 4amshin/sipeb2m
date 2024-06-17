@@ -17,6 +17,7 @@
                     <tr>
                         <th>No</th>
                         <th>Nama</th>
+                        <th class="text-center">Foto Profil</th>
                         <th>Nomor Telepon</th>
                         <th>Alamat</th>
                         <th>Email</th>
@@ -36,6 +37,11 @@
                                 <strong>
                                     {{ $pengguna->nama }}
                                 </strong>
+                            </td>
+                            <td class="text-center">
+                                <img src="{{ $pengguna->gambar_profil ? asset($pengguna->gambar_profil) : asset('assets/img/baju-kosong.png') }}"
+                                    alt="Avatar" class="rounded-circle" width="50">
+                            </td>
                             <td>
                                 <span class="badge bg-label-info me-1">
                                     {{ $pengguna->nomor_telepon }}

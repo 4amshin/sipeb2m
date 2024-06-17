@@ -1,5 +1,3 @@
 - Gambar Baju
-    - ketiak update gambar baju gambar lama masih tidak terhapus
-    - tambahkan fitur uploda and edit gambar profil
-        - tambah gambar_profil tabel pengguna
-        - tambah circle avatar template pada tabel pengguna
+    - ketika update gambar baju gambar lama masih tidak terhapus
+    - gambar profil pengguna tidak tampil

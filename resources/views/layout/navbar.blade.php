@@ -26,10 +26,17 @@
     <ul class="navbar-nav flex-row align-items-center ms-auto">
         <!-- User -->
         <li class="nav-item navbar-dropdown dropdown-user dropdown">
-
+            @php
+                // Query untuk mendapatkan gambar profil dari tabel 'pengguna' berdasarkan email pengguna yang sedang login
+                $email = auth()->user()->email;
+                $pengguna = \App\Models\Pengguna::where('email', $email)->first();
+                $gambarProfil = $pengguna->gambar_profil
+                    ? asset($pengguna->gambar_profil)
+                    : asset('assets/img/baju-kosong.png');
+            @endphp
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                 <div class="avatar avatar-online">
-                    <img src="{{ asset('assets/img/avatars/6.png') }}" alt class="w-px-40 h-auto rounded-circle" />
+                    <img src="{{ $gambarProfil }}" alt class="w-px-40 h-auto rounded-circle" />
                 </div>
             </a>
 
@@ -40,8 +47,7 @@
                         <div class="d-flex">
                             <div class="flex-shrink-0 me-3">
                                 <div class="avatar avatar-online">
-                                    <img src="{{ asset('assets/img/avatars/6.png') }}" alt
-                                        class="w-px-40 h-auto rounded-circle" />
+                                    <img src="{{ $gambarProfil }}" alt class="w-px-40 h-auto rounded-circle" />
                                 </div>
                             </div>
                             <div class="flex-grow-1">
