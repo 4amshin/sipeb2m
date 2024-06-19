@@ -1,3 +1,2 @@
 - Gambar Baju
     - ketika update gambar baju gambar lama masih tidak terhapus
-    - gambar profil pengguna tidak tampil
