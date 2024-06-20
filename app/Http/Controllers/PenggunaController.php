@@ -99,7 +99,7 @@ class PenggunaController extends Controller
         Pengguna::create($validatedData);
 
         //Kembali
-        return redirect()->route('pengguna.index')->with('success', 'Pengguna berhasil ditambahkan');
+        return redirect()->route('pengguna.index')->with('success', 'Pengguna baru berhasil ditambahkan');
     }
 
     /**
@@ -139,6 +139,6 @@ class PenggunaController extends Controller
     public function destroy(Pengguna $pengguna)
     {
         $pengguna->delete();
-        return redirect()->route('pengguna.index')->with('success', 'Akun Pengguna Berhasil Dihapus');
+        return redirect()->route('pengguna.index')->with('info', 'Akun Pengguna Berhasil Dihapus');
     }
 }

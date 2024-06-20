@@ -109,6 +109,9 @@
     <!-- Main JS -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
 
+    <!-- UI Toast -->
+    <script src="{{ asset('assets/js/ui-toasts.js') }}"></script>
+
     <!-- Page JS -->
     <script src="{{ asset('assets/js/dashboards-analytics.js') }}"></script>
 

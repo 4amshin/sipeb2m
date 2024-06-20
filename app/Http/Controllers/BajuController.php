@@ -165,6 +165,6 @@ class BajuController extends Controller
     public function destroy(Baju $baju)
     {
         $baju->delete();
-        return redirect()->route('baju.index')->with('success', 'Baju berhasil dihapus');
+        return redirect()->route('baju.index')->with('info', 'Baju berhasil dihapus');
     }
 }
