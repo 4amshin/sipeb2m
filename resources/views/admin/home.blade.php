@@ -26,9 +26,7 @@
 
                             <h5 class="card-title text-primary">Selamat Datang {{ $name }}! 🎉</h5>
                             <p class="mb-4">
-                                You have done <span class="fw-bold">72%</span> more sales today.
-                                Check your new badge in
-                                your profile.
+                                Lengkapi Profil anda untuk melakukan penyewaan, klik tombol 'Lihat Profil' dibawah ini untuk melengkapi profil.
                             </p>
 
                             <a href="{{ route('pengguna.profile') }}" class="btn btn-sm btn-outline-primary">Lihat Profil</a>

@@ -48,6 +48,7 @@ class PenggunaController extends Controller
         // Validasi data
         $validatedData = $request->validate([
             'nama' => 'required|string|max:255',
+            'jenis_kelamin' => 'required|string|max:255',
             'nomor_telepon' => 'nullable|string|max:255',
             'alamat' => 'nullable|string|max:255',
             'gambar_baju' => 'nullable|image|mimes:jpeg,png,jpg,webp',

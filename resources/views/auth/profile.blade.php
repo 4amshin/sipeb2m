@@ -56,6 +56,21 @@
                                         value="{{ $pengguna->nama }}" autofocus />
                                 </div>
 
+                                <!--Jenis Kelamin-->
+                            <div class="mb-3 col-md-6">
+                                <small class="text-light fw-semibold d-block">Jenis Kelamin</small>
+                                <div class="form-check form-check-inline mt-3">
+                                    <input class="form-check-input" type="radio" name="jenis_kelamin" id="laki-laki"
+                                        value="laki-laki" {{ $pengguna->jenis_kelamin == 'laki-laki' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="laki-laki">Laki-Laki</label>
+                                </div>
+                                <div class="form-check form-check-inline mt-3">
+                                    <input class="form-check-input" type="radio" name="jenis_kelamin" id="perempuan"
+                                        value="perempuan" {{ $pengguna->jenis_kelamin == 'perempuan' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="perempuan">Perempuan</label>
+                                </div>
+                            </div>
+
                                 <!-- Email -->
                                 <div class="mb-3 col-md-6">
                                     <label for="email" class="form-label">Email</label>
@@ -74,7 +89,7 @@
                                 </div>
 
                                 <!-- Aalamat -->
-                                <div class="mb-3 col-md-6">
+                                <div class="mb-3 col-md-12">
                                     <label for="alamat" class="form-label">Alamat</label>
                                     <input type="text" class="form-control" id="alamat" name="alamat"
                                         value="{{ $pengguna->alamat }}" />
