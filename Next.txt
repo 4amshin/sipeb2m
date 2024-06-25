@@ -2,9 +2,6 @@
     - ketika update gambar baju gambar lama masih tidak terhapus
 
 
-- gambar profil
-    - perbaiki dimana ketika gambar tidak beration square maka avatar circle akan gepeng
-
-- tanggal kembali ketika dikembalikan
-
-- Test Transaksi
+- Daftar pembayaran
+    - buat tanggal mejadi list, setiap kali update pembyaran/
+    pembyaran meningkat maka catat tanggal

@@ -63,6 +63,10 @@ class PembayaranController extends Controller
 
         if ($pembayaran->pembayaran_masuk >= $pembayaran->transaksi->harga_total) {
             $pembayaran->status_pembayaran = 'lunas';
+
+            $transaksi = Transaksi::find($pembayaran->transaksi->id);
+            $transaksi->status = 'selesai';
+            $transaksi->save();
         }
 
         $pembayaran->save();
