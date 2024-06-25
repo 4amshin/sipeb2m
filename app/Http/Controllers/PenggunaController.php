@@ -116,7 +116,8 @@ class PenggunaController extends Controller
      */
     public function edit(Pengguna $pengguna)
     {
-        return view('admin.pengguna.update-pengguna', compact('pengguna'));
+        $jenisKelamin = ['laki-laki', 'perempuan'];
+        return view('admin.pengguna.update-pengguna', compact('pengguna', 'jenisKelamin'));
     }
 
     /**

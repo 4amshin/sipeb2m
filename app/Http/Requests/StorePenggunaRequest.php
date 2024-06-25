@@ -24,6 +24,7 @@ class StorePenggunaRequest extends FormRequest
     {
         return [
             'nama' => 'required|string',
+            'jenis_kelamin' => 'required|string',
             'nomor_telepon' => 'nullable|string',
             'alamat' => 'nullable|string',
             'role' => 'required|string',

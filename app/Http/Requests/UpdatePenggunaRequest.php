@@ -25,6 +25,7 @@ class UpdatePenggunaRequest extends FormRequest
         $pengguna = $this->route('pengguna');
         return [
             'nama' => 'required|string',
+            'jenis_kelamin' => 'required|string',
             'nomor_telepon' => 'nullable|string',
             'alamat' => 'nullable|string',
             'email' => [
