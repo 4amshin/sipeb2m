@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pengembalian;
 use App\Http\Requests\StorePengembalianRequest;
 use App\Http\Requests\UpdatePengembalianRequest;
+use Carbon\Carbon;
 
 class PengembalianController extends Controller
 {
@@ -37,7 +38,7 @@ class PengembalianController extends Controller
     public function tandaiKembali(Pengembalian $pengembalian)
     {
         $pengembalian->status = 'diKembalikan';
-        $pengembalian->tanggal_kembali = now();
+        $pengembalian->tanggal_kembali = Carbon::now();
         $pengembalian->save();
 
         return redirect()->route('pengembalian.index')->with('success', 'Baju telah dikembalikan');
