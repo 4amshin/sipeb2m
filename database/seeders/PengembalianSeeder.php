@@ -17,10 +17,12 @@ class PengembalianSeeder extends Seeder
             [
                 'transaksi_id'  => 1,
                 'status' => 'belum_diKembalikan',
+                'tanggal_kembali' => null,
             ],
             [
                 'transaksi_id'  => 2,
                 'status' => 'diKembalikan',
+                'tanggal_kembali' => now(),
             ],
         ]);
     }

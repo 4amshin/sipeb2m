@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('page-title', 'Daftar Pembayaran')
+@section('page-title', 'Daftar Pengembalian')
 
 @section('content')
     <!-- Alert -->
@@ -18,6 +18,7 @@
                         @endcan
                         <th>Baju Disewa</th>
                         <th>Status</th>
+                        <th>Tanggal</th>
                         @can('super-user')
                             <th>Aksi</th>
                         @endcan
@@ -59,22 +60,31 @@
                                         <span class="badge bg-label-info me-1">Status Tidak Dikenali</span>
                                 @endswitch
                             </td>
+                            <td>
+                                @if ($pengembalian->tanggal_kembali != null)
+                                    {{ formatDate($pengembalian->tanggal_kembali) }}
+                                @else
+                                    -
+                                @endif
+                            </td>
                             @can('super-user')
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                            data-bs-toggle="dropdown">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <!--Tombol Dikembalikan-->
-                                            <a href="{{ route('pengembalian.tandaiKembali', $pengembalian->id) }}"
-                                                class="dropdown-item">
-                                                <i class='bx bx-check-double'></i> Telah Kembali
-                                            </a>
+                                @if ($pengembalian->status == 'belum_diKembalikan')
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                data-bs-toggle="dropdown">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <!--Tombol Dikembalikan-->
+                                                <a href="{{ route('pengembalian.tandaiKembali', $pengembalian->id) }}"
+                                                    class="dropdown-item">
+                                                    <i class='bx bx-check-double'></i> Telah Kembali
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
+                                @endif
                             @endcan
                         </tr>
 

@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('page-title', 'Daftar Penyewaan')
+@section('page-title', 'Riwayat Penyewaan')
 
 @section('content')
     <!-- Alert -->
@@ -8,12 +8,6 @@
 
     <!-- Tabel -->
     <div class="card">
-        @can('super-user')
-            <div class="float-left p-3">
-                <a href="{{ route('transaksi.create') }}" class="btn btn-primary"> Tambah Penyewaan</a>
-            </div>
-        @endcan
-
 
         <div class="table-responsive text-nowrap">
             <table class="table">
@@ -29,9 +23,6 @@
                         <th>Harga Total</th>
                         <th>Tanggal Sewa</th>
                         <th>Status</th>
-                        @can('super-user')
-                            <th>Aksi</th>
-                        @endcan
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -85,42 +76,14 @@
                                         <span class="badge bg-label-primary me-1">Terkonfirmasi</span>
                                     @break
 
+                                    @case('selesai')
+                                        <span class="badge bg-label-success me-1">Selesai</span>
+                                    @break
+
                                     @default
                                         <span class="badge bg-label-info me-1">Status Tidak Dikenali</span>
                                 @endswitch
                             </td>
-
-                            @can('super-user')
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                            data-bs-toggle="dropdown">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <!--Tombol Konfirmasi-->
-                                            <a href="{{ route('transaksi.konfirmasi', $transaksi->id) }}"
-                                                class="dropdown-item">
-                                                <i class="bx bx-edit-alt me-1"></i> Konfirmasi
-                                            </a>
-
-                                            <!--Tombol Selesai-->
-                                            {{-- <a href="{{ route('transaksi.selesai', $transaksi->id) }}" class="dropdown-item">
-                                                <i class="bx bx-edit-alt me-1"></i> Selesai
-                                            </a> --}}
-
-                                            <!--Tombol Hapus-->
-                                            <form action="{{ route('transaksi.destroy', $transaksi->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="dropdown-item">
-                                                    <i class="bx bx-trash me-1"></i> Hapus
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </td>
-                            @endcan
                         </tr>
                         @empty
                             <tr>

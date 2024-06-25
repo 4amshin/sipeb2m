@@ -20,20 +20,39 @@ class TransaksiController extends Controller
      * Display a listing of the resource.
      */
     public function index()
+{
+    $user = auth()->user();
+
+    if ($user->role == 'pengguna') {
+        $daftarTransaksi = Transaksi::where('nama_penyewa', $user->name)
+            ->where('status', '!=', 'selesai')
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
+    } else {
+        $daftarTransaksi = Transaksi::where('status', '!=', 'selesai')
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
+    }
+
+    return view('admin.penyewaan.daftar-penyewaan', compact('daftarTransaksi'))->with('showNavbar', true);
+}
+
+
+    public function riwayatPenyewaan()
     {
         $user = auth()->user();
 
 
         if ($user->role == 'pengguna') {
-            $daftarTransaksi = Transaksi::where('nama_penyewa', $user->name)->orderBy('created_at', 'desc')
+            $daftarTransaksi = Transaksi::where('status', 'selesai')->where('nama_penyewa', $user->name)->orderBy('created_at', 'desc')
                 ->paginate(5);
         } else {
-            $daftarTransaksi  = Transaksi::orderBy('created_at', 'desc')
+            $daftarTransaksi  = Transaksi::where('status', 'selesai')->orderBy('created_at', 'desc')
                 ->paginate(5);
         }
 
 
-        return view('admin.penyewaan.daftar-penyewaan', compact('daftarTransaksi'))->with('showNavbar', true);
+        return view('admin.penyewaan.riwayat-penyewaan', compact('daftarTransaksi'))->with('showNavbar', true);
     }
 
     public function getUkuran($nama_baju)
@@ -163,7 +182,7 @@ class TransaksiController extends Controller
             'pembayaran_masuk' => 0,
             'status_pembayaran' => 'belum_lunas',
             'metode_pembayaran' => null,
-            'tanggal_pembayaran' => null,
+            'tanggal_pembayaran' => now(),
         ]);
 
         // Buat entri pengembalian baru

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('transaksi_id')->constrained('transaksis')->onDelete('cascade');
             $table->enum('status', ['diKembalikan', 'belum_diKembalikan', 'terlambat'])->default('belum_diKembalikan');
+            $table->date('tanggal_kembali')->nullable();
             $table->timestamps();
         });
     }

@@ -12,6 +12,7 @@ class Pengembalian extends Model
     protected $fillable = [
         'transaksi_id',
         'status',
+        'tanggal_kembali',
     ];
 
     public function transaksi()

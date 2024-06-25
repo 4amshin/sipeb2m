@@ -16,6 +16,7 @@ class PenggunaSeeder extends Seeder
     {
         Pengguna::factory()->create([
             'nama' => 'Admin Sipeb2m',
+            'jenis_kelamin' => 'laki-laki',
             'nomor_telepon' =>  '081231341561',
             'alamat' => 'Palopo Kota',
             'role' => 'admin',
@@ -24,6 +25,7 @@ class PenggunaSeeder extends Seeder
         ]);
         Pengguna::factory()->create([
             'nama' => 'Ibrahim',
+            'jenis_kelamin' => 'laki-laki',
             'nomor_telepon' =>  '081231341561',
             'alamat' => 'Bua',
             'role' => 'pengguna',
@@ -32,6 +34,7 @@ class PenggunaSeeder extends Seeder
         ]);
         Pengguna::factory()->create([
             'nama' => 'Siti Fatimah',
+            'jenis_kelamin' => 'perempuan',
             'nomor_telepon' =>  '081231341561',
             'alamat' => 'Luwu Timu',
             'role' => 'pengguna',

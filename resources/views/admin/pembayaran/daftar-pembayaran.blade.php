@@ -20,6 +20,7 @@
                         <th>Pembayaran Masuk</th>
                         <th>Metode Pembayaran</th>
                         <th>Status</th>
+                        <th>Tanggal</th>
                         @can('super-user')
                             <th>Aksi</th>
                         @endcan
@@ -63,6 +64,9 @@
                                     @default
                                         <span class="badge bg-label-info me-1">Status Tidak Dikenali</span>
                                 @endswitch
+                            </td>
+                            <td>
+                                {{ formatDate($pembayaran->tanggal_pembayaran) }}
                             </td>
                             @can('super-user')
                                 @if ($pembayaran->status_pembayaran == 'belum_lunas')

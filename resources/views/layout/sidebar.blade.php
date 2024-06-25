@@ -39,6 +39,13 @@
             <i class='menu-icon tf-icons bx bxs-shopping-bags'></i>
             <div data-i18n="Analytics">Penyewaan</div>
         </a>
+
+    <!-- Riwayat Penyewaan -->
+    <li class="menu-item {{ Request::is('riwayat-penyewaan*') ? 'active' : '' }}">
+        <a href="{{ route('transaksi.riwayat') }}" class="menu-link">
+            <i class='menu-icon tf-icons bx bx-history'></i>
+            <div data-i18n="Analytics">Riwayat Penyewaan</div>
+        </a>
     </li>
 
     <!-- Pembayaran -->

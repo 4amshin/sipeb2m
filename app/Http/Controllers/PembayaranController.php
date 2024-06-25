@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pembayaran;
 use App\Http\Requests\StorePembayaranRequest;
 use App\Http\Requests\UpdatePembayaranRequest;
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
 
 class PembayaranController extends Controller
@@ -42,6 +43,10 @@ class PembayaranController extends Controller
         $pembayaran->tanggal_pembayaran = now();
 
         $pembayaran->save();
+
+        $transaksi = Transaksi::find($pembayaran->transaksi->id);
+        $transaksi->status = 'selesai';
+        $transaksi->save();
 
         return redirect()->back()->with('success', 'Pembayaran Lunas');
     }

@@ -20,18 +20,33 @@
                                 <input type="text" class="form-control" id="nama" name="nama" autofocus required>
                             </div>
 
+                            <!--Jenis Kelamin-->
+                            <div class="col-md">
+                                <small class="text-light fw-semibold d-block">Jenis Kelamin</small>
+                                @foreach ($jenisKelamin as $kelamin)
+                                    <div class="form-check form-check-inline mt-3">
+                                        <input class="form-check-input" type="radio" name="jenis_kelamin"
+                                            id="{{ $kelamin }}"
+                                            value="{{ $kelamin == 'laki-laki' ? 'Laki Laki' : 'Perempuan' }}">
+                                        <label class="form-check-label"
+                                            for="{{ $kelamin }}">{{ $kelamin == 'laki-laki' ? 'Laki Laki' : 'Perempuan' }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <div class="row">
                             <!--Nomor Telepon-->
                             <div class="col-6 mb-3">
                                 <label class="form-label" for="nomor_telepon">Nomor Telepon (Whatsapp)</label>
                                 <input type="text" id="nomor_telepon" name="nomor_telepon"
                                     class="form-control phone-mask">
                             </div>
-                        </div>
-
-                        <!--Alamat-->
-                        <div class="mb-3">
-                            <label class="form-label" for="alamat">Alamat</label>
-                            <input type="text" class="form-control" id="alamat" name="alamat">
+                            <!--Alamat-->
+                            <div class="col-6 mb-3">
+                                <label class="form-label" for="alamat">Alamat</label>
+                                <input type="text" class="form-control" id="alamat" name="alamat">
+                            </div>
                         </div>
 
                         <div class="row">

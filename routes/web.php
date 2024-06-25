@@ -39,6 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/transaksi/konfirmasi/{transaksi}', [TransaksiController::class, 'konfirmasi'])->name('transaksi.konfirmasi');
     Route::get('/transaksi/selesai/{transaksi}', [TransaksiController::class, 'tandaiSelesai'])->name('transaksi.selesai');
     Route::post('/transaksi/tambah-data-baju', [TransaksiController::class, 'tambahDataBaju'])->name('transaksi.tambahDataBaju');
+    Route::get('/riwayat-penyewaan', [TransaksiController::class, 'riwayatPenyewaan'])->name('transaksi.riwayat');
 
 
     /*----------------------------------------DETAIL TRANSAKSI--------------------------------------*/

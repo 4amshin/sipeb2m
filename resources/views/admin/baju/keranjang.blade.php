@@ -44,8 +44,8 @@
             <h2>Total Harga: <span class="totalPrice">Rp0</span></h2>
         </div>
         <div class="btn">
-            <button class="close">CLOSE</button>
-            <button class="checkOut" data-bs-toggle="modal" data-bs-target="#tanggalSewaModal">Check Out</button>
+            <button class="close">Tutup</button>
+            <button class="checkOut" data-bs-toggle="modal" data-bs-target="#tanggalSewaModal">Sewa</button>
         </div>
     </div>
 
@@ -90,7 +90,7 @@
                     <!--Tombol-->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Lanjut</button>
+                        <button type="submit" class="btn btn-primary">Sewa</button>
                     </div>
                 </form>
             </div>

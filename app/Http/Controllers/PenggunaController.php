@@ -79,7 +79,8 @@ class PenggunaController extends Controller
      */
     public function create()
     {
-        return view('admin.pengguna.tambah-pengguna');
+        $jenisKelamin = ['laki-laki', 'perempuan'];
+        return view('admin.pengguna.tambah-pengguna', compact('jenisKelamin'));
     }
 
     /**
