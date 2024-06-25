@@ -37,6 +37,7 @@ class PengembalianController extends Controller
     public function tandaiKembali(Pengembalian $pengembalian)
     {
         $pengembalian->status = 'diKembalikan';
+        $pengembalian->tanggal_kembali = now();
         $pengembalian->save();
 
         return redirect()->route('pengembalian.index')->with('success', 'Baju telah dikembalikan');

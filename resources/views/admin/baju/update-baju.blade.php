@@ -20,20 +20,6 @@
                                     value="{{ $baju->nama_baju }}" autofocus required>
                             </div>
 
-                             <!--Jenis Kelamin-->
-                             <div class="col-md">
-                                <small class="text-light fw-semibold d-block">Jenis Kelamin</small>
-                                @foreach ($jenisKelamin as $kelamin)
-                                    <div class="form-check form-check-inline mt-3">
-                                        <input class="form-check-input" type="radio" name="jenis_kelamin"
-                                            id="{{ $kelamin }}"
-                                            value="{{ $kelamin }}">
-                                        <label class="form-check-label"
-                                            for="{{ $kelamin }}">{{ $kelamin == 'laki-laki' ? 'Laki Laki' : 'Perempuan' }}</label>
-                                    </div>
-                                @endforeach
-                            </div>
-
                             <!--Ukuran-->
                             <div class="col-md">
                                 <small class="text-light fw-semibold d-block">Ukuran Baju</small>

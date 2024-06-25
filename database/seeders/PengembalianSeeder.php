@@ -13,17 +13,17 @@ class PengembalianSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('pengembalians')->insert([
-            [
-                'transaksi_id'  => 1,
-                'status' => 'belum_diKembalikan',
-                'tanggal_kembali' => null,
-            ],
-            [
-                'transaksi_id'  => 2,
-                'status' => 'diKembalikan',
-                'tanggal_kembali' => now(),
-            ],
-        ]);
+        // DB::table('pengembalians')->insert([
+        //     [
+        //         'transaksi_id'  => 1,
+        //         'status' => 'belum_diKembalikan',
+        //         'tanggal_kembali' => null,
+        //     ],
+        //     [
+        //         'transaksi_id'  => 2,
+        //         'status' => 'diKembalikan',
+        //         'tanggal_kembali' => now(),
+        //     ],
+        // ]);
     }
 }

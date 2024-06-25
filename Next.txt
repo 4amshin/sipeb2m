@@ -4,3 +4,7 @@
 
 - gambar profil
     - perbaiki dimana ketika gambar tidak beration square maka avatar circle akan gepeng
+
+- tanggal kembali ketika dikembalikan
+
+- Test Transaksi
