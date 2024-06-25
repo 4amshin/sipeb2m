@@ -20,7 +20,8 @@
         <div class="listProduct">
             @forelse ($daftarBaju as $baju)
                 <div data-id="{{ $baju->id }}" class="item">
-                    <img src=" {{ asset($baju->gambar_baju) }}">
+                    <img src="{{ $baju->gambar_baju ? asset($baju->gambar_baju) : asset('assets/img/baju-kosong.png') }}"
+                        alt="Gambar Baju" class="fill-box" height="230">
                     <div class="item-details">
                         <h2>{{ $baju->nama_baju }} ({{ $baju->ukuran }})</h2>
                         <div class="price">
