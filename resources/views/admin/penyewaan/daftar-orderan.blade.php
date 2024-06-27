@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('page-title', 'Daftar Penyewaan')
+@section('page-title', 'Daftar Orderan')
 
 @section('content')
     <!-- Alert -->
@@ -8,24 +8,17 @@
 
     <!-- Tabel -->
     <div class="card">
-        @can('super-user')
-            <div class="float-left p-3">
-                <a href="{{ route('transaksi.create') }}" class="btn btn-primary"> Tambah Penyewaan</a>
-            </div>
-        @endcan
-
-
         <div class="table-responsive text-nowrap">
             <table class="table">
                 <thead>
                     <tr>
                         <th>No</th>
                         @can('super-user')
-                            <th>Penyewa</th>
+                            <th>Pelanggan</th>
                             <th>Alamat</th>
                             <th>No.Telepon</th>
                         @endcan
-                        <th>Baju Disewa</th>
+                        <th>Baju DiOrder</th>
                         <th>Harga Total</th>
                         <th>Tanggal Sewa</th>
                         <th>Status</th>
@@ -35,10 +28,10 @@
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    @forelse ($daftarTransaksi as $index => $transaksi)
+                    @forelse ($daftarOrderan as $index => $transaksi)
                         <tr>
                             <td>
-                                {{ $index + $daftarTransaksi->firstItem() }}
+                                {{ $index + $daftarOrderan->firstItem() }}
                             </td>
                             @can('super-user')
                                 <td>
@@ -76,13 +69,17 @@
                                 @endif
                             </td>
                             <td>
-                                @switch($transaksi->status)
+                                @switch($transaksi->status_order)
                                     @case('diproses')
                                         <span class="badge bg-label-warning me-1">DiProses</span>
                                     @break
 
-                                    @case('terkonfirmasi')
-                                        <span class="badge bg-label-primary me-1">Terkonfirmasi</span>
+                                    @case('diterima')
+                                        <span class="badge bg-label-success me-1">DiTerima</span>
+                                    @break
+
+                                    @case('ditolak')
+                                        <span class="badge bg-label-danger me-1">DiTolak</span>
                                     @break
 
                                     @default
@@ -91,35 +88,38 @@
                             </td>
 
                             @can('super-user')
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                            data-bs-toggle="dropdown">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <!--Tombol Konfirmasi-->
-                                            {{-- <a href="{{ route('transaksi.konfirmasi', $transaksi->id) }}"
-                                                class="dropdown-item">
-                                                <i class="bx bx-edit-alt me-1"></i> Konfirmasi
-                                            </a> --}}
+                                @if ($transaksi->status_order == 'diproses')
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                data-bs-toggle="dropdown">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <!--Tombol Terima-->
+                                                <a href="{{ route('transaksi.terimaOrderan', $transaksi->id) }}"
+                                                    class="dropdown-item">
+                                                    <i class='bx bx-check me-1'></i> Terima Order
+                                                </a>
 
-                                            <!--Tombol Selesai-->
-                                            {{-- <a href="{{ route('transaksi.selesai', $transaksi->id) }}" class="dropdown-item">
-                                                <i class="bx bx-edit-alt me-1"></i> Selesai
-                                            </a> --}}
+                                                <!--Tombol Tolak-->
+                                                <a href="{{ route('transaksi.tolakOrderan', $transaksi->id) }}"
+                                                    class="dropdown-item">
+                                                    <i class='bx bx-x me-1'></i> Tolak Order
+                                                </a>
 
-                                            <!--Tombol Hapus-->
-                                            <form action="{{ route('transaksi.destroy', $transaksi->id) }}" method="POST">
+                                                <!--Tombol Tolak/Hapus-->
+                                                {{-- <form action="{{ route('transaksi.destroy', $transaksi->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="dropdown-item">
-                                                    <i class="bx bx-trash me-1"></i> Hapus
+                                                    <i class='bx bx-x me-1'></i> Tolak
                                                 </button>
-                                            </form>
+                                            </form> --}}
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
+                                @endif
                             @endcan
                         </tr>
                         @empty
@@ -135,7 +135,7 @@
             <!--Navigasi Halaman-->
             <nav class="p-3" aria-label="Page navigation">
                 <ul class="pagination justify-content-end">
-                    {{ $daftarTransaksi->withQueryString()->links() }}
+                    {{ $daftarOrderan->withQueryString()->links() }}
                 </ul>
             </nav>
 

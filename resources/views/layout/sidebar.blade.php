@@ -33,18 +33,11 @@
 
     <li class="menu-header small text-uppercase"><span class="menu-header-text">Transaksi</span></li>
 
-    <!-- Penyewaan -->
-    <li class="menu-item {{ Request::is('transaksi*') ? 'active' : '' }}">
-        <a href="{{ route('transaksi.index') }}" class="menu-link">
-            <i class='menu-icon tf-icons bx bxs-shopping-bags'></i>
-            <div data-i18n="Analytics">Penyewaan</div>
-        </a>
-
-    <!-- Riwayat Penyewaan -->
-    <li class="menu-item {{ Request::is('riwayat-penyewaan*') ? 'active' : '' }}">
-        <a href="{{ route('transaksi.riwayat') }}" class="menu-link">
-            <i class='menu-icon tf-icons bx bx-history'></i>
-            <div data-i18n="Analytics">Riwayat Penyewaan</div>
+    <!-- Orderan -->
+    <li class="menu-item {{ Request::is('daftarOrderan*') ? 'active' : '' }}">
+        <a href="{{ route('daftarOrderan') }}" class="menu-link">
+            <i class='menu-icon tf-icons bx bxs-receipt'></i>
+            <div data-i18n="Analytics">Orderan</div>
         </a>
     </li>
 
@@ -56,6 +49,14 @@
         </a>
     </li>
 
+    <!-- Penyewaan -->
+    <li class="menu-item {{ Request::is('transaksi*') ? 'active' : '' }}">
+        <a href="{{ route('transaksi.index') }}" class="menu-link">
+            <i class='menu-icon tf-icons bx bxs-shopping-bags'></i>
+            <div data-i18n="Analytics">Penyewaan</div>
+        </a>
+    </li>
+
     <!-- Pengembalian -->
     <li class="menu-item {{ Request::is('pengembalian*') ? 'active' : '' }}">
         <a href="{{ route('pengembalian.index') }}" class="menu-link">
@@ -63,6 +64,16 @@
             <div data-i18n="Analytics">Pengembalian</div>
         </a>
     </li>
+
+    <!-- Riwayat Penyewaan -->
+    <li class="menu-item {{ Request::is('riwayat-penyewaan*') ? 'active' : '' }}">
+        <a href="{{ route('transaksi.riwayat') }}" class="menu-link">
+            <i class='menu-icon tf-icons bx bx-history'></i>
+            <div data-i18n="Analytics">Riwayat Penyewaan</div>
+        </a>
+    </li>
+
+
 
 
 </ul>

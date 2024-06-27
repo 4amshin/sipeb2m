@@ -13,31 +13,31 @@ class DetailTransaksiSeeder extends Seeder
      */
     public function run(): void
     {
-        // DB::table('detail_transaksis')->insert([
-        //     [
-        //         'transaksi_id' => 1,
-        //         'baju_id' => 1,
-        //         'ukuran' => 'M',
-        //         'jumlah' => 2,
-        //     ],
-        //     [
-        //         'transaksi_id' => 1,
-        //         'baju_id' => 1,
-        //         'ukuran' => 'L',
-        //         'jumlah' => 3,
-        //     ],
-        //     [
-        //         'transaksi_id' => 2,
-        //         'baju_id' => 1,
-        //         'ukuran' => 'XL',
-        //         'jumlah' => 5,
-        //     ],
-        //     [
-        //         'transaksi_id' => 2,
-        //         'baju_id' => 2,
-        //         'ukuran' => 'S',
-        //         'jumlah' => 1,
-        //     ],
-        // ]);
+        DB::table('detail_transaksis')->insert([
+            [
+                'transaksi_id' => 1,
+                'baju_id' => 1,
+                'ukuran' => 'M',
+                'jumlah' => 2,
+            ],
+            [
+                'transaksi_id' => 1,
+                'baju_id' => 1,
+                'ukuran' => 'L',
+                'jumlah' => 3,
+            ],
+            [
+                'transaksi_id' => 2,
+                'baju_id' => 1,
+                'ukuran' => 'XL',
+                'jumlah' => 5,
+            ],
+            [
+                'transaksi_id' => 2,
+                'baju_id' => 2,
+                'ukuran' => 'S',
+                'jumlah' => 1,
+            ],
+        ]);
     }
 }

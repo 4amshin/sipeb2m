@@ -36,7 +36,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     /*----------------------------------------TRANSAKSI--------------------------------------*/
     Route::resource('transaksi', TransaksiController::class);
     Route::get('/transaksi/ukuran/{nama_baju}', [TransaksiController::class, 'getUkuran']);
-    Route::get('/transaksi/konfirmasi/{transaksi}', [TransaksiController::class, 'konfirmasi'])->name('transaksi.konfirmasi');
+
+    /*----------------------------------------ORDERAN--------------------------------------*/
+    Route::get('/daftarOrderan', [TransaksiController::class,'daftarOrderan'])->name('daftarOrderan');
+    Route::get('/transaksi/terimaOrderan/{transaksi}', [TransaksiController::class, 'terimaOrderan'])->name('transaksi.terimaOrderan');
+    Route::get('/transaksi/tolakOrderan/{transaksi}', [TransaksiController::class, 'tolakOrderan'])->name('transaksi.tolakOrderan');
+
+    /*----------------------------------------PENYEWAAAN--------------------------------------*/
     Route::get('/transaksi/selesai/{transaksi}', [TransaksiController::class, 'tandaiSelesai'])->name('transaksi.selesai');
     Route::post('/transaksi/tambah-data-baju', [TransaksiController::class, 'tambahDataBaju'])->name('transaksi.tambahDataBaju');
     Route::get('/riwayat-penyewaan', [TransaksiController::class, 'riwayatPenyewaan'])->name('transaksi.riwayat');

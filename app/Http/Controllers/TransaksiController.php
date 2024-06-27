@@ -20,22 +20,38 @@ class TransaksiController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-{
-    $user = auth()->user();
+    {
+        $user = auth()->user();
 
-    if ($user->role == 'pengguna') {
-        $daftarTransaksi = Transaksi::where('nama_penyewa', $user->name)
-            ->where('status', '!=', 'selesai')
-            ->orderBy('created_at', 'desc')
-            ->paginate(5);
-    } else {
-        $daftarTransaksi = Transaksi::where('status', '!=', 'selesai')
-            ->orderBy('created_at', 'desc')
-            ->paginate(5);
+        if ($user->role == 'pengguna') {
+            $daftarTransaksi = Transaksi::where('nama_penyewa', $user->name)
+                ->where('status_order', 'diterima')
+                ->orderBy('created_at', 'desc')
+                ->paginate(5);
+        } else {
+            $daftarTransaksi = Transaksi::where('status_order', 'diterima')
+                ->orderBy('created_at', 'desc')
+                ->paginate(5);
+        }
+
+        return view('admin.penyewaan.daftar-penyewaan', compact('daftarTransaksi'))->with('showNavbar', true);
     }
 
-    return view('admin.penyewaan.daftar-penyewaan', compact('daftarTransaksi'))->with('showNavbar', true);
-}
+    public function daftarOrderan()
+    {
+        $user = auth()->user();
+
+        if ($user->role == 'pengguna') {
+            $daftarOrderan = Transaksi::where('nama_penyewa', $user->name)
+                ->orderBy('created_at', 'desc')
+                ->paginate(5);
+        } else {
+            $daftarOrderan = Transaksi::orderBy('created_at', 'desc')
+                ->paginate(5);
+        }
+
+        return view('admin.penyewaan.daftar-orderan', compact('daftarOrderan'))->with('showNavbar', true);
+    }
 
 
     public function riwayatPenyewaan()
@@ -171,16 +187,15 @@ class TransaksiController extends Controller
 
 
 
-    public function konfirmasi(Transaksi $transaksi)
+    public function terimaOrderan(Transaksi $transaksi)
     {
-        // Update status transaksi menjadi terkonfirmasi
-        $transaksi->update(['status' => 'terkonfirmasi']);
+        // Update status transaksi menjadi diterima
+        $transaksi->update(['status_order' => 'diterima']);
 
         // Buat entri pembayaran baru
         $pembayaran = Pembayaran::create([
             'transaksi_id' => $transaksi->id,
-            'pembayaran_masuk' => 0,
-            'status_pembayaran' => 'belum_lunas',
+            'status_pembayaran' => 'belum_bayar',
             'metode_pembayaran' => null,
             'tanggal_pembayaran' => now(),
         ]);
@@ -192,7 +207,16 @@ class TransaksiController extends Controller
         ]);
 
         // Redirect ke halaman daftar transaksi dengan pesan sukses
-        return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil dikonfirmasi.');
+        return redirect()->route('daftarOrderan')->with('success', 'Orderan Diterima.');
+    }
+
+    public function tolakOrderan(Transaksi $transaksi)
+    {
+        // Update status transaksi menjadi ditolak
+        $transaksi->update(['status_order' => 'ditolak']);
+
+        // Redirect ke halaman daftar transaksi dengan pesan sukses
+        return redirect()->route('daftarOrderan')->with('info', 'Orderan Ditolak.');
     }
 
 
