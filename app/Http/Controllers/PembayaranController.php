@@ -38,43 +38,19 @@ class PembayaranController extends Controller
 
     public function tandaiLunas(Pembayaran $pembayaran)
     {
-        $pembayaran->status_pembayaran = 'lunas';
-        $pembayaran->pembayaran_masuk = $pembayaran->transaksi->harga_total;
+        $pembayaran->status_pembayaran = 'dibayar';
         $pembayaran->tanggal_pembayaran = now();
 
         $pembayaran->save();
 
         $transaksi = Transaksi::find($pembayaran->transaksi->id);
-        $transaksi->status = 'selesai';
+        $transaksi->status_sewa = 'sudah_lunas';
         $transaksi->save();
 
         return redirect()->back()->with('success', 'Pembayaran Lunas');
     }
 
-    public function updatePembayaran(Request $request, Pembayaran $pembayaran)
-    {
-        $request->validate([
-            'pembayaran_masuk' => 'required|numeric',
-            'metode_pembayaran' => 'required|string|max:255',
-        ]);
-
-        $pembayaran->pembayaran_masuk = $request->input('pembayaran_masuk');
-        $pembayaran->metode_pembayaran = $request->input('metode_pembayaran');
-
-        if ($pembayaran->pembayaran_masuk >= $pembayaran->transaksi->harga_total) {
-            $pembayaran->status_pembayaran = 'lunas';
-
-            $transaksi = Transaksi::find($pembayaran->transaksi->id);
-            $transaksi->status = 'selesai';
-            $transaksi->save();
-        }
-
-        $pembayaran->save();
-
-        return redirect()->back()->with('success', 'Pembayaran berhasil diperbarui');
-    }
-
-    /**
+      /**
      * Store a newly created resource in storage.
      */
     public function store(StorePembayaranRequest $request)

@@ -197,7 +197,7 @@ class TransaksiController extends Controller
             'transaksi_id' => $transaksi->id,
             'status_pembayaran' => 'belum_bayar',
             'metode_pembayaran' => null,
-            'tanggal_pembayaran' => now(),
+            'tanggal_pembayaran' => null,
         ]);
 
         // Buat entri pengembalian baru
