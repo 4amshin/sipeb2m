@@ -22,7 +22,6 @@
                         <th>Baju Disewa</th>
                         <th>Harga Total</th>
                         <th>Tanggal Sewa</th>
-                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -66,25 +65,7 @@
                                     {{ $tanggalKembali->isoFormat('DD MMMM YYYY') }}
                                 @endif
                             </td>
-                            <td>
-                                @switch($transaksi->status)
-                                    @case('diproses')
-                                        <span class="badge bg-label-warning me-1">DiProses</span>
-                                    @break
-
-                                    @case('terkonfirmasi')
-                                        <span class="badge bg-label-primary me-1">Terkonfirmasi</span>
-                                    @break
-
-                                    @case('selesai')
-                                        <span class="badge bg-label-success me-1">Selesai</span>
-                                    @break
-
-                                    @default
-                                        <span class="badge bg-label-info me-1">Status Tidak Dikenali</span>
-                                @endswitch
-                            </td>
-                        </tr>
+                                                    </tr>
                         @empty
                             <tr>
                                 <td>Data Tidak Ditemukan</td>

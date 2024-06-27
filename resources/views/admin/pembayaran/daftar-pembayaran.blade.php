@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('page-title', 'Daftar Pembayaran')
+@section('page-title', 'Pembayaran')
 
 @section('content')
     <!-- Alert -->

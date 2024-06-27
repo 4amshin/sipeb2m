@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('page-title', 'Daftar Orderan')
+@section('page-title', 'Orderan')
 
 @section('content')
     <!-- Alert -->

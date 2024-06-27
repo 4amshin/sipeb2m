@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('page-title', 'Daftar Pengembalian')
+@section('page-title', 'Pengembalian')
 
 @section('content')
     <!-- Alert -->
@@ -70,19 +70,11 @@
                             @can('super-user')
                                 @if ($pengembalian->status == 'belum_diKembalikan')
                                     <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                data-bs-toggle="dropdown">
-                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <!--Tombol Dikembalikan-->
-                                                <a href="{{ route('pengembalian.tandaiKembali', $pengembalian->id) }}"
-                                                    class="dropdown-item">
-                                                    <i class='bx bx-check-double'></i> Telah Kembali
-                                                </a>
-                                            </div>
-                                        </div>
+                                        <!--Tombol Dikembalikan-->
+                                        <a href="{{ route('pengembalian.tandaiKembali', $pengembalian->id) }}"
+                                            class="btn btn-primary">
+                                            <i class='bx bx-check-double'></i> Tandai Kembali
+                                        </a>
                                     </td>
                                 @endif
                             @endcan

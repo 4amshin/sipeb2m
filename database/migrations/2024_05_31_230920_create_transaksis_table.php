@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('tanggal_kembali');
             $table->decimal('harga_total', 10, 2);
             $table->enum('status_order', ['diproses', 'diterima', 'ditolak'])->default('diproses');
-            $table->enum('status_sewa', ['sudah_lunas', 'sudah_ambil', 'dikirim'])->nullable();
+            $table->enum('status_sewa', ['selesai', 'sudah_lunas', 'sudah_ambil', 'dikirim'])->nullable();
             $table->timestamps();
         });
     }

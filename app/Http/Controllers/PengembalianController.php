@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pengembalian;
 use App\Http\Requests\StorePengembalianRequest;
 use App\Http\Requests\UpdatePengembalianRequest;
+use App\Models\Transaksi;
 use Carbon\Carbon;
 
 class PengembalianController extends Controller
@@ -40,6 +41,10 @@ class PengembalianController extends Controller
         $pengembalian->status = 'diKembalikan';
         $pengembalian->tanggal_kembali = Carbon::now();
         $pengembalian->save();
+
+        $transaksi = Transaksi::find($pengembalian->transaksi->id);
+        $transaksi->status_sewa = 'selesai';
+        $transaksi->save();
 
         return redirect()->route('pengembalian.index')->with('success', 'Baju telah dikembalikan');
     }

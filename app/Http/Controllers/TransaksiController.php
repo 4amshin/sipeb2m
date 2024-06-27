@@ -66,10 +66,13 @@ class TransaksiController extends Controller
 
 
         if ($user->role == 'pengguna') {
-            $daftarTransaksi = Transaksi::where('status', 'selesai')->where('nama_penyewa', $user->name)->orderBy('created_at', 'desc')
+            $daftarTransaksi = Transaksi::where('status_sewa', 'selesai')
+                ->where('nama_penyewa', $user->name)
+                ->orderBy('created_at', 'desc')
                 ->paginate(5);
         } else {
-            $daftarTransaksi  = Transaksi::where('status', 'selesai')->orderBy('created_at', 'desc')
+            $daftarTransaksi  = Transaksi::where('status_sewa', 'selesai')
+                ->orderBy('created_at', 'desc')
                 ->paginate(5);
         }
 
