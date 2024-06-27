@@ -99,17 +99,12 @@ class BajuController extends Controller
     {
         //$simpan data baju
         $baju = new Baju($request->validated());
+        $gambarBaju = $request->file('gambar_baju');
 
-        //jika ada gambar, simpan gambar
         if ($request->hasFile('gambar_baju')) {
-            $file = $request->file('gambar_baju');
-            $extension = $file->getClientOriginalExtension();
+            $gambarBaju->store('public');
 
-            $filename = time() . '.' . $extension;
-
-            $path = 'uploads/baju/';
-            $file->move($path, $filename);
-            $baju->gambar_baju = $path . $filename;
+            $baju->gambar_baju = $gambarBaju->hashName();
         }
 
         $baju->save();
@@ -139,22 +134,34 @@ class BajuController extends Controller
      */
     public function update(UpdateBajuRequest $request, Baju $baju)
     {
-        $baju->fill($request->validated());
+        // $baju->fill($request->validated());
+        $oldFoto = $baju->gambar_baju;
+        $gambarBaju = $request->file('gambar_baju');
 
-        // Hapus gambar lama jika ada gambar baru yang diunggah
         if ($request->hasFile('gambar_baju')) {
-            if ($baju->gambar_baju && File::exists(public_path($baju->gambar_baju))) {
-                File::delete(public_path($baju->gambar_baju));
-            }
+            $gambarBaju->store('public');
 
-            // Simpan gambar baru
-            $file = $request->file('gambar_baju');
-            $path = 'uploads/baju/' . time() . '.' . $file->getClientOriginalExtension();
-            $file->move('uploads/baju', $path);
-            $baju->gambar_baju = $path;
+            // $baju->gambar_baju = $gambarBaju->hashName();
+            $baju->update([
+                'nama_baju' => $request->nama_baju,
+                'gambar_baju' => $gambarBaju->hashName(),
+                'ukuran' => $request->ukuran,
+                'stok' => $request->stok,
+                'harga_sewa_perhari' => $request->harga_sewa_perhari,
+            ]);
+
+            //hapus foto lama
+            Storage::disk('public')->delete($oldFoto);
+        } else {
+            $baju->update([
+                'nama_baju' => $request->nama_baju,
+                'ukuran' => $request->ukuran,
+                'stok' => $request->stok,
+                'harga_sewa_perhari' => $request->harga_sewa_perhari,
+            ]);
         }
 
-        $baju->save();
+        // $baju->save();
 
         return redirect()->route('baju.index')->with('success', 'Baju berhasil diperbarui');
     }
@@ -164,6 +171,9 @@ class BajuController extends Controller
      */
     public function destroy(Baju $baju)
     {
+        //hapus foto
+        Storage::disk('public')->delete($baju->gambar_baju);
+
         $baju->delete();
         return redirect()->route('baju.index')->with('info', 'Baju berhasil dihapus');
     }

@@ -43,6 +43,15 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+
+        'public/profil' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/profil'),
+            'url' => env('APP_URL') . '/storage/profil',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         'upload' => [
             'driver' => 'local',
             'root' => storage_path('app/upload'),

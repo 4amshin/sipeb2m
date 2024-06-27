@@ -31,7 +31,7 @@
                 $email = auth()->user()->email;
                 $pengguna = \App\Models\Pengguna::where('email', $email)->first();
                 $gambarProfil = $pengguna->gambar_profil
-                    ? asset($pengguna->gambar_profil)
+                    ? asset('storage/profil/'.$pengguna->gambar_profil)
                     : asset('assets/img/baju-kosong.png');
             @endphp
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">

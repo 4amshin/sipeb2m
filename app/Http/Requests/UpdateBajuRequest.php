@@ -23,7 +23,7 @@ class UpdateBajuRequest extends FormRequest
     {
         return [
             'nama_baju' => 'sometimes|required|string|max:255',
-            'gambar_baju' => 'sometimes|required|image|mimes:jpeg,png,jpg,webp',
+            'gambar_baju' => 'nullable|image|mimes:jpeg,png,jpg',
             'ukuran' => 'sometimes|required|in:S,M,L,XL,XXL',
             'stok' => 'sometimes|required|integer|min:1',
             'harga_sewa_perhari' => 'sometimes|required|numeric|min:0',

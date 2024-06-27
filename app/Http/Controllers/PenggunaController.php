@@ -8,6 +8,7 @@ use App\Http\Requests\UpdatePenggunaRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class PenggunaController extends Controller
 {
@@ -54,18 +55,24 @@ class PenggunaController extends Controller
             'gambar_baju' => 'nullable|image|mimes:jpeg,png,jpg,webp',
         ]);
 
+        $oldFoto = $pengguna->gambar_profil;
+        $gambarProfil = $request->file('gambar_profil');
+
         // Periksa apakah ada gambar baru yang diunggah
         if ($request->hasFile('gambar_profil')) {
-            // Hapus gambar lama jika ada
-            if ($pengguna->gambar_profil && File::exists(public_path($pengguna->gambar_profil))) {
-                File::delete(public_path($pengguna->gambar_profil));
+            // Pastikan folder profil ada, jika tidak buat foldernya
+            if (!Storage::exists('public/profil')) {
+                Storage::makeDirectory('public/profil');
             }
 
-            // Simpan gambar baru
-            $file = $request->file('gambar_profil');
-            $path = 'uploads/profil/' . time() . '.' . $file->getClientOriginalExtension();
-            $file->move('uploads/profil', $path);
-            $pengguna->gambar_profil = $path;
+            $gambarProfil->store('public/profil');
+
+            $pengguna->gambar_profil = $gambarProfil->hashName();
+
+            //hapus foto lama
+            if($oldFoto){
+                Storage::disk('public/profil')->delete($oldFoto);
+            }
         }
 
         // Perbarui data profil pengguna

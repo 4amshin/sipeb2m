@@ -17,7 +17,7 @@
                     <div class="card-body">
                         <div class="d-flex align-items-start align-items-sm-center gap-4">
                             <!-- Foto -->
-                            <img src="{{ $pengguna->gambar_profil ? asset($pengguna->gambar_profil) : asset('assets/img/baju-kosong.png') }}"
+                            <img src="{{ $pengguna->gambar_profil ? asset('storage/profil/' . $pengguna->gambar_profil) : asset('assets/img/baju-kosong.png') }}"
                                 alt="user-avatar" class="d-block rounded fill-box" height="100" width="100"
                                 id="uploadedAvatar" />
 
@@ -57,19 +57,21 @@
                                 </div>
 
                                 <!--Jenis Kelamin-->
-                            <div class="mb-3 col-md-6">
-                                <small class="text-light fw-semibold d-block">Jenis Kelamin</small>
-                                <div class="form-check form-check-inline mt-3">
-                                    <input class="form-check-input" type="radio" name="jenis_kelamin" id="laki-laki"
-                                        value="laki-laki" {{ $pengguna->jenis_kelamin == 'laki-laki' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="laki-laki">Laki-Laki</label>
+                                <div class="mb-3 col-md-6">
+                                    <small class="text-light fw-semibold d-block">Jenis Kelamin</small>
+                                    <div class="form-check form-check-inline mt-3">
+                                        <input class="form-check-input" type="radio" name="jenis_kelamin" id="laki-laki"
+                                            value="laki-laki"
+                                            {{ $pengguna->jenis_kelamin == 'laki-laki' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="laki-laki">Laki-Laki</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mt-3">
+                                        <input class="form-check-input" type="radio" name="jenis_kelamin" id="perempuan"
+                                            value="perempuan"
+                                            {{ $pengguna->jenis_kelamin == 'perempuan' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="perempuan">Perempuan</label>
+                                    </div>
                                 </div>
-                                <div class="form-check form-check-inline mt-3">
-                                    <input class="form-check-input" type="radio" name="jenis_kelamin" id="perempuan"
-                                        value="perempuan" {{ $pengguna->jenis_kelamin == 'perempuan' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="perempuan">Perempuan</label>
-                                </div>
-                            </div>
 
                                 <!-- Email -->
                                 <div class="mb-3 col-md-6">
@@ -115,7 +117,7 @@
             const uploadInput = document.getElementById('upload');
             const resetButton = document.querySelector('.account-image-reset');
             const defaultAvatarSrc =
-                "{{ $pengguna->gambar_profil ? asset($pengguna->gambar_profil) : asset('assets/img/baju-kosong.png') }}";
+                "{{ $pengguna->gambar_profil ? asset('storage/public/'.$pengguna->gambar_profil) : asset('assets/img/baju-kosong.png') }}";
 
             // Handle image upload
             uploadInput.addEventListener('change', function(event) {

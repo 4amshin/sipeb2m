@@ -56,7 +56,7 @@
                         <div class="mb-3">
                             <label for="formFile" class="form-label">Input Gambar Baju</label>
                             <div class="d-flex align-items-center">
-                                <img src="{{ $baju->gambar_baju ? asset($baju->gambar_baju) : asset('assets/img/baju-kosong.png') }}"
+                                <img src="{{ $baju->gambar_baju ? asset('storage/' . $baju->gambar_baju) : asset('assets/img/baju-kosong.png') }}"
                                     alt="Gambar Baju" class="d-block rounded me-3" style="width: 100px;" id="uploadedBaju">
                                 <input class="form-control" type="file" id="formFile" name="gambar_baju">
                                 <button type="button" class="btn btn-outline-secondary ms-2"
@@ -82,7 +82,7 @@
             const uploadInput = document.getElementById('formFile');
             const resetButton = document.getElementById('resetButton');
             const defaultBajuSrc =
-                "{{ $baju->gambar_baju ? asset($baju->gambar_baju) : asset('assets/img/baju-kosong.png') }}";
+                "{{ $baju->gambar_baju ? asset('storage/' . $baju->gambar_baju) : asset('assets/img/baju-kosong.png') }}";
 
             // Handle image upload
             uploadInput.addEventListener('change', function(event) {
