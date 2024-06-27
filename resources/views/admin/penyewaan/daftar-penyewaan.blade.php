@@ -76,13 +76,17 @@
                                 @endif
                             </td>
                             <td>
-                                @switch($transaksi->status)
-                                    @case('diproses')
-                                        <span class="badge bg-label-warning me-1">DiProses</span>
+                                @switch($transaksi->status_sewa)
+                                    @case('sudah_lunas')
+                                        <span class="badge bg-label-success me-1">Sudah Lunas</span>
                                     @break
 
-                                    @case('terkonfirmasi')
-                                        <span class="badge bg-label-primary me-1">Terkonfirmasi</span>
+                                    @case('sudah_ambil')
+                                        <span class="badge bg-label-primary me-1">Sudah Diambil</span>
+                                    @break
+
+                                    @case('dikirim')
+                                        <span class="badge bg-label-info me-1">Sudah Dikirim</span>
                                     @break
 
                                     @default
@@ -91,35 +95,31 @@
                             </td>
 
                             @can('super-user')
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                            data-bs-toggle="dropdown">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <!--Tombol Konfirmasi-->
-                                            {{-- <a href="{{ route('transaksi.konfirmasi', $transaksi->id) }}"
-                                                class="dropdown-item">
-                                                <i class="bx bx-edit-alt me-1"></i> Konfirmasi
-                                            </a> --}}
+                                @if ($transaksi->status_sewa == 'sudah_lunas')
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                data-bs-toggle="dropdown">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <!--Tombol Sudah Diambil-->
+                                                <a href="{{ route('transaksi.diAmbil', $transaksi->id) }}"
+                                                    class="dropdown-item">
+                                                    <i class='bx bx-check-circle me-1'></i> Tandai Diambil
+                                                </a>
 
-                                            <!--Tombol Selesai-->
-                                            {{-- <a href="{{ route('transaksi.selesai', $transaksi->id) }}" class="dropdown-item">
-                                                <i class="bx bx-edit-alt me-1"></i> Selesai
-                                            </a> --}}
+                                                <!--Tombol Sudah Dikirim-->
+                                                <a href="{{ route('transaksi.diKirim', $transaksi->id) }}"
+                                                    class="dropdown-item">
+                                                    <i class='bx bx-archive me-1'></i> Tandai Dikirim
+                                                </a>
 
-                                            <!--Tombol Hapus-->
-                                            <form action="{{ route('transaksi.destroy', $transaksi->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="dropdown-item">
-                                                    <i class="bx bx-trash me-1"></i> Hapus
-                                                </button>
-                                            </form>
+
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
+                                @endif
                             @endcan
                         </tr>
                         @empty

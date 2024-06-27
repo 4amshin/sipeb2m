@@ -26,10 +26,16 @@ class TransaksiController extends Controller
         if ($user->role == 'pengguna') {
             $daftarTransaksi = Transaksi::where('nama_penyewa', $user->name)
                 ->where('status_order', 'diterima')
+                ->where('status_sewa', 'sudah_ambil')
+                ->orWhere('status_sewa', 'sudah_lunas')
+                ->orWhere('status_sewa', 'dikirim')
                 ->orderBy('created_at', 'desc')
                 ->paginate(5);
         } else {
             $daftarTransaksi = Transaksi::where('status_order', 'diterima')
+                ->where('status_sewa', 'sudah_ambil')
+                ->orWhere('status_sewa', 'sudah_lunas')
+                ->orWhere('status_sewa', 'dikirim')
                 ->orderBy('created_at', 'desc')
                 ->paginate(5);
         }
@@ -217,6 +223,24 @@ class TransaksiController extends Controller
 
         // Redirect ke halaman daftar transaksi dengan pesan sukses
         return redirect()->route('daftarOrderan')->with('info', 'Orderan Ditolak.');
+    }
+
+    public function diAmbil(Transaksi $transaksi)
+    {
+        // Update status transaksi menjadi sudah_ambil
+        $transaksi->update(['status_sewa' => 'sudah_ambil']);
+
+        // Redirect ke halaman daftar transaksi dengan pesan sukses
+        return redirect()->route('transaksi.index')->with('info', 'Barang Telah Diambil');
+    }
+
+    public function diKirim(Transaksi $transaksi)
+    {
+        // Update status transaksi menjadi dikirim
+        $transaksi->update(['status_sewa' => 'dikirim']);
+
+        // Redirect ke halaman daftar transaksi dengan pesan sukses
+        return redirect()->route('transaksi.index')->with('info', 'Barang Telah Dikirim');
     }
 
 

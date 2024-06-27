@@ -36,6 +36,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     /*----------------------------------------TRANSAKSI--------------------------------------*/
     Route::resource('transaksi', TransaksiController::class);
     Route::get('/transaksi/ukuran/{nama_baju}', [TransaksiController::class, 'getUkuran']);
+    Route::post('/transaksi/tambah-data-baju', [TransaksiController::class, 'tambahDataBaju'])->name('transaksi.tambahDataBaju');
 
     /*----------------------------------------ORDERAN--------------------------------------*/
     Route::get('/daftarOrderan', [TransaksiController::class,'daftarOrderan'])->name('daftarOrderan');
@@ -43,8 +44,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/transaksi/tolakOrderan/{transaksi}', [TransaksiController::class, 'tolakOrderan'])->name('transaksi.tolakOrderan');
 
     /*----------------------------------------PENYEWAAAN--------------------------------------*/
-    Route::get('/transaksi/selesai/{transaksi}', [TransaksiController::class, 'tandaiSelesai'])->name('transaksi.selesai');
-    Route::post('/transaksi/tambah-data-baju', [TransaksiController::class, 'tambahDataBaju'])->name('transaksi.tambahDataBaju');
+    Route::get('/transaksi/diAmbil/{transaksi}', [TransaksiController::class, 'diAmbil'])->name('transaksi.diAmbil');
+    Route::get('/transaksi/diKirim/{transaksi}', [TransaksiController::class, 'diKirim'])->name('transaksi.diKirim');
+
+    /*----------------------------------------RIWAYAT--------------------------------------*/
     Route::get('/riwayat-penyewaan', [TransaksiController::class, 'riwayatPenyewaan'])->name('transaksi.riwayat');
 
 
