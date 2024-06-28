@@ -6,33 +6,10 @@
     <!-- Alert -->
     @include('layout.page-alert')
 
-    <!--Keterangan Status-->
-    <div class="card p-3">
-        <div class="row gx-3">
-            <div class="col-md-4 d-flex align-items-start">
-                <div class="content-right">
-                    <span class="badge bg-label-success me-1">Sudah Lunas</span>
-                    <p class="mb-0 lh-1">Pembayaran untuk penyewaan telah dilunasi</p>
-                </div>
-            </div>
-            <div class="col-md-4 d-flex align-items-center">
-                <div class="content-right">
-                    <span class="badge bg-label-primary me-1">Sudah Diambil</span>
-                    <p class="mb-0 lh-1">Barang yang disewa telah diambil oleh penyewa yang berada dekat dengan toko</p>
-                </div>
-            </div>
-            <div class="col-md-4 d-flex align-items-center">
-                <div class="content-right">
-                    <span class="badge bg-label-info me-1">Sudah Dikirim</span>
-                    <p class="mb-0 lh-1">Barang yang disewa telah dikirim ke penyewa yang berada di luar kota atau jauh dari
-                        toko</p>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <!-- Tabel -->
-    <div class="card mt-2">
+    <div class="card mb-3">
         @can('super-user')
             <div class="float-left p-3">
                 <a href="{{ route('transaksi.create') }}" class="btn btn-primary"> Tambah Penyewaan</a>
@@ -146,24 +123,46 @@
                                 @endif
                             @endcan
                         </tr>
-                        @empty
-                            <tr>
-                                <td>Data Tidak Ditemukan</td>
-                            </tr>
-                        @endforelse
+                    @empty
+                        <tr>
+                            <td>Data Tidak Ditemukan</td>
+                        </tr>
+                    @endforelse
 
-                    </tbody>
-                </table>
-            </div>
-
+                </tbody>
+            </table>
+        </div>
             <!--Navigasi Halaman-->
             <nav class="p-3" aria-label="Page navigation">
                 <ul class="pagination justify-content-end">
                     {{ $daftarTransaksi->withQueryString()->links() }}
                 </ul>
             </nav>
+    </div>
 
+    <!--Keterangan Status-->
+    <div class="card p-3">
+        <div class="row gx-3">
+            <div class="col-md-4 d-flex align-items-start">
+                <div class="content-right">
+                    <span class="badge bg-label-success me-1">Sudah Lunas</span>
+                    <p class="mb-0 lh-1">Pembayaran untuk penyewaan telah dilunasi</p>
+                </div>
+            </div>
+            <div class="col-md-4 d-flex align-items-center">
+                <div class="content-right">
+                    <span class="badge bg-label-primary me-1">Sudah Diambil</span>
+                    <p class="mb-0 lh-1">Barang yang disewa telah diambil oleh penyewa yang berada dekat dengan toko</p>
+                </div>
+            </div>
+            <div class="col-md-4 d-flex align-items-center">
+                <div class="content-right">
+                    <span class="badge bg-label-info me-1">Sudah Dikirim</span>
+                    <p class="mb-0 lh-1">Barang yang disewa telah dikirim ke penyewa yang berada di luar kota atau jauh dari
+                        toko</p>
+                </div>
+            </div>
         </div>
-        <!--/ Basic Bootstrap Table -->
+    </div>
 
     @endsection

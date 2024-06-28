@@ -6,26 +6,8 @@
     <!-- Alert -->
     @include('layout.page-alert')
 
-    <!--Keterangan Status-->
-    <div class="card p-3">
-        <div class="row gx-3">
-            <div class="col-md-6 d-flex align-items-start">
-                <div class="content-right">
-                    <span class="badge bg-label-warning me-1">Belum DiBayar</span>
-                    <p class="mb-0 lh-1">Pembayaran belum diterima atau belum dikonfirmasi</p>
-                </div>
-            </div>
-            <div class="col-md-6 d-flex align-items-center">
-                <div class="content-right">
-                    <span class="badge bg-label-success me-1">Lunas</span>
-                    <p class="mb-0 lh-1">Pembayaran telah diterima dan dikonfirmasi</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Tabel -->
-    <div class="card mt-2">
+    <div class="card mb-3">
         <div class="table-responsive text-nowrap">
             <table class="table">
                 <thead>
@@ -65,13 +47,6 @@
                             <td>
                                 Rp{{ number_format($pembayaran->transaksi->harga_total, 0, ',', '.') }}
                             </td>
-                            {{-- <td>
-                                @if ($pembayaran->metode_pembayaran != null)
-                                    {{ $pembayaran->metode_pembayaran }}
-                                @else
-                                    -
-                                @endif
-                            </td> --}}
                             <td>
                                 @switch($pembayaran->status_pembayaran)
                                     @case('belum_bayar')
@@ -103,16 +78,14 @@
                                 @endif
                             @endcan
                         </tr>
-
-                        @empty
-                            <tr>
-                                <td>Data Tidak Ditemukan</td>
-                            </tr>
-                        @endforelse
-
-                    </tbody>
-                </table>
-            </div>
+                    @empty
+                        <tr>
+                            <td>Data Tidak Ditemukan</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
 
             <!--Navigasi Halaman-->
             <nav class="p-3" aria-label="Page navigation">
@@ -120,8 +93,24 @@
                     {{ $daftarPembayaran->withQueryString()->links() }}
                 </ul>
             </nav>
+    </div>
 
+    <!--Keterangan Status-->
+    <div class="card p-3">
+        <div class="row gx-3">
+            <div class="col-md-6 d-flex align-items-start">
+                <div class="content-right">
+                    <span class="badge bg-label-warning me-1">Belum DiBayar</span>
+                    <p class="mb-0 lh-1">Pembayaran belum diterima atau belum dikonfirmasi</p>
+                </div>
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+                <div class="content-right">
+                    <span class="badge bg-label-success me-1">Lunas</span>
+                    <p class="mb-0 lh-1">Pembayaran telah diterima dan dikonfirmasi</p>
+                </div>
+            </div>
         </div>
-        <!--/ Basic Bootstrap Table -->
+    </div>
 
     @endsection

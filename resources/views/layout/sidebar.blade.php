@@ -8,7 +8,7 @@
     <!-- Beranda -->
     <li class="menu-item {{ Request::is('home*') ? 'active' : '' }}">
         <a href="{{ route('home') }}" class="menu-link">
-            <i class='menu-icon tf-icons bx bxs-home-smile'></i>
+            <i class='menu-icon tf-icons bx bxs-home'></i>
             <div data-i18n="Analytics">Beranda</div>
         </a>
     </li>

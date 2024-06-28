@@ -6,33 +6,8 @@
     <!-- Alert -->
     @include('layout.page-alert')
 
-    <!--Keterangan Status-->
-    <div class="card p-3">
-        <div class="row gx-3">
-            <div class="col-md-4 d-flex align-items-start">
-                <div class="content-right">
-                    <span class="badge bg-label-warning me-1">DiProses</span>
-                    <p class="mb-0 lh-1">Pesanan sedang dalam tahap verifikasi dan penyiapan</p>
-                </div>
-            </div>
-            <div class="col-md-4 d-flex align-items-center">
-                <div class="content-right">
-                    <span class="badge bg-label-success me-1">DiTerima</span>
-                    <p class="mb-0 lh-1">Pesanan telah disetujui dan akan segera diproses lebih lanjut</p>
-                </div>
-            </div>
-            <div class="col-md-4 d-flex align-items-center">
-                <div class="content-right">
-                    <span class="badge bg-label-danger me-1">DiTolak</span>
-                    <p class="mb-0 lh-1">Pesanan tidak disetujui, kemungkinan karena alasan tertentu seperti stok habis atau informasi yang tidak valid</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     <!-- Tabel -->
-    <div class="card mt-2">
+    <div class="card mb-3">
         <div class="table-responsive text-nowrap">
             <table class="table">
                 <thead>
@@ -153,9 +128,9 @@
                             </tr>
                         @endforelse
 
-                    </tbody>
-                </table>
-            </div>
+                </tbody>
+            </table>
+        </div>
 
             <!--Navigasi Halaman-->
             <nav class="p-3" aria-label="Page navigation">
@@ -163,8 +138,32 @@
                     {{ $daftarOrderan->withQueryString()->links() }}
                 </ul>
             </nav>
+    </div>
 
+
+    <!--Keterangan Status-->
+    <div class="card p-3">
+        <div class="row gx-3">
+            <div class="col-md-4 d-flex align-items-start">
+                <div class="content-right">
+                    <span class="badge bg-label-warning me-1">DiProses</span>
+                    <p class="mb-0 lh-1">Pesanan sedang dalam tahap verifikasi dan penyiapan</p>
+                </div>
+            </div>
+            <div class="col-md-4 d-flex align-items-center">
+                <div class="content-right">
+                    <span class="badge bg-label-success me-1">DiTerima</span>
+                    <p class="mb-0 lh-1">Pesanan telah disetujui dan akan segera diproses lebih lanjut</p>
+                </div>
+            </div>
+            <div class="col-md-4 d-flex align-items-center">
+                <div class="content-right">
+                    <span class="badge bg-label-danger me-1">DiTolak</span>
+                    <p class="mb-0 lh-1">Pesanan tidak disetujui, kemungkinan karena alasan tertentu seperti stok habis atau
+                        informasi yang tidak valid</p>
+                </div>
+            </div>
         </div>
-        <!--/ Basic Bootstrap Table -->
+    </div>
 
     @endsection

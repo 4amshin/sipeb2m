@@ -101,6 +101,17 @@
 
 @push('customJs')
     <script>
+        //Script Button
+        document.querySelectorAll(".addCart").forEach(button => {
+            button.addEventListener("click", (e) => {
+                e.preventDefault();
+                button.classList.add("animate");
+                setTimeout(() => {
+                    button.classList.remove("animate");
+                }, 600);
+            });
+        });
+
         let products = @json($daftarBaju);
 
         document.querySelector('.checkOut').addEventListener('click', () => {
@@ -143,5 +154,6 @@
                 });
         });
     </script>
+
     <script src="{{ asset('assets/js/cart.js') }}"></script>
 @endpush
