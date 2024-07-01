@@ -30,7 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     /*----------------------------------------BAJU--------------------------------------*/
     Route::resource('baju', BajuController::class);
     Route::post('/checkout', [BajuController::class, 'checkout'])->name('checkout');
-
+    Route::get('/check-stock/{baju}', [BajuController::class, 'checkStock']);
 
 
     /*----------------------------------------TRANSAKSI--------------------------------------*/

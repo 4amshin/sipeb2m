@@ -97,7 +97,6 @@ header {
 /*-----------------------------------------------*/
 
 
-
 /* cart */
 .cartTab {
     width: 400px;
@@ -110,6 +109,11 @@ header {
     display: grid;
     grid-template-rows: 70px 1fr 70px;
     transition: .5s;
+}
+
+.plus.disabled  {
+    color: grey;
+    pointer-events: none;
 }
 
 .totalPriceContainer {

@@ -93,6 +93,15 @@ class BajuController extends Controller
         return redirect()->route('daftarOrderan')->with('success', 'Transaksi diproses');
     }
 
+    public function checkStock(Baju $baju)
+    {
+        if ($baju) {
+            return response()->json(['stok' => $baju->stok]);
+        } else {
+            return response()->json(['stok' => 0], 404);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      */
