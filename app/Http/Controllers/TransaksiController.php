@@ -127,8 +127,6 @@ class TransaksiController extends Controller
     }
 
 
-
-
     /**
      * Store a newly created resource in storage.
      */
@@ -191,7 +189,7 @@ class TransaksiController extends Controller
         // Reset session listDataBaju
         session()->forget('listDataBaju');
 
-        return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil disimpan.');
+        return redirect()->route('daftarOrderan')->with('success', 'Transaksi diproses.');
     }
 
 

@@ -1,3 +1,4 @@
+// cart.js
 let listProductHTML = document.querySelector('.listProduct');
 let listCartHTML = document.querySelector('.listCart');
 let iconCart = document.querySelector('.icon-cart');
@@ -14,19 +15,14 @@ closeCart.addEventListener('click', () => {
     body.classList.toggle('showCart');
 });
 
-listProductHTML.addEventListener('click', (event) => {
-    let positionClick = event.target;
-    if (positionClick.classList.contains('addCart')) {
-        let id_product = positionClick.closest('.item').dataset.id;
-        addToCart(id_product);
-    }
-});
-
-const addToCart = (product_id) => {
+const addToCart = (product_id, product_name, product_size, product_price) => {
     let positionThisProductInCart = cart.findIndex((value) => value.product_id == product_id);
     if (positionThisProductInCart < 0) {
         cart.push({
             product_id: product_id,
+            product_name: product_name,
+            product_size: product_size,
+            product_price: product_price,
             quantity: 1
         });
     } else {
@@ -51,11 +47,13 @@ const addCartToHTML = () => {
             newItem.classList.add('item');
             newItem.dataset.id = item.product_id;
 
-            // Get product information from DOM
-            let productElement = document.querySelector(`.listProduct .item[data-id='${item.product_id}']`);
-            let productName = productElement.querySelector('h2').innerText;
-            let productPrice = parseFloat(productElement.querySelector('.price').innerText.replace('Rp', '').replace(/\./g, '').replace('/Hari', ''));
-            let productImageSrc = productElement.querySelector('img').src;
+            // Ambil data produk dari array products
+            let product = products.find(p => p.id == item.product_id);
+            let productName = product.nama_baju;
+            let productSize = item.product_size;
+            let productPrice = product.harga_sewa_perhari;
+            let productImageSrc = product.gambar_baju ? `{{ asset('storage/${product.gambar_baju}') }}` : `{{ asset('assets/img/baju-kosong.png') }}`;
+            // let productImageSrc = productElement.querySelector('img').src;
 
             totalPrice += productPrice * item.quantity;
 
@@ -64,7 +62,7 @@ const addCartToHTML = () => {
                     <img src="${productImageSrc}">
                 </div>
                 <div class="details">
-                    <div class="name">${productName}</div>
+                    <div class="name">${productName} (${productSize})</div>
                     <div class="totalPrice">Rp${(productPrice * item.quantity).toLocaleString('id-ID')}</div>
                     <div class="quantity">
                         <span class="minus"><i class="tf-icons bx bx-minus"></i></span>
@@ -112,7 +110,6 @@ const changeQuantityCart = (product_id, type) => {
 };
 
 const initApp = () => {
-    // Get data cart from memory
     if (localStorage.getItem('cart')) {
         cart = JSON.parse(localStorage.getItem('cart'));
         addCartToHTML();
@@ -120,3 +117,4 @@ const initApp = () => {
 };
 
 initApp();
+``

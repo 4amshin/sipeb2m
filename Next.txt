@@ -1,7 +1,9 @@
 - Gambar Baju
     - ketika update gambar baju gambar lama masih tidak terhapus
 
+- Perbaiki
+    - logika tambah kurang jumalh barang pada chart
+        - ketika sudah mencapai batas maka hilangkan tombol tambah
+    - gambar item pada list Cart
 
-- Daftar pembayaran
-    - buat tanggal mejadi list, setiap kali update pembyaran/
-    pembyaran meningkat maka catat tanggal
+- Buat Landing Page

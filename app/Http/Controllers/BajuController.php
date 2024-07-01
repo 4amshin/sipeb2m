@@ -32,7 +32,11 @@ class BajuController extends Controller
 
             return view('admin.baju.daftar-baju', compact('daftarBaju'))->with('showNavbar', true);
         } else  if ($user->role == 'pengguna') {
-            $daftarBaju = Baju::all();
+            // $daftarBaju = Baju::all();
+            $daftarBaju = Baju::all()->map(function ($baju) {
+                $baju->gambar_baju_url = $baju->gambar_baju ? asset('storage/' . $baju->gambar_baju) : asset('assets/img/baju-kosong.png');
+                return $baju;
+            });
 
             return view('admin.baju.keranjang', compact('daftarBaju'))->with('showNavbar', false);
         }
@@ -40,23 +44,31 @@ class BajuController extends Controller
 
     public function checkout(Request $request)
     {
-        // Decode the cart data
+        // Menguraikan data keranjang
         $cart = json_decode($request->input('cart'), true);
 
-        // Get the authenticated user
+        // Mendapatkan pengguna yang terautentikasi
         $user = Auth::user();
         $penyewa = Pengguna::where('email', $user->email)->first();
 
-        // Generate transaction code
+        // Menghasilkan kode transaksi
         $kodeTransaksi = Str::random(10);
 
-        // Calculate total price from cart
-        $totalPrice = array_reduce($cart, function ($sum, $item) {
+
+        // Mendapatkan tanggal sewa dan tanggal kembali
+        $tanggalSewa = new \DateTime($request->input('tanggal_sewa'));
+        $tanggalKembali = new \DateTime($request->input('tanggal_kembali'));
+
+        // Menghitung jumlah hari sewa
+        $jumlahHari = $tanggalKembali->diff($tanggalSewa)->days + 1;
+
+        // Menghitung total harga dari keranjang
+        $totalPrice = array_reduce($cart, function ($sum, $item) use ($jumlahHari) {
             $baju = Baju::find($item['product_id']);
-            return $sum + ($baju->harga_sewa_perhari * $item['quantity']);
+            return $sum + ($baju->harga_sewa_perhari * $item['quantity'] * $jumlahHari);
         }, 0);
 
-        // Create new transaction
+        // Membuat transaksi baru
         $transaksi = new Transaksi();
         $transaksi->kode_transaksi = $kodeTransaksi;
         $transaksi->nama_penyewa = $penyewa->nama;
@@ -67,20 +79,18 @@ class BajuController extends Controller
         $transaksi->harga_total = $totalPrice;
         $transaksi->save();
 
-        // Create detail transactions
+        // Membuat detail transaksi
         foreach ($cart as $item) {
             $baju = Baju::find($item['product_id']);
             $detailTransaksi = new DetailTransaksi();
             $detailTransaksi->transaksi_id = $transaksi->id;
             $detailTransaksi->baju_id = $item['product_id'];
-            $detailTransaksi->ukuran = $baju->ukuran; // Assuming 'ukuran' is a property of Baju model
+            $detailTransaksi->ukuran = $baju->ukuran; // Menganggap 'ukuran' adalah properti dari model Baju
             $detailTransaksi->jumlah = $item['quantity'];
             $detailTransaksi->save();
         }
 
-        return redirect()->route('transaksi.index')->with('success', 'Transaksi Berhasil');
-        // Return JSON response
-        // return response()->json(['message' => 'Transaction successful!'], 200);
+        return redirect()->route('daftarOrderan')->with('success', 'Transaksi diproses');
     }
 
     /**
@@ -151,7 +161,9 @@ class BajuController extends Controller
             ]);
 
             //hapus foto lama
-            Storage::disk('public')->delete($oldFoto);
+            if ($oldFoto) {
+                Storage::disk('public')->delete($oldFoto);
+            }
         } else {
             $baju->update([
                 'nama_baju' => $request->nama_baju,
