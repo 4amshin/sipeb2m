@@ -9,10 +9,21 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+/*----------------------------------------LANDING PAGE--------------------------------------*/
 Route::get('/', function () {
-    return view('auth.login');
+    return view('landing-page.index');
 });
 
+Route::get('/product', function () {
+    return view('landing-page.products');
+});
+
+Route::get('/contact', function () {
+    return view('landing-page.contact');
+});
+
+
+/*----------------------------------------AUTH USER--------------------------------------*/
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('home', function () {
         return view('admin.home')->with('showNavbar', true);
@@ -39,7 +50,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/transaksi/tambah-data-baju', [TransaksiController::class, 'tambahDataBaju'])->name('transaksi.tambahDataBaju');
 
     /*----------------------------------------ORDERAN--------------------------------------*/
-    Route::get('/daftarOrderan', [TransaksiController::class,'daftarOrderan'])->name('daftarOrderan');
+    Route::get('/daftarOrderan', [TransaksiController::class, 'daftarOrderan'])->name('daftarOrderan');
     Route::get('/transaksi/terimaOrderan/{transaksi}', [TransaksiController::class, 'terimaOrderan'])->name('transaksi.terimaOrderan');
     Route::get('/transaksi/tolakOrderan/{transaksi}', [TransaksiController::class, 'tolakOrderan'])->name('transaksi.tolakOrderan');
 
