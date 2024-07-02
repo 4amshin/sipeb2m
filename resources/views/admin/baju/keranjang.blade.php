@@ -39,6 +39,8 @@
             @endforelse
         </div>
     </div>
+
+    <!--Side CartTab-->
     <div class="cartTab">
         <h1>Keranjang Saya</h1>
         <div class="listCart">

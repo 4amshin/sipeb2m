@@ -199,7 +199,9 @@ const addCartToHTML = () => {
             let productName = product.nama_baju;
             let productSize = item.product_size;
             let productPrice = product.harga_sewa_perhari;
-            let productImageSrc = product.gambar_baju ? `{{ asset('storage/${product.gambar_baju}') }}` : `{{ asset('assets/img/baju-kosong.png') }}`;
+            // let productImageSrc = product.gambar_baju ? `{{ asset('storage/${product.gambar_baju}') }}` : `{{ asset('assets/img/baju-kosong.png') }}`;
+            let productImageSrc = product.gambar_baju ? `${window.location.origin}/storage/${product.gambar_baju}` : `${window.location.origin}/assets/img/baju-kosong.png`;
+
 
             totalPrice += productPrice * item.quantity;
 

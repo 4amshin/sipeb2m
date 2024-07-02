@@ -1,7 +1,4 @@
-- Gambar Baju
-    - ketika update gambar baju gambar lama masih tidak terhapus
-
 - Perbaiki
-    - gambar item pada list Cart
+    - tambahkan jumlah stok setiap kali ukuran baju dpilih
 
 - Buat Landing Page
