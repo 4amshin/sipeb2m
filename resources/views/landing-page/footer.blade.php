@@ -3,10 +3,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="block">
-                    <a href="index.html" class="mb-4 d-inline-block"> <img src="{{ asset('assets/img/logo.svg') }}"
+                    <a href="" class="mb-4 d-inline-block"> <img src="{{ asset('assets/img/logo.svg') }}"
                             alt="Vex" width="100px"> </a>
-                    <p class="copyright-text">Copyright &copy; 2021, Designed &amp; Developed By <a
-                            href="https://themefisher.com/">Themefisher</a></p>
+                    <p class="copyright-text">Copyright &copy; 2024 Sipeb2m</p>
                 </div>
             </div>
         </div>
