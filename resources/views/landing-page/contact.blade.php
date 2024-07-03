@@ -15,8 +15,8 @@
                         <li class="mb-3"><a href="tel:0124857985320"><i class="tf-ion-ios-telephone mr-2"></i>
                                 0124857985320</a></li>
                         <li class="mb-3"><a href="mailto:demo@email.com"><i
-                                    class="tf-ion-email mr-2"></i>demo@email.com</a></li>
-                        <li class="mb-3"><i class="tf-ion-ios-location mr-2"></i>Dhaka, Bangladedsh
+                                    class="tf-ion-email mr-2"></i>admin@sipeb2m.id</a></li>
+                        <li class="mb-3"><i class="tf-ion-ios-location mr-2"></i>Olang, Ponrang Selatan
                         </li>
                     </ul>
                 </div>

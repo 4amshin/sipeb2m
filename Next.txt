@@ -1,4 +1,10 @@
 - Perbaiki
     - tambahkan jumlah stok setiap kali ukuran baju dpilih
 
-- Buat Landing Page
+- Landing Page
+    - Koleksi Baju
+        - Tampilkan Baju dari daftar Baju databse
+        - hilangkan tombol tambah ketika hover baju
+    - lengkapi kontak(nomor, email, alamat)
+    - Buat Landing Page Bisa Diedit
+        - buatkan tabel informasi

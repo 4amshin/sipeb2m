@@ -14,9 +14,7 @@ Route::get('/', function () {
     return view('landing-page.index');
 });
 
-Route::get('/product', function () {
-    return view('landing-page.products');
-});
+Route::get('/product', [BajuController::class, 'koleksiBaju']);
 
 Route::get('/contact', function () {
     return view('landing-page.contact');

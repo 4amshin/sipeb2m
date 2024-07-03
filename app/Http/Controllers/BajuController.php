@@ -42,6 +42,29 @@ class BajuController extends Controller
         }
     }
 
+    public function koleksiBaju()
+    {
+        // Mendapatkan daftar nama baju yang unik
+        $distinctNames = Baju::select('nama_baju')->distinct()->get();
+
+        // Membuat koleksi kosong untuk menyimpan hasil akhir
+        $koleksiBaju = collect();
+
+        // Iterasi melalui setiap nama baju yang unik
+        foreach ($distinctNames as $name) {
+            // Mengambil baris pertama yang cocok dengan nama baju
+            $baju = Baju::where('nama_baju', $name->nama_baju)->first();
+            // Menambahkan hasil ke dalam koleksi jika ditemukan
+            if ($baju) {
+                $koleksiBaju->push($baju);
+            }
+        }
+
+        // Mengirimkan hasil ke tampilan
+        return view('landing-page.products', compact('koleksiBaju'));
+    }
+
+
     public function checkout(Request $request)
     {
         // Menguraikan data keranjang

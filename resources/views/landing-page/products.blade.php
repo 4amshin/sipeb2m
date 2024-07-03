@@ -10,152 +10,26 @@
                     <h1 class="font-weight-bold">Koleksi Baju Bodo</h1>
                 </div>
 
-                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                    <div class="block">
-                        <div class="gallery-overlay">
-                            <a href="product-details.html" class="gallery-popup">
-                                <i class="tf-ion-plus-round"></i>
-                            </a>
+                @foreach ($koleksiBaju as $baju)
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="block">
+                            <div class="gallery-overlay">
+                                <a href="product-details.html" class="gallery-popup">
+                                    <i class="tf-ion-plus-round"></i>
+                                </a>
+                            </div>
+                            <img class="img-fluid" src="{{ asset('storage/'.$baju->gambar_baju) }}"
+                                alt="Apple Watch">
                         </div>
-                        <img class="img-fluid" src="{{ asset('assets/img/lp-images/showcase/showcase-1.png') }}"
-                            alt="Apple Watch">
-                    </div>
-                    <div class="product-info">
-                        <h4 class="mb-2"><a href="product-details.html" class="link-title">Apple Watch</a></h4>
-                        <p class="price">$25.00
-                            <s class="price">$30.00</s>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                    <div class="block">
-                        <div class="gallery-overlay">
-                            <a href="product-details.html" class="gallery-popup">
-                                <i class="tf-ion-plus-round"></i>
-                            </a>
+                        <div class="product-info">
+                            <h4 class="mb-2"><a href="product-details.html" class="link-title">{{ $baju->nama_baju }}</a></h4>
+                            <p class="price">
+                                Rp{{ number_format($baju->harga_sewa_perhari, 0, ',', '.') }}
+                            </p>
                         </div>
-                        <img class="img-fluid" src="{{ asset('assets/img/lp-images/showcase/showcase-2.png') }}"
-                            alt="Galaxy Watch">
                     </div>
-                    <div class="product-info">
-                        <h4 class="mb-2"><a href="product-details.html" class="link-title">Galaxy Watch</a></h4>
-                        <p class="price">$25.00
-                            <s class="price">$30.00</s>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                    <div class="block">
-                        <div class="gallery-overlay">
-                            <a href="product-details.html" class="gallery-popup">
-                                <i class="tf-ion-plus-round"></i>
-                            </a>
-                        </div>
-                        <img class="img-fluid" src="{{ asset('assets/img/lp-images/showcase/showcase-4.png') }}"
-                            alt="Motorola Watch">
-                    </div>
-                    <div class="product-info">
-                        <h4 class="mb-2"><a href="product-details.html" class="link-title">Motorola Watch</a></h4>
-                        <p class="price">$25.00
-                            <s class="price">$30.00</s>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                    <div class="block">
-                        <div class="gallery-overlay">
-                            <a href="product-details.html" class="gallery-popup">
-                                <i class="tf-ion-plus-round"></i>
-                            </a>
-                        </div>
-                        <img class="img-fluid" src="{{ asset('assets/img/lp-images/showcase/showcase-7.png') }}"
-                            alt="OnePlus Watch">
-                    </div>
-                    <div class="product-info">
-                        <h4 class="mb-2"><a href="product-details.html" class="link-title">OnePlus Watch</a></h4>
-                        <p class="price">$25.00
-                            <s class="price">$30.00</s>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                    <div class="block">
-                        <div class="gallery-overlay">
-                            <a href="product-details.html" class="gallery-popup">
-                                <i class="tf-ion-plus-round"></i>
-                            </a>
-                        </div>
-                        <img class="img-fluid" src="{{ asset('assets/img/lp-images/showcase/showcase-8.png') }}"
-                            alt="Oppo Watch">
-                    </div>
-                    <div class="product-info">
-                        <h4 class="mb-2"><a href="product-details.html" class="link-title">Oppo Watch</a></h4>
-                        <p class="price">$25.00
-                            <s class="price">$30.00</s>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                    <div class="block">
-                        <div class="gallery-overlay">
-                            <a href="product-details.html" class="gallery-popup">
-                                <i class="tf-ion-plus-round"></i>
-                            </a>
-                        </div>
-                        <img class="img-fluid" src="{{ asset('assets/img/lp-images/showcase/showcase-6.png') }}"
-                            alt="Realme Watch">
-                    </div>
-                    <div class="product-info">
-                        <h4 class="mb-2"><a href="product-details.html" class="link-title">Realme Watch</a></h4>
-                        <p class="price">$25.00
-                            <s class="price">$30.00</s>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                    <div class="block">
-                        <div class="gallery-overlay">
-                            <a href="product-details.html" class="gallery-popup">
-                                <i class="tf-ion-plus-round"></i>
-                            </a>
-                        </div>
-                        <img class="img-fluid" src="{{ asset('assets/img/lp-images/showcase/showcase-5.png') }}"
-                            alt="Redmi Watch">
-                    </div>
-                    <div class="product-info">
-                        <h4 class="mb-2"><a href="product-details.html" class="link-title">Redmi Watch</a></h4>
-                        <p class="price">$25.00
-                            <s class="price">$30.00</s>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                    <div class="block">
-                        <div class="gallery-overlay">
-                            <a href="product-details.html" class="gallery-popup">
-                                <i class="tf-ion-plus-round"></i>
-                            </a>
-                        </div>
-                        <img class="img-fluid" src="{{ asset('assets/img/lp-images/showcase/showcase-3.png') }}"
-                            alt="Xiaomi Watch">
-                    </div>
-                    <div class="product-info">
-                        <h4 class="mb-2"><a href="product-details.html" class="link-title">Xiaomi Watch</a></h4>
-                        <p class="price">$25.00
-                            <s class="price">$30.00</s>
-                        </p>
-                    </div>
-                </div>
-
+                @endforeach
             </div>
         </div>
     </section>
 @endsection
-

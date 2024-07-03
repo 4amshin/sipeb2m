@@ -24,6 +24,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/contact">Kontak</a>
                     </li>
+                    <li class="nav-item">
+                        <a href="/login" class="btn btn-second">Masuk/Daftar</a>
+                    </li>
 
                 </ul>
 
