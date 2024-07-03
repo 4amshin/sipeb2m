@@ -13,16 +13,11 @@
                 @foreach ($koleksiBaju as $baju)
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                         <div class="block">
-                            <div class="gallery-overlay">
-                                <a href="product-details.html" class="gallery-popup">
-                                    <i class="tf-ion-plus-round"></i>
-                                </a>
-                            </div>
-                            <img class="img-fluid" src="{{ asset('storage/'.$baju->gambar_baju) }}"
-                                alt="Apple Watch">
+                            <img class="img-fluid" src="{{ asset('storage/' . $baju->gambar_baju) }}" alt="Apple Watch">
                         </div>
                         <div class="product-info">
-                            <h4 class="mb-2"><a href="product-details.html" class="link-title">{{ $baju->nama_baju }}</a></h4>
+                            <h4 class="mb-2"><a href="product-details.html" class="link-title">{{ $baju->nama_baju }}</a>
+                            </h4>
                             <p class="price">
                                 Rp{{ number_format($baju->harga_sewa_perhari, 0, ',', '.') }}
                             </p>
