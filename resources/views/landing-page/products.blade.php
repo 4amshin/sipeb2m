@@ -14,7 +14,7 @@
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                         <div class="block mb-5">
                             <div class="image-container">
-                                <img class="img-fluid" src="{{ asset('storage/' . $baju->gambar_baju) }}" alt="{{ $baju->nama_baju }}">
+                                <img class="koleksi-baju" src="{{ asset('storage/' . $baju->gambar_baju) }}" alt="{{ $baju->nama_baju }}">
                             </div>
                         </div>
                         <div class="product-info mt-2">

@@ -427,6 +427,22 @@ a:active {
     position: relative;
 }
 
+.koleksi-baju {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 130%;
+    object-fit: cover;
+    border-radius: 30px;
+    transition: 0.3s ease;
+}
+
+.koleksi-baju:hover {
+    transform: scale(1.03);
+}
+
 .gallery .block:hover .gallery-overlay {
     transform: scale(1);
     opacity: 1;
