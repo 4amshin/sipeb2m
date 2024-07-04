@@ -34,9 +34,13 @@
                             <td>
                                 {{ $index + $daftarPengguna->firstItem() }}
                             </td>
-                            <td class="text-center">
-                                <img src="{{ $pengguna->gambar_profil ? asset($pengguna->gambar_profil) : asset('assets/img/baju-kosong.png') }}"
-                                    alt="Avatar" class="rounded-circle" width="50">
+                            <td class="align-center">
+                                <div class="avatar">
+                                    <img src="{{ $pengguna->gambar_profil ? asset('storage/profil/' . $pengguna->gambar_profil) : asset('assets/img/baju-kosong.png') }}"
+                                        alt class="w-px-40 rounded-circle fill-box w-p"/>
+                                </div>
+                                {{-- <img src="{{ $pengguna->gambar_profil ? asset('storage/profil/' . $pengguna->gambar_profil) : asset('assets/img/baju-kosong.png') }}"
+                                    alt="Avatar" class="rounded-circle fill-box" width="50px"> --}}
                             </td>
                             <td>
                                 <strong>

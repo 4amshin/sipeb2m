@@ -9,16 +9,15 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
-        //Cek Access
+        // Memeriksa apakah pengguna tidak memiliki izin sebagai super-user
         if (Gate::denies('super-user')) {
+            // Jika tidak memiliki izin, tampilkan halaman error 403
             abort(403, 'Anda tidak bisa mengakses halaman ini');
         }
 
+        // Mengambil daftar pengguna dari database dengan opsi pencarian dan paginasi
         $daftarPengguna = User::when($request->input('search'), function ($query, $search) {
             $query->where('name', 'like', '%' . $search . '%')
                 ->orWhere('nomor_telepon', 'like', '%' . $search . '%')
@@ -27,28 +26,24 @@ class UserController extends Controller
                 ->orWhere('email', 'like', '%' . $search . '%');
         })->orderBy('created_at', 'desc')->paginate(5);
 
+        // Mengembalikan tampilan daftar pengguna dengan data pengguna
         return view('admin.pengguna.daftar-pengguna', compact('daftarPengguna'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
+        // Mengembalikan tampilan untuk menambahkan pengguna baru
         return view('admin.pengguna.tambah-pengguna');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-
-        //Cek Akses
+        // Memeriksa apakah pengguna tidak memiliki izin 'super-user'
         if (Gate::denies('super-user')) {
             abort(403, 'Anda tidak bisa mengakses halaman ini');
         }
-        // Validasi input
+
+        // Memvalidasi data yang diinputkan
         $request->validate([
             'name' => 'required|string',
             'nomor_telepon' => 'required|string|max:15',
@@ -57,7 +52,7 @@ class UserController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        // Simpan pengguna baru
+        // Membuat pengguna baru dengan data yang telah divalidasi
         $user = User::create([
             'name' => $request->name,
             'nomor_telepon' => $request->nomor_telepon,
@@ -70,39 +65,26 @@ class UserController extends Controller
 
         dd($user);
 
-        // Redirect dengan pesan sukses
+        // Mengarahkan kembali ke daftar pengguna dengan pesan sukses
         return redirect()->route('user.index')->with('success', 'Pengguna berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(User $user)
     {
-        //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(User $user)
     {
+        // Mengembalikan tampilan untuk mengupdate data pengguna
         return view('admin.pengguna.update-pengguna', compact('user'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, User $user)
     {
-        //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(User $user)
     {
-        //
     }
 }

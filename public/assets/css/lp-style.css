@@ -418,6 +418,13 @@ a:active {
 .gallery .block {
     padding: 20px;
     position: relative;
+
+}
+
+.image-container {
+    width: 100%;
+    padding-top: 100%; /* This creates a square container, adjust the value to change aspect ratio */
+    position: relative;
 }
 
 .gallery .block:hover .gallery-overlay {

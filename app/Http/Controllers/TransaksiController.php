@@ -16,86 +16,101 @@ use Illuminate\Support\Str;
 
 class TransaksiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
+        // Mendapatkan pengguna yang sedang login
         $user = auth()->user();
 
+        // Memeriksa apakah pengguna memiliki peran 'pengguna'
         if ($user->role == 'pengguna') {
+            // Mendapatkan daftar transaksi yang sesuai dengan pengguna
             $daftarTransaksi = Transaksi::where('nama_penyewa', $user->name)
                 ->where('status_order', 'diterima')
-                ->where('status_sewa', 'sudah_ambil')
-                ->orWhere('status_sewa', 'sudah_lunas')
-                ->orWhere('status_sewa', 'dikirim')
+                ->where(function ($query) {
+                    $query->where('status_sewa', 'sudah_ambil')
+                        ->orWhere('status_sewa', 'sudah_lunas')
+                        ->orWhere('status_sewa', 'dikirim');
+                })
                 ->orderBy('created_at', 'desc')
                 ->paginate(5);
         } else {
+            // Mendapatkan daftar transaksi untuk admin
             $daftarTransaksi = Transaksi::where('status_order', 'diterima')
-                ->where('status_sewa', 'sudah_ambil')
-                ->orWhere('status_sewa', 'sudah_lunas')
-                ->orWhere('status_sewa', 'dikirim')
+                ->where(function ($query) {
+                    $query->where('status_sewa', 'sudah_ambil')
+                        ->orWhere('status_sewa', 'sudah_lunas')
+                        ->orWhere('status_sewa', 'dikirim');
+                })
                 ->orderBy('created_at', 'desc')
                 ->paginate(5);
         }
 
+        // Mengembalikan tampilan daftar penyewaan dengan daftar transaksi yang sesuai
         return view('admin.penyewaan.daftar-penyewaan', compact('daftarTransaksi'))->with('showNavbar', true);
     }
 
     public function daftarOrderan()
     {
+        // Mendapatkan pengguna yang sedang login
         $user = auth()->user();
 
+        // Memeriksa apakah pengguna memiliki peran 'pengguna'
         if ($user->role == 'pengguna') {
+            // Mendapatkan daftar orderan yang sesuai dengan pengguna
             $daftarOrderan = Transaksi::where('nama_penyewa', $user->name)
                 ->orderBy('created_at', 'desc')
                 ->paginate(5);
         } else {
+            // Mendapatkan daftar orderan untuk admin
             $daftarOrderan = Transaksi::orderBy('created_at', 'desc')
                 ->paginate(5);
         }
 
+        // Mengembalikan tampilan daftar orderan dengan daftar orderan yang sesuai
         return view('admin.penyewaan.daftar-orderan', compact('daftarOrderan'))->with('showNavbar', true);
     }
 
-
     public function riwayatPenyewaan()
     {
+        // Mendapatkan pengguna yang sedang login
         $user = auth()->user();
 
-
+        // Memeriksa apakah pengguna memiliki peran 'pengguna'
         if ($user->role == 'pengguna') {
+            // Mendapatkan daftar transaksi yang telah selesai untuk pengguna
             $daftarTransaksi = Transaksi::where('status_sewa', 'selesai')
                 ->where('nama_penyewa', $user->name)
                 ->orderBy('created_at', 'desc')
                 ->paginate(5);
         } else {
-            $daftarTransaksi  = Transaksi::where('status_sewa', 'selesai')
+            // Mendapatkan daftar transaksi yang telah selesai untuk admin
+            $daftarTransaksi = Transaksi::where('status_sewa', 'selesai')
                 ->orderBy('created_at', 'desc')
                 ->paginate(5);
         }
 
-
+        // Mengembalikan tampilan riwayat penyewaan dengan daftar transaksi yang sesuai
         return view('admin.penyewaan.riwayat-penyewaan', compact('daftarTransaksi'))->with('showNavbar', true);
     }
 
+
     public function getUkuran($nama_baju)
     {
-        // Mengambil semua data baju dengan nama_baju yang sesuai
+        // Mengambil data baju berdasarkan nama baju yang diberikan
         $bajus = Baju::where('nama_baju', $nama_baju)->get();
 
-        // Inisialisasi array untuk menampung ukuran yang tersedia
+        // Membuat array untuk menyimpan ukuran baju yang tersedia
         $listUkuran = [];
 
-        // Loop melalui setiap baju dan cek stoknya
+        // Mengecek setiap baju yang ditemukan
         foreach ($bajus as $baju) {
             if ($baju->stok > 0) {
+                // Menambahkan ukuran baju ke dalam array jika stok masih ada
                 $listUkuran[] = $baju->ukuran;
             }
         }
 
-        // Cek apakah ada ukuran yang tersedia
+        // Mengembalikan daftar ukuran jika tersedia, atau pesan error jika tidak ada ukuran atau stok habis
         if (count($listUkuran) > 0) {
             return response()->json($listUkuran);
         } else {
@@ -103,36 +118,43 @@ class TransaksiController extends Controller
         }
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
+        // Daftar ukuran yang tersedia
         $listUkuran = ['S', 'M', 'L', 'XL', 'XXL'];
+
+        // Mengambil semua data baju dari database
         $listBaju = Baju::all();
+
+        // Mengambil dan menghapus data baju dari session jika ada
         $listDataBaju = session()->get('listDataBaju', []);
         session()->forget('listDataBaju');
+
+        // Mengirimkan data ke view untuk proses tambah penyewaan
         return view('admin.penyewaan.tambah-penyewaan', compact('listBaju', 'listUkuran', 'listDataBaju'));
     }
 
     public function tambahDataBaju(Request $request)
     {
+        // Mendapatkan data baju yang ditambahkan dari request
         $dataBaju = $request->only(['nama_baju', 'ukuran', 'jumlah']);
+
+        // Mengambil list data baju dari session, jika tidak ada maka array kosong
         $listDataBaju = session()->get('listDataBaju', []);
+
+        // Menambahkan data baju baru ke dalam list
         $listDataBaju[] = $dataBaju;
+
+        // Menyimpan kembali list data baju ke dalam session
         session()->put('listDataBaju', $listDataBaju);
 
+        // Memberikan respons JSON untuk menandakan sukses
         return response()->json(['success' => true]);
     }
 
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        // Validasi input
+        // Validasi data yang diterima dari form
         $request->validate([
             'nama_penyewa' => 'required|string|max:255',
             'alamat_penyewa' => 'required|string|max:255',
@@ -141,12 +163,12 @@ class TransaksiController extends Controller
             'tanggal_kembali' => 'required|date|after_or_equal:tanggal_sewa',
         ]);
 
-        // Hitung durasi sewa dalam hari
+        // Menghitung durasi sewa berdasarkan tanggal sewa dan tanggal kembali
         $tanggalSewa = \Carbon\Carbon::parse($request->tanggal_sewa);
         $tanggalKembali = \Carbon\Carbon::parse($request->tanggal_kembali);
         $durasiSewa = $tanggalKembali->diffInDays($tanggalSewa);
 
-        // Hitung harga total
+        // Menghitung harga total berdasarkan baju yang dipilih
         $hargaTotal = 0;
         $listDataBaju = session()->get('listDataBaju', []);
         foreach ($listDataBaju as $dataBaju) {
@@ -161,9 +183,9 @@ class TransaksiController extends Controller
             }
         }
 
-        // Simpan data transaksi
+        // Membuat transaksi baru
         $transaksi = Transaksi::create([
-            'kode_transaksi' => Str::random(10), // Atau gunakan generator kode unik lainnya
+            'kode_transaksi' => Str::random(10),
             'nama_penyewa' => $request->nama_penyewa,
             'alamat_penyewa' => $request->alamat_penyewa,
             'noTelepon_penyewa' => $request->noTelepon_penyewa,
@@ -173,7 +195,7 @@ class TransaksiController extends Controller
             'status' => 'diproses',
         ]);
 
-        // Simpan data detail transaksi
+        // Menyimpan detail transaksi untuk setiap baju yang dipilih
         foreach ($listDataBaju as $dataBaju) {
             $baju = Baju::where('nama_baju', $dataBaju['nama_baju'])->first();
             if ($baju) {
@@ -186,20 +208,19 @@ class TransaksiController extends Controller
             }
         }
 
-        // Reset session listDataBaju
+        // Menghapus data baju dari session setelah transaksi selesai diproses
         session()->forget('listDataBaju');
 
+        // Redirect ke halaman daftar orderan dengan pesan sukses
         return redirect()->route('daftarOrderan')->with('success', 'Transaksi diproses.');
     }
 
-
-
     public function terimaOrderan(Transaksi $transaksi)
     {
-        // Update status transaksi menjadi diterima
+        // Memperbarui status order transaksi menjadi 'diterima'
         $transaksi->update(['status_order' => 'diterima']);
 
-        // Buat entri pembayaran baru
+        // Membuat entri pembayaran baru untuk transaksi ini
         $pembayaran = Pembayaran::create([
             'transaksi_id' => $transaksi->id,
             'status_pembayaran' => 'belum_bayar',
@@ -207,80 +228,71 @@ class TransaksiController extends Controller
             'tanggal_pembayaran' => null,
         ]);
 
-        // Buat entri pengembalian baru
+        // Membuat entri pengembalian baru untuk transaksi ini
         $pengembalian = Pengembalian::create([
             'transaksi_id' => $transaksi->id,
             'status' => 'belum_diKembalikan',
         ]);
 
-        // Redirect ke halaman daftar transaksi dengan pesan sukses
+        // Redirect kembali ke halaman daftar orderan dengan pesan sukses
         return redirect()->route('daftarOrderan')->with('success', 'Orderan Diterima.');
     }
 
     public function tolakOrderan(Transaksi $transaksi)
     {
-        // Update status transaksi menjadi ditolak
+        // Memperbarui status order transaksi menjadi 'ditolak'
         $transaksi->update(['status_order' => 'ditolak']);
 
-        // Redirect ke halaman daftar transaksi dengan pesan sukses
+        // Redirect kembali ke halaman daftar orderan dengan pesan info
         return redirect()->route('daftarOrderan')->with('info', 'Orderan Ditolak.');
     }
 
     public function diAmbil(Transaksi $transaksi)
     {
-        // Update status transaksi menjadi sudah_ambil
+        // Memperbarui status sewa transaksi menjadi 'sudah_ambil'
         $transaksi->update(['status_sewa' => 'sudah_ambil']);
 
-        // Redirect ke halaman daftar transaksi dengan pesan sukses
+        // Redirect kembali ke halaman indeks transaksi dengan pesan info
         return redirect()->route('transaksi.index')->with('info', 'Barang Telah Diambil');
     }
 
     public function diKirim(Transaksi $transaksi)
     {
-        // Update status transaksi menjadi dikirim
+        // Memperbarui status sewa transaksi menjadi 'dikirim'
         $transaksi->update(['status_sewa' => 'dikirim']);
 
-        // Redirect ke halaman daftar transaksi dengan pesan sukses
+        // Redirect kembali ke halaman indeks transaksi dengan pesan info
         return redirect()->route('transaksi.index')->with('info', 'Barang Telah Dikirim');
     }
 
-
     public function tandaiSelesai(Transaksi $transaksi)
     {
+        // Memperbarui status transaksi menjadi 'selesai'
         $transaksi->update(['status' => 'selesai']);
+
+        // Redirect kembali ke halaman indeks transaksi dengan pesan sukses
         return redirect()->route('transaksi.index')->with('success', 'Transaksi ditandai selesai.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Transaksi $transaksi)
     {
-        //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Transaksi $transaksi)
     {
-        //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateTransaksiRequest $request, transaksi $transaksi)
     {
-        //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Transaksi $transaksi)
     {
+        // Menghapus transaksi dari database
         $transaksi->delete();
+
+        // Redirect kembali ke halaman indeks transaksi dengan pesan informasi
         return redirect()->route('transaksi.index')->with('info', 'Transaksi Berhasil Dihapus');
     }
 }

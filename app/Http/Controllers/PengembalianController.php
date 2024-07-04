@@ -10,27 +10,29 @@ use Carbon\Carbon;
 
 class PengembalianController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
+        // Mengambil informasi pengguna yang sedang terautentikasi
         $user = auth()->user();
 
+        // Inisialisasi daftar pengembalian yang akan ditampilkan
+        $daftarPengembalian = null;
+
+        // Jika pengguna memiliki peran sebagai 'pengguna', hanya menampilkan pengembalian yang terkait dengan nama pengguna tersebut
         if ($user->role == 'pengguna') {
             $daftarPengembalian = Pengembalian::whereHas('transaksi', function ($query) use ($user) {
                 $query->where('nama_penyewa', $user->name);
             })->with('transaksi')->orderBy('created_at', 'desc')->paginate(5);
         } else {
+            // Jika pengguna memiliki peran lain atau tidak ditentukan, menampilkan semua pengembalian
             $daftarPengembalian = Pengembalian::with('transaksi')->orderBy('created_at', 'desc')->paginate(5);
         }
 
+        // Mengembalikan tampilan daftar pengembalian dengan variabel yang diperlukan
         return view('admin.pengembalian.daftar-pengembalian', compact('daftarPengembalian'))->with('showNavbar', true);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         //
@@ -38,52 +40,41 @@ class PengembalianController extends Controller
 
     public function tandaiKembali(Pengembalian $pengembalian)
     {
+        // Menandai status pengembalian sebagai 'diKembalikan' dan mencatat tanggal kembali saat ini
         $pengembalian->status = 'diKembalikan';
         $pengembalian->tanggal_kembali = Carbon::now();
         $pengembalian->save();
 
+        // Memperbarui status transaksi terkait menjadi 'selesai'
         $transaksi = Transaksi::find($pengembalian->transaksi->id);
         $transaksi->status_sewa = 'selesai';
         $transaksi->save();
 
+        // Redirect kembali ke halaman daftar pengembalian dengan pesan sukses
         return redirect()->route('pengembalian.index')->with('success', 'Baju telah dikembalikan');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(StorePengembalianRequest $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Pengembalian $pengembalian)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Pengembalian $pengembalian)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdatePengembalianRequest $request, Pengembalian $pengembalian)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Pengembalian $pengembalian)
     {
         //

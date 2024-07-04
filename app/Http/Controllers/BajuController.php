@@ -10,34 +10,37 @@ use App\Models\Pengguna;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class BajuController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
+        // Mendapatkan pengguna yang sedang login
         $user = auth()->user();
 
+        // Jika pengguna adalah admin
         if ($user->role == 'admin') {
+            // Mengambil daftar baju dengan pencarian dan pengurutan
             $daftarBaju = Baju::when($request->input('search'), function ($query, $search) {
                 $query->where('nama_baju', 'like', '%' . $search . '%')
                     ->orWhere('ukuran', 'like', '%' . $search . '%')
                     ->orWhere('deskripsi', 'like', '%' . $search . '%');
             })->orderBy('created_at', 'desc')->paginate(5);
 
+            // Mengirimkan data ke tampilan daftar baju admin
             return view('admin.baju.daftar-baju', compact('daftarBaju'))->with('showNavbar', true);
-        } else  if ($user->role == 'pengguna') {
-            // $daftarBaju = Baju::all();
+        }
+        // Jika pengguna adalah pengguna biasa
+        else if ($user->role == 'pengguna') {
+            // Mengambil semua data baju dan menambahkan URL gambar baju
             $daftarBaju = Baju::all()->map(function ($baju) {
                 $baju->gambar_baju_url = $baju->gambar_baju ? asset('storage/' . $baju->gambar_baju) : asset('assets/img/baju-kosong.png');
                 return $baju;
             });
 
+            // Mengirimkan data ke tampilan keranjang pengguna
             return view('admin.baju.keranjang', compact('daftarBaju'))->with('showNavbar', false);
         }
     }
@@ -54,6 +57,7 @@ class BajuController extends Controller
         foreach ($distinctNames as $name) {
             // Mengambil baris pertama yang cocok dengan nama baju
             $baju = Baju::where('nama_baju', $name->nama_baju)->first();
+
             // Menambahkan hasil ke dalam koleksi jika ditemukan
             if ($baju) {
                 $koleksiBaju->push($baju);
@@ -64,34 +68,32 @@ class BajuController extends Controller
         return view('landing-page.products', compact('koleksiBaju'));
     }
 
-
     public function checkout(Request $request)
     {
-        // Menguraikan data keranjang
+        // Mengambil data keranjang dari permintaan dan mengonversinya menjadi array
         $cart = json_decode($request->input('cart'), true);
 
-        // Mendapatkan pengguna yang terautentikasi
+        // Mendapatkan data pengguna yang sedang login
         $user = Auth::user();
         $penyewa = Pengguna::where('email', $user->email)->first();
 
-        // Menghasilkan kode transaksi
+        // Membuat kode transaksi secara acak
         $kodeTransaksi = Str::random(10);
 
-
-        // Mendapatkan tanggal sewa dan tanggal kembali
+        // Mendapatkan tanggal sewa dan tanggal kembali dari permintaan
         $tanggalSewa = new \DateTime($request->input('tanggal_sewa'));
         $tanggalKembali = new \DateTime($request->input('tanggal_kembali'));
 
         // Menghitung jumlah hari sewa
         $jumlahHari = $tanggalKembali->diff($tanggalSewa)->days + 1;
 
-        // Menghitung total harga dari keranjang
+        // Menghitung total harga sewa berdasarkan jumlah hari dan jumlah barang
         $totalPrice = array_reduce($cart, function ($sum, $item) use ($jumlahHari) {
             $baju = Baju::find($item['product_id']);
             return $sum + ($baju->harga_sewa_perhari * $item['quantity'] * $jumlahHari);
         }, 0);
 
-        // Membuat transaksi baru
+        // Membuat transaksi baru dan menyimpannya ke database
         $transaksi = new Transaksi();
         $transaksi->kode_transaksi = $kodeTransaksi;
         $transaksi->nama_penyewa = $penyewa->nama;
@@ -102,88 +104,93 @@ class BajuController extends Controller
         $transaksi->harga_total = $totalPrice;
         $transaksi->save();
 
-        // Membuat detail transaksi
+        // Menyimpan detail transaksi untuk setiap item di keranjang
         foreach ($cart as $item) {
             $baju = Baju::find($item['product_id']);
             $detailTransaksi = new DetailTransaksi();
             $detailTransaksi->transaksi_id = $transaksi->id;
             $detailTransaksi->baju_id = $item['product_id'];
-            $detailTransaksi->ukuran = $baju->ukuran; // Menganggap 'ukuran' adalah properti dari model Baju
+            $detailTransaksi->ukuran = $baju->ukuran;
             $detailTransaksi->jumlah = $item['quantity'];
             $detailTransaksi->save();
         }
 
+        // Mengarahkan pengguna ke halaman daftar orderan dengan pesan sukses
         return redirect()->route('daftarOrderan')->with('success', 'Transaksi diproses');
     }
 
     public function checkStock(Baju $baju)
     {
+        // Mengecek apakah baju tersedia
         if ($baju) {
+            // Mengembalikan stok baju dalam format JSON
             return response()->json(['stok' => $baju->stok]);
         } else {
+            // Jika baju tidak ditemukan, mengembalikan stok 0 dengan status 404
             return response()->json(['stok' => 0], 404);
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
+        // Mendefinisikan daftar ukuran baju yang tersedia
         $listUkuran = ['S', 'M', 'L', 'XL', 'XXL'];
+
+        // Menampilkan halaman tambah baju dengan daftar ukuran
         return view('admin.baju.tambah-baju', compact('listUkuran'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreBajuRequest $request)
     {
-        //$simpan data baju
+        // Membuat instance baru dari model Baju dengan data yang telah divalidasi
         $baju = new Baju($request->validated());
+
+        // Mengambil file gambar baju dari request
         $gambarBaju = $request->file('gambar_baju');
 
+        // Mengecek apakah ada file gambar baju yang diupload
         if ($request->hasFile('gambar_baju')) {
+            // Menyimpan file gambar baju ke direktori 'public'
             $gambarBaju->store('public');
 
+            // Menyimpan nama file gambar baju yang telah di-hash ke dalam atribut model Baju
             $baju->gambar_baju = $gambarBaju->hashName();
         }
 
+        // Menyimpan data baju ke dalam database
         $baju->save();
 
+        // Mengarahkan kembali ke halaman index baju dengan pesan sukses
         return redirect()->route('baju.index')->with('success', 'Baju berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Baju $baju)
     {
-        //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Baju $baju)
     {
+        // Menentukan daftar ukuran yang tersedia
         $listUkuran = ['S', 'M', 'L', 'XL', 'XXL'];
+
+        // Menampilkan halaman untuk mengupdate data baju dengan data baju dan daftar ukuran yang tersedia
         return view('admin.baju.update-baju', compact('baju', 'listUkuran'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateBajuRequest $request, Baju $baju)
     {
-        // $baju->fill($request->validated());
+        // Menyimpan nama file gambar baju lama
         $oldFoto = $baju->gambar_baju;
+
+        // Mengambil file gambar baju dari request
         $gambarBaju = $request->file('gambar_baju');
 
+        // Mengecek apakah ada file gambar baju yang diupload
         if ($request->hasFile('gambar_baju')) {
+            // Menyimpan file gambar baju ke direktori 'public'
             $gambarBaju->store('public');
 
-            // $baju->gambar_baju = $gambarBaju->hashName();
+            // Mengupdate data baju dengan gambar baru
             $baju->update([
                 'nama_baju' => $request->nama_baju,
                 'gambar_baju' => $gambarBaju->hashName(),
@@ -192,11 +199,12 @@ class BajuController extends Controller
                 'harga_sewa_perhari' => $request->harga_sewa_perhari,
             ]);
 
-            //hapus foto lama
+            // Menghapus file gambar baju lama dari penyimpanan jika ada
             if ($oldFoto) {
                 Storage::disk('public')->delete($oldFoto);
             }
         } else {
+            // Mengupdate data baju tanpa mengubah gambar
             $baju->update([
                 'nama_baju' => $request->nama_baju,
                 'ukuran' => $request->ukuran,
@@ -205,20 +213,19 @@ class BajuController extends Controller
             ]);
         }
 
-        // $baju->save();
-
+        // Mengarahkan kembali ke halaman index baju dengan pesan sukses
         return redirect()->route('baju.index')->with('success', 'Baju berhasil diperbarui');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Baju $baju)
     {
-        //hapus foto
+        // Menghapus file gambar baju dari penyimpanan
         Storage::disk('public')->delete($baju->gambar_baju);
 
+        // Menghapus data baju dari database
         $baju->delete();
+
+        // Mengarahkan kembali ke halaman index baju dengan pesan informasi
         return redirect()->route('baju.index')->with('info', 'Baju berhasil dihapus');
     }
 }
