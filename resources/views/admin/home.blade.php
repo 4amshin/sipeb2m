@@ -90,7 +90,7 @@
                                             <h6 class="mb-0">{{ $item->nama_baju }}</h5>
                                         </div>
                                         <div class="user-progress">
-                                            <small class="fw-semibold">{{ $item->total_penyewaan }}x</small>
+                                            <small class="fw-semibold">{{ $item->total_penyewaan }}Pcs</small>
                                         </div>
                                     </div>
                                 </li>
