@@ -56,7 +56,7 @@ class PenggunaController extends Controller
             'jenis_kelamin' => 'required|string|max:255',
             'nomor_telepon' => 'nullable|string|max:255',
             'alamat' => 'nullable|string|max:255',
-            'gambar_profil' => 'nullable|image|mimes:jpeg,png,jpg,webp',
+            'gambar_profil' => 'nullable|image|mimes:jpeg,png,jpg',
         ]);
 
         // Mengambil foto profil lama untuk kemungkinan penghapusan setelah pembaruan
@@ -74,8 +74,9 @@ class PenggunaController extends Controller
             // Menyimpan gambar profil baru
             $gambarProfil->store('public/profil');
 
+
             // Memperbarui nama file gambar profil
-            $pengguna->gambar_profil = $gambarProfil->hashName();
+            $validatedData['gambar_profil'] = $gambarProfil->hashName();
 
             // Menghapus gambar profil lama jika ada
             if ($oldFoto) {

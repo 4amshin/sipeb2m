@@ -1,9 +1,14 @@
 - Perbaiki
     - tambahkan jumlah stok setiap kali ukuran baju dpilih
 
-- Buatkan Laporan
-    - Menu Laporan atau tampilkan di beranda
-
 - Landing Page
     - Buat Landing Page Bisa Diedit
         - buatkan tabel informasi
+=======================
+- Buatkan Laporan
+    - Menu Laporan atau tampilkan di beranda
+
+- Fix Bug
+    - profil, setelah ganti gambar, gamabr tidak tampilkan
+    -
+
