@@ -4,7 +4,3 @@
 - Landing Page
     - Buat Landing Page Bisa Diedit
         - buatkan tabel informasi
-=======================
-- Buatkan Laporan
-    - Menu Laporan atau tampilkan di beranda
-

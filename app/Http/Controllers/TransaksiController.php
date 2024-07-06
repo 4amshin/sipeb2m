@@ -20,12 +20,10 @@ class TransaksiController extends Controller
 {
     public function homePage()
     {
-        // Baju Terlaris
+        /*------------------BAJU TERLARIS-------------------*/
         $bajuTerlaris = DetailTransaksi::select('baju_id', DB::raw('SUM(jumlah) as total_penyewaan'))
             ->whereHas('transaksi', function ($query) {
-                $query->where('status_sewa', 'selesai')
-                    ->whereMonth('tanggal_sewa', Carbon::now()->month)
-                    ->whereYear('tanggal_sewa', Carbon::now()->year);
+                $query->where('status_sewa', 'selesai');
             })
             ->groupBy('baju_id')
             ->orderBy('total_penyewaan', 'DESC')
@@ -49,15 +47,21 @@ class TransaksiController extends Controller
         foreach ($mergedItems as $namaBaju => $totalPenyewaan) {
             $bajuTerlarisMerged->push((object) ['nama_baju' => $namaBaju, 'total_penyewaan' => $totalPenyewaan]);
         }
+        /*------------------BAJU TERLARIS-------------------*/
 
-        // Total Penyewaan Bulan Ini
-        $totalPenyewaan = DetailTransaksi::whereHas('transaksi', function ($query) {
-            $query->where('status_sewa', 'selesai')
-                ->whereMonth('tanggal_sewa', Carbon::now()->month)
-                ->whereYear('tanggal_sewa', Carbon::now()->year);
-        })->sum('jumlah');
 
-        return view('admin.home', compact('bajuTerlarisMerged', 'totalPenyewaan'));
+        /*------------------PENDAPATAN BULANAN-------------------*/
+        $pendapatanBulanan = Transaksi::select(
+            DB::raw('SUM(harga_total) as total_pendapatan'),
+            DB::raw('DATE_FORMAT(tanggal_sewa, "%Y-%m") as bulan')
+        )
+            ->where('status_sewa', 'selesai')
+            ->groupBy(DB::raw('DATE_FORMAT(tanggal_sewa, "%Y-%m")'))
+            ->orderBy(DB::raw('DATE_FORMAT(tanggal_sewa, "%Y-%m")'), 'DESC')
+            ->get();
+        /*------------------PENDAPATAN BULANAN-------------------*/
+
+        return view('admin.home', compact('bajuTerlarisMerged', 'pendapatanBulanan'));
     }
 
 
