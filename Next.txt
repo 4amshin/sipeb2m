@@ -8,7 +8,3 @@
 - Buatkan Laporan
     - Menu Laporan atau tampilkan di beranda
 
-- Fix Bug
-    - profil, setelah ganti gambar, gamabr tidak tampilkan
-    -
-

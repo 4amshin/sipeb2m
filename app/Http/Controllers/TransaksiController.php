@@ -10,12 +10,58 @@ use App\Models\DetailTransaksi;
 use App\Models\Pembayaran;
 use App\Models\Pengembalian;
 use App\Models\Pengguna;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 
 class TransaksiController extends Controller
 {
+    public function homePage()
+    {
+        // Baju Terlaris
+        $bajuTerlaris = DetailTransaksi::select('baju_id', DB::raw('SUM(jumlah) as total_penyewaan'))
+            ->whereHas('transaksi', function ($query) {
+                $query->where('status_sewa', 'selesai')
+                    ->whereMonth('tanggal_sewa', Carbon::now()->month)
+                    ->whereYear('tanggal_sewa', Carbon::now()->year);
+            })
+            ->groupBy('baju_id')
+            ->orderBy('total_penyewaan', 'DESC')
+            ->with('baju') // Assuming you have a relationship to get the baju details
+            ->take(5) // Limit to top 5 items, adjust as necessary
+            ->get();
+
+        // Menggabungkan item berdasarkan nama baju
+        $mergedItems = [];
+        foreach ($bajuTerlaris as $item) {
+            $namaBaju = $item->baju->nama_baju;
+            if (isset($mergedItems[$namaBaju])) {
+                $mergedItems[$namaBaju] += $item->total_penyewaan;
+            } else {
+                $mergedItems[$namaBaju] = $item->total_penyewaan;
+            }
+        }
+
+        // Konversi array $mergedItems menjadi koleksi Laravel
+        $bajuTerlarisMerged = collect();
+        foreach ($mergedItems as $namaBaju => $totalPenyewaan) {
+            $bajuTerlarisMerged->push((object) ['nama_baju' => $namaBaju, 'total_penyewaan' => $totalPenyewaan]);
+        }
+
+        // Total Penyewaan Bulan Ini
+        $totalPenyewaan = DetailTransaksi::whereHas('transaksi', function ($query) {
+            $query->where('status_sewa', 'selesai')
+                ->whereMonth('tanggal_sewa', Carbon::now()->month)
+                ->whereYear('tanggal_sewa', Carbon::now()->year);
+        })->sum('jumlah');
+
+        return view('admin.home', compact('bajuTerlarisMerged', 'totalPenyewaan'));
+    }
+
+
+
     public function index()
     {
         // Mendapatkan pengguna yang sedang login
@@ -92,7 +138,6 @@ class TransaksiController extends Controller
         // Mengembalikan tampilan riwayat penyewaan dengan daftar transaksi yang sesuai
         return view('admin.penyewaan.riwayat-penyewaan', compact('daftarTransaksi'))->with('showNavbar', true);
     }
-
 
     public function getUkuran($nama_baju)
     {

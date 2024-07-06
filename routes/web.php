@@ -23,9 +23,11 @@ Route::get('/contact', function () {
 
 /*----------------------------------------AUTH USER--------------------------------------*/
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('home', function () {
-        return view('admin.home')->with('showNavbar', true);
-    })->name('home');
+    // Route::get('home', function () {
+    //     return view('admin.home')->with('showNavbar', true);
+    // })->name('home');
+
+    Route::get('home', [TransaksiController::class,'homePage'])->name('home');
 
     Route::resource('user', UserController::class);
 
