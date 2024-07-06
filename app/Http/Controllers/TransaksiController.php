@@ -61,7 +61,7 @@ class TransaksiController extends Controller
             ->get();
         /*------------------PENDAPATAN BULANAN-------------------*/
 
-        return view('admin.home', compact('bajuTerlarisMerged', 'pendapatanBulanan'));
+        return view('admin.home', compact('bajuTerlarisMerged', 'pendapatanBulanan'))->with('showNavbar', true);
     }
 
 
