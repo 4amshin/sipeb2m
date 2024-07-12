@@ -31,18 +31,22 @@ class PenggunaObserver
      */
     public function updated(Pengguna $pengguna): void
     {
-        $userData = [
-            'name' => $pengguna->nama,
-            'email' => $pengguna->email,
-        ];
+        $user = User::where('email', $pengguna->getOriginal('email'))->first();
 
-        //update password only when it submitted
-        if (!empty($pengguna->password)) {
-            $userData['password'] = Hash::make($pengguna->password);
+        if ($user) {
+            $userData = [
+                'name' => $pengguna->nama,
+                'email' => $pengguna->email,
+            ];
+
+            // Update password only if it is submitted
+            if (!empty($pengguna->password)) {
+                $userData['password'] = Hash::make($pengguna->password);
+            }
+
+            // Update user data in the users table
+            $user->update($userData);
         }
-
-        // Update user data in the users table
-        User::where('email', $pengguna->email)->update($userData);
     }
 
     /**
@@ -50,9 +54,11 @@ class PenggunaObserver
      */
     public function deleted(Pengguna $pengguna): void
     {
-        //delete user
-        $user = User::find($pengguna->id);
-        $user->delete();
+        // Delete user
+        $user = User::where('email', $pengguna->email)->first();
+        if ($user) {
+            $user->delete();
+        }
     }
 
     /**
