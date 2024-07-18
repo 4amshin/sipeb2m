@@ -45,6 +45,9 @@
     <!--Content-->
     @yield('content')
 
+    {{-- @include('landing-page.footer') --}}
+
+
     <script src="{{ asset('assets/lp-pluggins/jquery/jquery.js') }}"></script>
 
     <script src="{{ asset('assets/lp-pluggins/bootstrap/bootstrap.min.js') }}"></script>
@@ -55,4 +58,3 @@
 </body>
 
 </html>
-@include('landing-page.footer')

@@ -10,6 +10,7 @@
         <div class="col-md-12">
             <div class="card mb-4">
                 <h5 class="card-header">Biodata Pengguna</h5>
+                <!--FORM-->
                 <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
@@ -105,6 +106,7 @@
                         </form>
                     </div>
                 </form>
+                <!--FORM-->
             </div>
         </div>
     </div>
