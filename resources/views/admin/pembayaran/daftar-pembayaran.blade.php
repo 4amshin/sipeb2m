@@ -26,6 +26,7 @@
                         <th>Status</th>
                         <th>Tanggal</th>
                         @can('super-user')
+                            <th>Bukti Pembayaran</th>
                             <th>Aksi</th>
                         @endcan
                     </tr>
@@ -72,6 +73,14 @@
                                     -
                                 @endif
                             </td>
+                            @can('super-user')
+                                <td>
+                                    <img src="{{ $pembayaran->bukti_pembayaran ? asset('storage/bukti-pembayaran/' . $pembayaran->bukti_pembayaran) : asset('assets/img/baju-kosong.png') }}"
+                                        alt="user-avatar" class="d-block rounded fill-box" height="100" width="100"
+                                        id="uploadedAvatar" data-bs-toggle="modal"
+                                        data-bs-target="#imageModal{{ $pembayaran->id }}" />
+                                </td>
+                            @endcan
                             <!--Tombol Pembayaran (PENGGUNA)-->
                             @can('pengguna-only')
                                 @if ($pembayaran->status_pembayaran == 'belum_bayar')
@@ -96,6 +105,7 @@
                                 @endif
                             @endcan
                         </tr>
+
                         <!-- Modal Update Pembayaran -->
                         <div class="modal fade" id="updatePembayaranModal{{ $pembayaran->id }}" tabindex="-1"
                             aria-labelledby="exampleModalLabel{{ $pembayaran->id }}" aria-hidden="true">
@@ -109,10 +119,10 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
-                                    <form action="" method="POST">
+                                    <form action="{{ route('pembayaran.buktiPembayaran', $pembayaran->id) }}"
+                                        method="POST" enctype="multipart/form-data">
                                         @csrf
                                         @method('PUT')
-
                                         <!--Form Input-->
                                         <div class="modal-body">
                                             <!--Metode Pembayran-->
@@ -126,22 +136,20 @@
                                                         placeholder="Contoh: Tunai atau Transfer" required>
                                                 </div>
                                             </div>
-
                                             <!--Bukti Pembayaran-->
                                             <div class="row">
-                                                <!--Custom File Upload-->
                                                 <div class="fl-container">
-                                                    <input type="file" id="file" accept="image/*" hidden>
+                                                    <input type="file" id="file" accept="image/*"
+                                                        name="bukti_pembayaran" hidden>
                                                     <div class="img-area" data-img="">
                                                         <i class='bx bxs-cloud-upload icon'></i>
                                                         <h3>Upload Bukti Pembayaran</h3>
                                                         <p>Ukuran gambar maksimal <span>2MB</span></p>
                                                     </div>
-                                                    <button class="fl-select-image">Pilih Gambar</button>
+                                                    <button type="button" class="fl-select-image">Pilih Gambar</button>
                                                 </div>
                                             </div>
                                         </div>
-
                                         <!--Tombol-->
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-outline-secondary"
@@ -149,9 +157,30 @@
                                             <button type="submit" class="btn btn-primary">Save changes</button>
                                         </div>
                                     </form>
+
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Modal Image View -->
+                        <div class="modal fade" id="imageModal{{ $pembayaran->id }}" tabindex="-1"
+                            aria-labelledby="imageModalLabel{{ $pembayaran->id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="imageModalLabel{{ $pembayaran->id }}">Bukti Pembayaran
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        <img src="{{ $pembayaran->bukti_pembayaran ? asset('storage/bukti-pembayaran/' . $pembayaran->bukti_pembayaran) : asset('assets/img/baju-kosong.png') }}"
+                                            alt="user-avatar" class="img-fluid rounded" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         @empty
                             <tr>
                                 <td>Data Tidak Ditemukan</td>

@@ -64,8 +64,6 @@ class TransaksiController extends Controller
         return view('admin.home', compact('bajuTerlarisMerged', 'pendapatanBulanan'))->with('showNavbar', true);
     }
 
-
-
     public function index()
     {
         // Mendapatkan pengguna yang sedang login

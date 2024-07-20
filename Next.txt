@@ -6,12 +6,7 @@
         - buatkan tabel informasi
 =================
 Revisi Dosen 02
-    - tambahakn bukti transfer atau tunai (ask GPT for better option)
     - tambahakkn sistem denda jika lewat masa pengembalian
     - tambahkan jaminan ketika melakukan peminjaman (sperti gambar ktp)
 
 
-==============
-- Bukti Pembayaran
-    - Buatkan File Upload dibawahnya yang langsun menampilkan gambar butk iketika diklik
-    - contoh gambar profil

@@ -52,6 +52,14 @@ return [
             'throw' => false,
         ],
 
+        'public/bukti-pembayaran' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/bukti-pembayaran'),
+            'url' => env('APP_URL') . '/storage/bukti-pembayaran',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         'upload' => [
             'driver' => 'local',
             'root' => storage_path('app/upload'),

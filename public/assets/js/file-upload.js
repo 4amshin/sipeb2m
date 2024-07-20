@@ -22,6 +22,6 @@ inputFile.addEventListener('change', function () {
 		}
 		reader.readAsDataURL(image);
 	} else {
-		alert("Image size more than 2MB");
+		alert("Gambar Melebihi 2MB, Upload Gambar dibawah 2MB");
 	}
 })
