@@ -14,6 +14,7 @@ class Transaksi extends Model
         'nama_penyewa',
         'alamat_penyewa',
         'noTelepon_penyewa',
+        'foto_ktp',
         'tanggal_sewa',
         'tanggal_kembali',
         'harga_total',

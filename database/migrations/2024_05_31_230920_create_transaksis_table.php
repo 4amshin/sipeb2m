@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nama_penyewa');
             $table->string('alamat_penyewa');
             $table->string('noTelepon_penyewa');
+            $table->string('foto_ktp')->nullable();
             $table->date('tanggal_sewa');
             $table->date('tanggal_kembali');
             $table->decimal('harga_total', 10, 2);
