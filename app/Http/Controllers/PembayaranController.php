@@ -97,12 +97,9 @@ class PembayaranController extends Controller
     protected function deleteOldImage($oldImage)
     {
         if ($oldImage) {
-            Storage::disk('public')->delete($oldImage);
+            Storage::disk('public/bukti-pembayaran')->delete($oldImage);
         }
     }
-
-
-
 
     public function store(StorePembayaranRequest $request)
     {

@@ -7,6 +7,5 @@
 =================
 Revisi Dosen 02
     - tambahakkn sistem denda jika lewat masa pengembalian
-    - tambahkan jaminan ketika melakukan peminjaman (sperti gambar ktp)
 
 

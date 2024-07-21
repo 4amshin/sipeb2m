@@ -22,13 +22,10 @@
                         @endcan
                         <th>Baju Disewa</th>
                         <th>Total Harga</th>
-                        {{-- <th>Metode Pembayaran</th> --}}
                         <th>Status</th>
                         <th>Tanggal</th>
-                        @can('super-user')
-                            <th>Bukti Pembayaran</th>
-                            <th>Aksi</th>
-                        @endcan
+                        <th>Metode Pembayaran</th>
+                        <th>Bukti Pembayaran</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -73,22 +70,31 @@
                                     -
                                 @endif
                             </td>
-                            @can('super-user')
-                                <td>
-                                    <img src="{{ $pembayaran->bukti_pembayaran ? asset('storage/bukti-pembayaran/' . $pembayaran->bukti_pembayaran) : asset('assets/img/baju-kosong.png') }}"
-                                        alt="user-avatar" class="d-block rounded fill-box" height="100" width="100"
-                                        id="uploadedAvatar" data-bs-toggle="modal"
-                                        data-bs-target="#imageModal{{ $pembayaran->id }}" />
-                                </td>
-                            @endcan
+                            <td>
+                                {{ $pembayaran->metode_pembayaran }}
+                            </td>
+                            <td>
+                                <img src="{{ $pembayaran->bukti_pembayaran ? asset('storage/bukti-pembayaran/' . $pembayaran->bukti_pembayaran) : asset('assets/img/baju-kosong.png') }}"
+                                    alt="user-avatar" class="d-block rounded fill-box" height="75" width="100"
+                                    id="uploadedAvatar" data-bs-toggle="modal"
+                                    data-bs-target="#imageModal{{ $pembayaran->id }}" />
+                            </td>
                             <!--Tombol Pembayaran (PENGGUNA)-->
                             @can('pengguna-only')
-                                @if ($pembayaran->status_pembayaran == 'belum_bayar')
+                                @if ($pembayaran->status_pembayaran == 'belum_bayar' && $pembayaran->metode_pembayaran == null)
+                                    <!-- Tombol Bayar -->
                                     <td>
-                                        <!-- Tombol Update Pembayaran -->
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                             data-bs-target="#updatePembayaranModal{{ $pembayaran->id }}">
                                             Bayar
+                                        </button>
+                                    </td>
+                                @elseif ($pembayaran->status_pembayaran == 'belum_bayar' && $pembayaran->metode_pembayaran && $pembayaran->bukti_pembayaran)
+                                    <!-- Tombol Update Pembayaran -->
+                                    <td>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#updatePembayaranModal{{ $pembayaran->id }}">
+                                            Update Pembayaran
                                         </button>
                                     </td>
                                 @endif
@@ -106,7 +112,7 @@
                             @endcan
                         </tr>
 
-                        <!-- Modal Update Pembayaran -->
+                        <!-- Modal Pembayaran -->
                         <div class="modal fade" id="updatePembayaranModal{{ $pembayaran->id }}" tabindex="-1"
                             aria-labelledby="exampleModalLabel{{ $pembayaran->id }}" aria-hidden="true">
                             <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
@@ -161,6 +167,7 @@
                                 </div>
                             </div>
                         </div>
+
 
                         <!-- Modal Image View -->
                         <div class="modal fade" id="imageModal{{ $pembayaran->id }}" tabindex="-1"

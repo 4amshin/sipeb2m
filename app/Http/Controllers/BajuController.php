@@ -102,6 +102,17 @@ class BajuController extends Controller
         $transaksi->tanggal_sewa = $request->input('tanggal_sewa');
         $transaksi->tanggal_kembali = $request->input('tanggal_kembali');
         $transaksi->harga_total = $totalPrice;
+
+        // Simpan Gambar KTP
+        $fotoKtp = $request->file('foto_ktp');
+        if($fotoKtp) {
+            //buat directori jika belum ada
+            $this->createDirectoryIfNotExists('public/foto-ktp');
+
+            $fotoKtp->store('public/foto-ktp');
+            $transaksi->foto_ktp = $fotoKtp->hashName();
+        }
+
         $transaksi->save();
 
         // Menyimpan detail transaksi untuk setiap item di keranjang
@@ -117,6 +128,22 @@ class BajuController extends Controller
 
         // Mengarahkan pengguna ke halaman daftar orderan dengan pesan sukses
         return redirect()->route('daftarOrderan')->with('success', 'Transaksi diproses');
+    }
+
+    // Membuat direktori jika belum ada
+    protected function createDirectoryIfNotExists($path)
+    {
+        if (!Storage::exists($path)) {
+            Storage::makeDirectory($path);
+        }
+    }
+
+    // Menghapus gambar lama jika ada
+    protected function deleteOldImage($oldImage)
+    {
+        if ($oldImage) {
+            Storage::disk('public')->delete($oldImage);
+        }
     }
 
     public function checkStock(Baju $baju)

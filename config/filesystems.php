@@ -60,6 +60,14 @@ return [
             'throw' => false,
         ],
 
+        'public/foto-ktp' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/foto-ktp'),
+            'url' => env('APP_URL') . '/storage/foto-ktp',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         'upload' => [
             'driver' => 'local',
             'root' => storage_path('app/upload'),

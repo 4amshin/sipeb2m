@@ -15,6 +15,7 @@
                         <th>No</th>
                         @can('super-user')
                             <th>Pelanggan</th>
+                            <th>Jaminan</th>
                             <th>Alamat</th>
                             <th>No.Telepon</th>
                         @endcan
@@ -39,6 +40,14 @@
                                         {{ $transaksi->nama_penyewa }}
                                     </strong>
                                 </td>
+                                @can('super-user')
+                                    <td>
+                                        <img src="{{ $transaksi->foto_ktp ? asset('storage/foto-ktp/' . $transaksi->foto_ktp) : asset('assets/img/baju-kosong.png') }}"
+                                            alt="user-avatar" class="d-block rounded fill-box" height="70" width="100"
+                                            id="uploadedAvatar" data-bs-toggle="modal"
+                                            data-bs-target="#imageModal{{ $transaksi->id }}" />
+                                    </td>
+                                @endcan
                                 <td>
                                     {{ $transaksi->alamat_penyewa }}
                                 </td>
@@ -122,15 +131,35 @@
                                 @endif
                             @endcan
                         </tr>
+
+                        <!-- Modal Image View -->
+                        <div class="modal fade" id="imageModal{{ $transaksi->id }}" tabindex="-1"
+                            aria-labelledby="imageModalLabel{{ $transaksi->id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="imageModalLabel{{ $transaksi->id }}">Jaminan (Foto KTP/Tanda Pengenal Lainnya)
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        <img src="{{ $transaksi->foto_ktp ? asset('storage/foto-ktp/' . $transaksi->foto_ktp) : asset('assets/img/baju-kosong.png') }}"
+                                            alt="user-avatar" class="img-fluid rounded" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         @empty
                             <tr>
                                 <td>Data Tidak Ditemukan</td>
                             </tr>
                         @endforelse
 
-                </tbody>
-            </table>
-        </div>
+                    </tbody>
+                </table>
+            </div>
 
             <!--Navigasi Halaman-->
             <nav class="p-3" aria-label="Page navigation">
@@ -138,32 +167,32 @@
                     {{ $daftarOrderan->withQueryString()->links() }}
                 </ul>
             </nav>
-    </div>
+        </div>
 
 
-    <!--Keterangan Status-->
-    <div class="card p-3">
-        <div class="row gx-3">
-            <div class="col-md-4 d-flex align-items-start">
-                <div class="content-right">
-                    <span class="badge bg-label-warning me-1">DiProses</span>
-                    <p class="mb-0 lh-1">Pesanan sedang dalam tahap verifikasi dan penyiapan</p>
+        <!--Keterangan Status-->
+        <div class="card p-3">
+            <div class="row gx-3">
+                <div class="col-md-4 d-flex align-items-start">
+                    <div class="content-right">
+                        <span class="badge bg-label-warning me-1">DiProses</span>
+                        <p class="mb-0 lh-1">Pesanan sedang dalam tahap verifikasi dan penyiapan</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4 d-flex align-items-center">
-                <div class="content-right">
-                    <span class="badge bg-label-success me-1">DiTerima</span>
-                    <p class="mb-0 lh-1">Pesanan telah disetujui dan akan segera diproses lebih lanjut</p>
+                <div class="col-md-4 d-flex align-items-center">
+                    <div class="content-right">
+                        <span class="badge bg-label-success me-1">DiTerima</span>
+                        <p class="mb-0 lh-1">Pesanan telah disetujui dan akan segera diproses lebih lanjut</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4 d-flex align-items-center">
-                <div class="content-right">
-                    <span class="badge bg-label-danger me-1">DiTolak</span>
-                    <p class="mb-0 lh-1">Pesanan tidak disetujui, kemungkinan karena alasan tertentu seperti stok habis atau
-                        informasi yang tidak valid</p>
+                <div class="col-md-4 d-flex align-items-center">
+                    <div class="content-right">
+                        <span class="badge bg-label-danger me-1">DiTolak</span>
+                        <p class="mb-0 lh-1">Pesanan tidak disetujui, kemungkinan karena alasan tertentu seperti stok habis atau
+                            informasi yang tidak valid</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
     @endsection

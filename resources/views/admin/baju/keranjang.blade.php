@@ -2,6 +2,7 @@
 
 @push('customCss')
     <link rel="stylesheet" href="{{ asset('assets/css/cart.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/file-upload.css') }}">
 @endpush
 
 @section('content')
@@ -22,7 +23,7 @@
             @endphp
             @forelse ($groupedBaju as $namaBaju => $bajuGroup)
                 <div data-nama="{{ $namaBaju }}" class="item">
-                    <img src="{{ $bajuGroup->first()->gambar_baju ? asset('storage/'.$bajuGroup->first()->gambar_baju) : asset('assets/img/baju-kosong.png') }}"
+                    <img src="{{ $bajuGroup->first()->gambar_baju ? asset('storage/' . $bajuGroup->first()->gambar_baju) : asset('assets/img/baju-kosong.png') }}"
                         alt="Gambar Baju" class="fill-box" height="230">
                     <div class="item-details">
                         <h2>{{ $namaBaju }}</h2>
@@ -88,20 +89,37 @@
                     <h5 class="modal-title" id="exampleModalLabel">Durasi Penyewaan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('checkout') }}" method="POST">
+                <form action="{{ route('checkout') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
+                        <!--Tanggal Sewa-->
                         <div class="row">
                             <div class="col mb-3">
                                 <label for="tanggalSewa" class="form-label">Tanggal Sewa</label>
                                 <input type="date" id="tanggalSewa" name="tanggal_sewa" class="form-control" required>
                             </div>
                         </div>
+
+                        <!--Tanggal Kembali-->
                         <div class="row">
                             <div class="col mb-3">
                                 <label for="tanggalKembali" class="form-label">Tanggal Kembali</label>
                                 <input type="date" id="tanggalKembali" name="tanggal_kembali" class="form-control"
                                     required>
+                            </div>
+                        </div>
+
+                        <!--Foto KTP-->
+                        <div class="row">
+                            <label for="tanggalKembali" class="form-label">Jaminan (Foto KTP/Tanda Pengenal Lainnya)</label>
+                            <div class="fl-container">
+                                <input type="file" id="file" accept="image/*" name="foto_ktp" hidden>
+                                <div class="img-area" data-img="">
+                                    <i class='bx bxs-cloud-upload icon'></i>
+                                    <h3>Upload Gambar</h3>
+                                    <p>Ukuran gambar maksimal <span>2MB</span></p>
+                                </div>
+                                <button type="button" class="fl-select-image">Pilih Gambar</button>
                             </div>
                         </div>
                     </div>
@@ -191,6 +209,8 @@
             document.getElementById('cartData').value = JSON.stringify(cart);
         });
     </script>
+
+    <script src="{{ asset('assets/js/file-upload.js') }}"></script>
 
     <script src="{{ asset('assets/js/cart.js') }}"></script>
 @endpush
