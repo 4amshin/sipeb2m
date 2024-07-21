@@ -102,21 +102,41 @@ class TransaksiController extends Controller
         // Mendapatkan pengguna yang sedang login
         $user = auth()->user();
 
-        // Memeriksa apakah pengguna memiliki peran 'pengguna'
         if ($user->role == 'pengguna') {
-            // Mendapatkan daftar orderan yang sesuai dengan pengguna
-            $daftarOrderan = Transaksi::where('nama_penyewa', $user->name)
+            // Mendapatkan daftar orderan yang sesuai dengan pengguna dan pisahkan berdasarkan status
+            $orderDiproses = Transaksi::where('nama_penyewa', $user->name)
+                ->where('status_order', 'diproses')
                 ->orderBy('created_at', 'desc')
-                ->paginate(5);
+                ->paginate(5, ['*'], 'diproses');
+
+            $orderDiterima = Transaksi::where('nama_penyewa', $user->name)
+                ->where('status_order', 'diterima')
+                ->orderBy('created_at', 'desc')
+                ->paginate(5, ['*'], 'diterima');
+
+            $orderDitolak = Transaksi::where('nama_penyewa', $user->name)
+                ->where('status_order', 'ditolak')
+                ->orderBy('created_at', 'desc')
+                ->paginate(5, ['*'], 'ditolak');
         } else {
-            // Mendapatkan daftar orderan untuk admin
-            $daftarOrderan = Transaksi::orderBy('created_at', 'desc')
-                ->paginate(5);
+            // Mendapatkan daftar orderan untuk admin dan pisahkan berdasarkan status
+            $orderDiproses = Transaksi::where('status_order', 'diproses')
+                ->orderBy('created_at', 'desc')
+                ->paginate(5, ['*'], 'diproses');
+
+            $orderDiterima = Transaksi::where('status_order', 'diterima')
+                ->orderBy('created_at', 'desc')
+                ->paginate(5, ['*'], 'diterima');
+
+            $orderDitolak = Transaksi::where('status_order', 'ditolak')
+                ->orderBy('created_at', 'desc')
+                ->paginate(5, ['*'], 'ditolak');
         }
 
         // Mengembalikan tampilan daftar orderan dengan daftar orderan yang sesuai
-        return view('admin.penyewaan.daftar-orderan', compact('daftarOrderan'))->with('showNavbar', true);
+        return view('admin.penyewaan.daftar-orderan', compact('orderDiproses', 'orderDiterima', 'orderDitolak'))->with('showNavbar', true);
     }
+
 
     public function riwayatPenyewaan()
     {

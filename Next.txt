@@ -5,7 +5,7 @@
     - Buat Landing Page Bisa Diedit
         - buatkan tabel informasi
 =================
-Revisi Dosen 02
-    - tambahakkn sistem denda jika lewat masa pengembalian
 
 
+- Halaman order
+    - pisah order diterima dan diprose menggunakan tab

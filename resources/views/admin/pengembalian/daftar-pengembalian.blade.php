@@ -21,9 +21,6 @@
                         <th>Baju Disewa</th>
                         <th>Status</th>
                         <th>Tanggal</th>
-                        @can('super-user')
-                            <th>Aksi</th>
-                        @endcan
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -55,7 +52,7 @@
                                     @break
 
                                     @case('terlambat')
-                                        <span class="badge bg-label-info me-1">Terlambat</span>
+                                        <span class="badge bg-label-danger me-1">Terlambat</span>
                                     @break
 
                                     @default
@@ -69,6 +66,15 @@
                                     -
                                 @endif
                             </td>
+                            <!--Notif Denda-->
+                            @can('pengguna-only')
+                                @if ($pengembalian->status == 'terlambat')
+                                    <td>
+                                        <span class="badge bg-label-info me-1">Anda dikenakan denda sebesar Rp 30.000</span>
+                                    </td>
+                                @endif
+                            @endcan
+                            <!--Tombol Tandai Kembali-->
                             @can('super-user')
                                 @if ($pengembalian->status == 'belum_diKembalikan')
                                     <td>
@@ -81,14 +87,14 @@
                                 @endif
                             @endcan
                         </tr>
-                    @empty
-                        <tr>
-                            <td>Data Tidak Ditemukan</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+                        @empty
+                            <tr>
+                                <td>Data Tidak Ditemukan</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
 
             <!--Navigasi Halaman-->
             <nav class="p-3" aria-label="Page navigation">
@@ -97,30 +103,30 @@
                 </ul>
             </nav>
 
-    </div>
+        </div>
 
-     <!--Keterangan Status-->
-     <div class="card p-3">
-        <div class="row gx-3">
-            <div class="col-md-4 d-flex align-items-start">
-                <div class="content-right">
-                    <span class="badge bg-label-warning me-1">Belum DiKembalikan</span>
-                    <p class="mb-0 lh-1">Barang yang disewa telah dikembalikan ke toko</p>
+        <!--Keterangan Status-->
+        <div class="card p-3">
+            <div class="row gx-3">
+                <div class="col-md-4 d-flex align-items-start">
+                    <div class="content-right">
+                        <span class="badge bg-label-warning me-1">Belum DiKembalikan</span>
+                        <p class="mb-0 lh-1">Barang yang disewa telah dikembalikan ke toko</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4 d-flex align-items-center">
-                <div class="content-right">
-                    <span class="badge bg-label-success me-1">DiKembalikan</span>
-                    <p class="mb-0 lh-1">Barang yang disewa belum dikembalikan ke toko</p>
+                <div class="col-md-4 d-flex align-items-center">
+                    <div class="content-right">
+                        <span class="badge bg-label-success me-1">DiKembalikan</span>
+                        <p class="mb-0 lh-1">Barang yang disewa belum dikembalikan ke toko</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4 d-flex align-items-center">
-                <div class="content-right">
-                    <span class="badge bg-label-info me-1">Terlambat</span>
-                    <p class="mb-0 lh-1">Pengembalian barang melebihi batas waktu yang ditentukan</p>
+                <div class="col-md-4 d-flex align-items-center">
+                    <div class="content-right">
+                        <span class="badge bg-label-danger me-1">Terlambat</span>
+                        <p class="mb-0 lh-1">Pengembalian barang melebihi batas waktu yang ditentukan</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
     @endsection
