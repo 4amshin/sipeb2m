@@ -105,7 +105,7 @@ class BajuController extends Controller
 
         // Simpan Gambar KTP
         $fotoKtp = $request->file('foto_ktp');
-        if($fotoKtp) {
+        if ($fotoKtp) {
             //buat directori jika belum ada
             $this->createDirectoryIfNotExists('public/foto-ktp');
 
@@ -246,8 +246,10 @@ class BajuController extends Controller
 
     public function destroy(Baju $baju)
     {
-        // Menghapus file gambar baju dari penyimpanan
-        Storage::disk('public')->delete($baju->gambar_baju);
+        // Menghapus file gambar baju dari penyimpanan jika ada
+        if ($baju->gambar_baju) {
+            Storage::disk('public')->delete($baju->gambar_baju);
+        }
 
         // Menghapus data baju dari database
         $baju->delete();
