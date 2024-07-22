@@ -97,25 +97,6 @@
                     @endcan
                 </tr>
 
-                <!-- Modal Image View -->
-                <div class="modal fade" id="imageModal{{ $transaksi->id }}" tabindex="-1"
-                    aria-labelledby="imageModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="imageModalLabel">Foto KTP
-                                    {{ $transaksi->nama_penyewa }}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <img src="{{ $transaksi->foto_ktp ? asset('storage/foto-ktp/' . $transaksi->foto_ktp) : asset('assets/img/baju-kosong.png') }}"
-                                    alt="Foto KTP" class="img-fluid">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 @empty
                     <tr>
                         <td colspan="8" class="text-center text-muted">Belum ada orderan {{ $status }}.</td>

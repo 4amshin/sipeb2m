@@ -5,7 +5,3 @@
     - Buat Landing Page Bisa Diedit
         - buatkan tabel informasi
 =================
-
-
-- Halaman order
-    - pisah order diterima dan diprose menggunakan tab
