@@ -632,6 +632,10 @@ progress {
     margin-bottom: 0;
 }
 
+.uncp-logo img {
+    height: 20px;
+}
+
 .blockquote-footer {
     margin-top: -1rem;
     margin-bottom: 1rem;

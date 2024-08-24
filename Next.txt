@@ -1,4 +1,0 @@
-Revisi
-=========
-- Tambahakan Logo UNCP (Footer)
-- Cek Fitur hitungan harixharga sewa (tidak berfungsi katanya)
